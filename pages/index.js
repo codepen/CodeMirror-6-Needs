@@ -1,8 +1,12 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import CodeEditor from "../components/CodeEditor";
+import { useState } from "react";
 
 export default function Home() {
+  const [fontSize, setFontSize] = useState(16);
+  const [indentWidth, setIndentWidth] = useState(2);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,13 +19,19 @@ export default function Home() {
         <div className={styles.options}>
           <div>
             <label htmlFor="indent-width">Indent Width</label>
-            <select id="indent-width">
+            <select
+              id="indent-width"
+              onChange={(e) => {
+                setIndentWidth(parseInt(e.target.value));
+              }}
+            >
               <option>2</option>
               <option>4</option>
               <option>6</option>
             </select>
           </div>
           <div>
+            {/* https://codemirror.net/6/examples/styling/ */}
             <label htmlFor="syntax-highlighting">Syntax Highlighting</label>
             <select id="syntax-highlighting">
               <optgroup label="Dark Themes">
@@ -53,9 +63,14 @@ export default function Home() {
           </div>
           <div>
             <label htmlFor="font-size">Font Size</label>
-            <select id="font-size">
-              <option>16px</option>
-              <option>20px</option>
+            <select
+              id="font-size"
+              onChange={(e) => {
+                setFontSize(e.target.value);
+              }}
+            >
+              <option value="16">16px</option>
+              <option value="20">20px</option>
             </select>
           </div>
           <div>
@@ -66,6 +81,7 @@ export default function Home() {
             </select>
           </div>
           <div>
+            {/* https://codemirror.net/6/docs/ref/#gutter.lineNumbers */}
             <label htmlFor="line-numbers">Line Numbers</label>
             <select id="line-numbers">
               <option>On</option>
@@ -80,6 +96,7 @@ export default function Home() {
             </select>
           </div>
           <div>
+            {/* https://codemirror.net/6/docs/ref/#fold */}
             <label htmlFor="code-folding">Code Folding</label>
             <select id="code-folding">
               <option>On</option>
@@ -87,6 +104,8 @@ export default function Home() {
             </select>
           </div>
           <div>
+            {/* https://codemirror.net/6/docs/ref/#matchbrackets */}
+            {/* https://codemirror.net/6/docs/ref/#closebrackets */}
             <label htmlFor="match-brackets">Match Brackets/Tags</label>
             <select id="match-brackets">
               <option>On</option>
@@ -94,6 +113,7 @@ export default function Home() {
             </select>
           </div>
           <div>
+            {/* https://codemirror.net/6/docs/ref/#autocomplete */}
             <label htmlFor="autocomplete">Autocomplete</label>
             <select id="autocomplete">
               <option>On</option>
@@ -102,10 +122,27 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Languages! https://codemirror.net/6/examples/lang-package/ */}
+
         <div className={styles.codeEditors}>
-          <CodeEditor className={styles.codeEditor} type="html" tabSize={2} />
-          <CodeEditor className={styles.codeEditor} type="css" tabSize={2} />
-          <CodeEditor className={styles.codeEditor} type="js" tabSize={2} />
+          <CodeEditor
+            title={<h2>HTML</h2>}
+            className={styles.codeEditor}
+            type="html"
+            indentWidth={indentWidth}
+          />
+          <CodeEditor
+            title={<h2>CSS</h2>}
+            className={styles.codeEditor}
+            type="css"
+            indentWidth={indentWidth}
+          />
+          <CodeEditor
+            title={<h2>JavaScript</h2>}
+            className={styles.codeEditor}
+            type="js"
+            indentWidth={indentWidth}
+          />
         </div>
       </main>
     </div>
