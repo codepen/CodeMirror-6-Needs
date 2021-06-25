@@ -56,6 +56,7 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
     if (type === "scss") lang = css;
     if (type === "sass") lang = css;
     if (type === "less") lang = css;
+    if (type === "stylus") lang = css;
 
     // TODO entirely
     if (type === "haml") lang = html;

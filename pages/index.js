@@ -228,6 +228,17 @@ export default function Home() {
           <CodeEditor
             title={
               <h2>
+                <a href="https://stylus-lang.com/">Stylus</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="stylus"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
                 <a href="https://coffeescript.org/">CoffeeScript</a>
               </h2>
             }
