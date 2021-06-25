@@ -138,9 +138,21 @@ export default function Home() {
             indentWidth={indentWidth}
           />
           <CodeEditor
-            title={<h2>JavaScript</h2>}
+            title={<h2>JavaScript / JSX</h2>}
             className={styles.codeEditor}
             type="js"
+            indentWidth={indentWidth}
+          />
+          <CodeEditor
+            title={<h2>Markdown</h2>}
+            className={styles.codeEditor}
+            type="markdown"
+            indentWidth={indentWidth}
+          />
+          <CodeEditor
+            title={<h2>Haml</h2>}
+            className={styles.codeEditor}
+            type="haml"
             indentWidth={indentWidth}
           />
         </div>

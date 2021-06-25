@@ -1,13 +1,19 @@
 import { useRef, useEffect } from "react";
+
 import { basicSetup } from "@codemirror/basic-setup";
 import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultTabBinding } from "@codemirror/commands";
+
 import { oneDark } from "@codemirror/theme-one-dark";
+
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
+import { markdown } from "@codemirror/lang-markdown";
+
 import { DATA } from "../../data/code";
+
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import parserHtml from "prettier/parser-html";
@@ -39,7 +45,13 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
 
     if (type === "html") lang = html;
     if (type === "css") lang = css;
+    if (type === "markdown") lang = markdown;
+
+    // TODO Make JSX work
     if (type === "js") lang = javascript;
+
+    // TODO entirely
+    if (type === "haml") lang = html;
 
     let startState = EditorState.create({
       doc: DATA[type],
@@ -67,8 +79,6 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
       ),
     });
 
-    console.log(view.current);
-
     // Do Prettier!
     // https://prettier.io/docs/en/browser.html
 
@@ -89,12 +99,12 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
     if (type === "js") {
       // prettier can throw hard errors if the parser fails.
       try {
+        // replace entire document with prettified version
         const newDoc = prettier.format(DATA[type], {
           parser: "babel",
           plugins: [parserBabel, parserHtml],
           tabWidth: indentWidth,
         });
-        console.log(newDoc);
         view.current.dispatch(
           view.current.state.update({
             changes: {

@@ -10,14 +10,29 @@ export const DATA = {
 
 </body>
 </html>`,
+
   css: `body {
   background: red;
 }`,
+
   js: `let foo = "bar";
 
 const data = {
   age: 12
 };
 
-console.log(data.age);`,
+console.log(data.age);
+
+function render() {
+  return <div>text</div>;
+}`,
+
+  markdown: `# This is markdown
+
+Just some *copy* here.`,
+
+  haml: `- (1..16).each do |i|
+  %div #{i}
+
+%blockquote Hello, World!  `,
 };
