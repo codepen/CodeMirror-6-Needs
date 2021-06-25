@@ -1,0 +1,9 @@
+.main {
+  padding: 1rem;
+}
+
+.codeEditors {
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  gap: 1rem;
+}

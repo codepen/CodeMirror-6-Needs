@@ -12,9 +12,17 @@ export default function Home() {
       <main className={styles.main}>
         <h1>CodeMirror 6 Needs</h1>
 
-        <CodeEditor type="html" />
-        <CodeEditor type="css" />
-        <CodeEditor type="js" />
+        <div>
+          <select>
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div className={styles.codeEditors}>
+          <CodeEditor className={styles.codeEditor} type="html" tabSize={2} />
+          <CodeEditor className={styles.codeEditor} type="css" tabSize={2} />
+          <CodeEditor className={styles.codeEditor} type="js" tabSize={2} />
+        </div>
       </main>
     </div>
   );

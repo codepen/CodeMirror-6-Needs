@@ -9,41 +9,46 @@ import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import { DATA } from "../../data/code";
 
-export default function CodeEditor({ type }) {
+export default function CodeEditor({ type, tabSize, ...props }) {
   const container = useRef(null);
+  const compartments = {
+    language: new Compartment(),
+    tabSize: new Compartment(),
+  };
+  let lang, view;
 
   useEffect(() => {
-    const compartments = {
-      language: new Compartment(),
-      tabSize: new Compartment(),
-    };
-    let lang, code;
-    if (type === "html") {
-      lang = html;
-    }
-    if (type === "css") {
-      lang = css;
-    }
-    if (type === "js") {
-      lang = javascript;
-    }
+    // To prevent Next.js fast refresh from adding additional editors
+    if (container.current.children[0]) container.current.children[0].remove();
+
+    if (type === "html") lang = html;
+    if (type === "css") lang = css;
+    if (type === "js") lang = javascript;
 
     let startState = EditorState.create({
       doc: DATA[type],
       extensions: [
-        keymap.of(defaultTabBinding),
-        compartments.tabSize.of(EditorState.tabSize.of(2)),
+        keymap.of(defaultTabBinding), // TODO: Do we definitely want default Tab handling?
+        compartments.tabSize.of(EditorState.tabSize.of(tabSize)),
         compartments.language.of(lang.call()),
         oneDark,
       ],
     });
 
-    let view = new EditorView({
+    view = new EditorView({
       state: startState,
       parent: container.current,
+      lineWrapping: true,
+      editable: false,
       extensions: [basicSetup],
     });
   }, []);
 
-  return <div ref={container}></div>;
+  if (view) {
+    view.dispatch({
+      effects: tabSize.reconfigure(EditorState.tabSize.of(tabSize)),
+    });
+  }
+
+  return <div ref={container} {...props}></div>;
 }
