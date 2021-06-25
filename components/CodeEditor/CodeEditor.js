@@ -95,20 +95,7 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
     // Do Prettier!
     // https://prettier.io/docs/en/browser.html
 
-    //  const options = {
-    //    bracketSpacing: true,
-    //    jsxBracketSameLine: false,
-    //    parser: parserType,
-    //    semi: true,
-    //    tabWidth: tabSize,
-    //    trailingComma: "none",
-    //    useTabs: indentWith === "tabs",
-    //    // These settings would ideally apply to Vue, but don't seem to yet...
-    //    // https://github.com/prettier/prettier/issues/7595
-    //    proseWrap: "preserve",
-    //    htmlWhitespaceSensitivity: "ignore",
-    //  };
-
+    // TODO: Do Prettier on the other supported languages
     if (type === "js") {
       // prettier can throw hard errors if the parser fails.
       try {
@@ -117,6 +104,11 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
           parser: "babel",
           plugins: [parserBabel, parserHtml],
           tabWidth: indentWidth,
+          //    semi: true,
+          trailingComma: "none",
+          //    useTabs: indentWith === "tabs",
+          bracketSpacing: true,
+          jsxBracketSameLine: false,
         });
         view.current.dispatch(
           view.current.state.update({

@@ -1,0 +1,86 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include dark-theme-stuff;
+
+$yellow: #ddca7e;
+$blue: #809bbd;
+$lightGray: #eee;
+$midGray: #ccc;
+$darkGray: $gray-dark-2;
+$purple: #9a8297;
+$brown: #a7925a;
+$orange: #ff6400;
+$burnt: #d0782a;
+$green: #96b38a;
+$white: white;
+
+.cm-keyword {
+  color: $yellow;
+} // var
+.cm-atom {
+  color: $yellow;
+} // #tag
+.box-html .cm-atom {
+  color: $green;
+} // markdown blockquote
+.cm-number {
+  color: $burnt;
+} // 20, 20px
+.cm-unit {
+  color: $burnt;
+} // px
+.cm-def {
+  color: $blue;
+} // function([this])
+.cm-variable {
+  color: $yellow;
+} // margin, coffeescript var
+.cm-variable-2 {
+  color: $blue;
+} // for (key in [this]), markdown li, decimals witout 0 in front
+.cm-property {
+  color: $purple;
+} // getElementById
+.cm-operator {
+  color: $midGray;
+} // CoffeeScript ->
+.cm-comment {
+  color: $darkGray;
+} // /* test */
+.cm-string {
+  color: $green;
+} // href=["val"]
+.cm-string-2 {
+  color: $green;
+} // match([this])
+.cm-meta {
+  color: $purple;
+} // @font-face
+.cm-header {
+  color: $orange;
+} //
+.cm-tag {
+  color: $brown;
+} // body
+.box-css .cm-tag {
+  color: $yellow;
+} //
+.cm-attribute {
+  color: $yellow;
+} // e.g. href
+.cm-strong {
+  color: $yellow;
+} //
+.cm-em {
+  color: $yellow;
+} //
+.cm-qualifier {
+  color: $yellow;
+} // #id
+.cm-builtin {
+  color: $yellow;
+} // .class
+
+@include editorStyles(#1d1e22, white, #34363e, #666b7a);

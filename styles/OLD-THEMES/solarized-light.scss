@@ -1,0 +1,84 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include light-theme-stuff;
+
+.cm-keyword {
+  color: #268bd2;
+}
+.cm-atom {
+  color: #859900;
+}
+.box-html .cm-atom {
+  color: #cb4b16;
+}
+.cm-def {
+  color: #b58900;
+}
+.cm-variable {
+  color: #657b83;
+}
+.cm-variable-2 {
+  color: #859900;
+}
+.cm-variable-3 {
+  color: #586e75;
+}
+.cm-header {
+  color: #cb4b16;
+}
+.cm-number {
+  color: #2aa198;
+}
+.cm-property {
+  color: #b58900;
+}
+.cm-attribute {
+  color: #657b83;
+}
+.cm-builtin {
+  color: #6c71c4;
+}
+.cm-qualifier {
+  color: #268bd2;
+}
+.cm-operator {
+  color: #859900;
+}
+.cm-meta {
+  color: #268bd2;
+}
+.cm-string {
+  color: #2aa198;
+}
+.cm-string-2 {
+  color: #d33682;
+}
+.cm-tag {
+  color: #268bd2;
+}
+.box-css .cm-tag {
+  color: #859900;
+}
+.cm-tag.cm-bracket {
+  color: #657b83;
+}
+.cm-comment {
+  color: #93a1a1;
+}
+
+@include editorStyles(#fdf6e3, #657b83, #657b83, rgba(black, 0.05));
+
+.box-title {
+  color: #7b868e;
+}
+.powers {
+  .mini-button {
+    background: rgba(black, 0.3);
+    &:hover,
+    &:focus {
+      background: rgba(black, 0.5);
+    }
+  }
+}

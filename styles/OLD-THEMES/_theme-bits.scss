@@ -1,0 +1,302 @@
+@mixin light-theme-stuff {
+  .CodeMirror-cursor {
+    border-left-color: black !important;
+  }
+  .CodeMirror-selected {
+    background: rgba(black, 0.05);
+  }
+  .CodeMirror-focused .CodeMirror-selected {
+    background: rgba(black, 0.1);
+  }
+  .CodeMirror-matchingbracket {
+    border-bottom: 1px solid rgba(black, 0.5);
+  }
+  .CodeMirror-matchingtag {
+    border-bottom: 1px solid rgba(black, 0.3);
+  }
+  .expander {
+    span {
+      text-shadow: none;
+    }
+    &:hover,
+    &:focus {
+      span {
+        color: $gray-dark-4;
+      }
+    }
+  }
+  .powers {
+    border-bottom: 1px solid rgba(black, 0.075);
+  }
+  .cm-searching {
+    background: rgba(black, 0.1);
+    outline: 2px solid rgba(black, 0.5);
+  }
+  .console-command-line {
+    color: $gray-dark-3;
+    background: $gray-light-6;
+    border-bottom: 1px solid $gray-light-3;
+    border-top: 1px solid $gray-light-3;
+  }
+  .console-command-line-input {
+    color: $gray-dark-5;
+  }
+  .CodeMirror-hints,
+  .emmet-abbreviation-preview {
+    border: 1px solid $gray-light-3;
+    background: white;
+  }
+  .CodeMirror-hint {
+    color: black;
+  }
+  li.CodeMirror-hint-active {
+    background: $blue;
+    color: white;
+  }
+
+  /*
+    When you have a light theme active, the Editor View should go FULL ON WHITE!
+  */
+
+  .main-header .header-wrap {
+    box-shadow: 0 2px 5px rgba(black, 0.2);
+  }
+
+  body.room-editor,
+  body.editor, // mobile
+  body.room-collab,
+  body.room-professor,
+  body.room-pres {
+    .main-header,
+    .main-header .header-wrap,
+    .editor-footer {
+      background: white;
+      color: black;
+      .mini-logo path {
+        fill: black;
+      }
+    }
+    [data-component='Logo'] svg {
+      fill: $gray-dark-5;
+    }
+
+    #item-title {
+      a,
+      > span,
+      + div a {
+        color: black;
+      }
+    }
+
+    .editor-actions {
+      background: white;
+    }
+
+    // Buttons
+    .editor-footer,
+    .footer-actions,
+    .footer-actions,
+    .editor-actions,
+    .editor-actions-menu,
+    .footer-right {
+      .button {
+        background: var(--button-bg);
+        color: var(--button-color);
+      }
+
+      --button-bg: var(--gray-light-6);
+      --button-color: var(--gray-dark-4);
+      --button-hover-bg: var(--gray-light-5);
+      --button-hover-color: var(--gray-dark-5);
+    }
+
+    .view-switcher {
+      background: white;
+      color: black;
+      .link-list {
+        a {
+          color: $gray-dark-3;
+          &:hover:not(.active) {
+            color: $gray-dark-2;
+            background: $gray-light-5;
+          }
+        }
+        .active {
+          background: $gray-light-3;
+        }
+      }
+    }
+
+    .navigation-wrap,
+    .editor-footer {
+      .student-count,
+      span,
+      time {
+        color: $gray-dark-3;
+      }
+    }
+    .editor-footer {
+      border-top-color: $gray-light-3;
+    }
+
+    .drawer-comments {
+      background: white;
+      color: black;
+
+      .comment-list li:nth-child(odd) {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .comment-username {
+        color: $blue;
+        &:hover,
+        &:focus {
+          color: $blue-dark;
+        }
+      }
+    }
+    .drawer-comments-tab {
+      background: linear-gradient(to bottom, white, $gray-light-5);
+      box-shadow: -5px 0 10px -10px rgba($gray-dark-4, 0.3),
+        5px 0 10px -10px rgba($gray-dark-4, 0.3);
+      color: black;
+      border-color: $yellow;
+    }
+
+    .editor-resizer-console,
+    .editor-resizer {
+      background: $gray-light-3;
+    }
+    .result {
+      background: white;
+    }
+    .loading-text {
+      color: $gray-dark-5;
+    } // specific to layouts
+    &.layout-side .resizer {
+      background: white;
+      box-shadow: -1px 0 1px rgba(black, 0.1), 1px 0 1px rgba(black, 0.1);
+    }
+    &.layout-top .resizer,
+    &.layout-top .top-boxes .editor-resizer {
+      background: white;
+      border: 0;
+      box-shadow: 0 -1px 1px rgba(black, 0.1), 0 1px 1px rgba(black, 0.1);
+    }
+  }
+
+  /* Buttons */
+
+  // body.solarized-light,
+  // body.xq-light,
+  // body.duotone-light,
+  // body.mdn-like,
+  // body.highcontrast-light,
+  // body.oceanic-light,
+  // body.classic {
+  // }
+
+  /* Projects */
+  .project-editor-warning {
+    background: rgba(black, 0.5);
+  }
+
+  // 404 screen for Project Editor
+  .loading-error-message {
+    color: black;
+    opacity: 0.8;
+  }
+
+  .collaborators-indicators {
+    > span {
+      background: $gray-dark-3;
+      text-shadow: 0 1px 3px rgba(black, 0.3);
+    }
+  }
+}
+
+@mixin dark-theme-stuff {
+  .CodeMirror-cursor {
+    border-left-color: white !important;
+  }
+  .CodeMirror-selected {
+    background: rgba(white, 0.05);
+  }
+  .CodeMirror-focused .CodeMirror-selected {
+    background: rgba(white, 0.1);
+  }
+  .CodeMirror-matchingbracket {
+    border-bottom: 1px solid rgba(white, 0.5);
+  }
+  .CodeMirror-matchingtag {
+    // longer area... needs to be less intense
+    border-bottom: 1px solid rgba(white, 0.3);
+  }
+  .powers {
+    border-bottom: 1px solid rgba(white, 0.05);
+  }
+  .cm-searching {
+    background: black;
+    outline: 2px solid rgba(white, 0.25);
+  }
+  .CodeMirror-hints,
+  .emmet-abbreviation-preview {
+    border: 1px solid $gray-dark-3;
+    background: $gray-dark-6;
+  }
+  .CodeMirror-hint {
+    color: white;
+  }
+  li.CodeMirror-hint-active {
+    background: $gray-light-3;
+    color: black;
+  }
+
+  /* Projects */
+  .project-editor-warning {
+    background: rgba(white, 0.1);
+  }
+}
+
+@mixin editorStyles($background, $color, $gutter, $scrollbar) {
+  body.editor {
+    background: $background;
+  }
+  .box.box.box, /* GROSS specificity war with _codemirror.scss */
+  .editor .top-boxes,
+  .CodeMirror-gutter-wrapper,
+  body.project .editor-pane,
+  body.project .editor {
+    background: $background;
+    pre {
+      color: $color;
+    }
+  }
+  .CodeMirror-guttermarker-subtle,
+  .CodeMirror-linenumber {
+    color: $gutter;
+  }
+
+  #output pre,
+  #output iframe {
+    @include scrollbars(0.5em, $scrollbar, none);
+  }
+  .CodeMirror-simplescroll-horizontal div,
+  .CodeMirror-simplescroll-vertical div {
+    background: $scrollbar;
+  }
+}
+
+// Generic styles that apply to all themes.
+// NOTES
+// - .tag and .atom should be the same (for CSS selectors), or do .box-css specific styles
+.cm-header {
+  font-weight: bold;
+}
+
+.cm-strong {
+  font-weight: bold;
+}
+
+.cm-em {
+  font-style: italic;
+}

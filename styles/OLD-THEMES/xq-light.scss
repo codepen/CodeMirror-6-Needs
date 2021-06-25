@@ -1,0 +1,95 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include light-theme-stuff;
+
+.cm-keyword {
+  color: #5a5cad;
+  line-height: 1em;
+  font-weight: bold;
+}
+
+.cm-atom {
+  color: #6c8cd5;
+}
+
+.cm-number {
+  color: #164;
+}
+
+.cm-def {
+  text-decoration: underline;
+}
+
+.cm-variable {
+  color: black;
+}
+
+.cm-variable-2 {
+  color: black;
+}
+
+.cm-variable-3 {
+  color: black;
+}
+
+.cm-property {
+  color: #999;
+}
+
+.cm-operator {
+  color: #5a5cad;
+}
+
+.cm-comment {
+  color: #0080ff;
+  font-style: italic;
+}
+
+.cm-string {
+  color: red;
+}
+
+.cm-meta {
+  color: #0080ff;
+}
+
+.cm-qualifier {
+  color: grey;
+}
+
+.cm-builtin {
+  color: #7ea656;
+}
+
+.cm-bracket {
+  color: #cc7;
+}
+
+.cm-tag {
+  color: #3f7f7f;
+}
+
+.cm-attribute {
+  color: #7f007f;
+}
+
+.cm-error {
+  color: #f00;
+}
+
+@include editorStyles(white, black, #999, #999);
+.box-title {
+  color: #555;
+}
+
+.powers {
+  .mini-button {
+    background: #999;
+    &:hover,
+    &:focus {
+      background: #635c48;
+    }
+  }
+}

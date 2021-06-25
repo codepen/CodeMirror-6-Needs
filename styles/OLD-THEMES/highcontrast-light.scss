@@ -1,0 +1,84 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include light-theme-stuff;
+
+.cm-keyword {
+  color: #ca2825;
+}
+.cm-atom {
+  color: #0b6d6c;
+}
+.box-html .cm-atom {
+  color: #0b6d6c;
+}
+.cm-def {
+  color: #7c47b2;
+}
+.cm-variable {
+  color: mix(#7c47b2, #3172bc);
+}
+.cm-variable-2 {
+  color: #7c47b2;
+}
+.cm-variable-3 {
+  color: #000;
+}
+.cm-header {
+  color: #ca2825;
+}
+.cm-number {
+  color: #048500;
+}
+.cm-property {
+  color: #3172bc;
+}
+.cm-attribute {
+  color: #5a5f73;
+}
+.cm-builtin {
+  color: #7c47b2;
+}
+.cm-qualifier {
+  color: #ca2825;
+}
+.cm-operator {
+  color: #0b6d6c;
+}
+.cm-meta {
+  color: #3172bc;
+}
+.cm-string {
+  color: #0b6d6c;
+}
+.cm-string-2 {
+  color: mix(#ca2825, #7c47b2);
+}
+.cm-tag {
+  color: #ca2825;
+}
+.box-css .cm-tag {
+  color: mix(#ca2825, $yellow-dark);
+}
+.cm-tag.cm-bracket {
+  color: #5a5f73;
+}
+.cm-comment {
+  color: #5a5f73;
+}
+
+@include editorStyles(mix($yellow, #fff, 2%), #000, #000, rgba(black, 0.05));
+
+.box-title {
+  color: #5a5f73;
+}
+.powers {
+  .mini-button {
+    background: rgba(black, 0.3);
+    &:hover,
+    &:focus {
+      background: rgba(black, 0.5);
+    }
+  }
+}

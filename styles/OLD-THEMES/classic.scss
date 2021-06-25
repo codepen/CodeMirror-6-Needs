@@ -1,0 +1,95 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include light-theme-stuff;
+
+$black: black;
+$blue: #219;
+$red: #a11;
+$green: #164;
+$lightGray: #ccc;
+$midGray: #555;
+$purple: #708;
+
+.cm-keyword {
+  color: $blue;
+} // var
+.cm-atom {
+  color: $blue;
+} // #tag
+.box-html .cm-atom {
+  color: $red;
+} // markdown blockquote
+.cm-number {
+  color: $green;
+} // 20, 20px
+.cm-unit {
+  color: $green;
+} // px
+.cm-def {
+  color: $purple;
+} // function([this])
+.cm-variable {
+  color: $blue;
+} // margin, coffeescript var
+.cm-variable-2 {
+  color: $black;
+} // for (key in [this]), markdown li, decimals witout 0 in front
+.cm-property {
+  color: $blue;
+} // getElementById
+.cm-operator {
+  color: $black;
+} // CoffeeScript ->
+.cm-comment {
+  color: $lightGray;
+} // /* test */
+.cm-string {
+  color: $red;
+} // href=["val"]
+.cm-string-2 {
+  color: $red;
+} // match([this])
+.cm-meta {
+  color: $blue;
+} // @font-face, -webkit-
+.cm-header {
+  color: $red;
+} //
+.cm-tag {
+  color: $blue;
+} // body
+.box-css .cm-tag {
+  color: $blue;
+} // p
+.cm-attribute {
+  color: $midGray;
+} // e.g. href
+.cm-strong {
+  color: $midGray;
+} // **markdown**
+.cm-em {
+  color: $midGray;
+} // *markdown* _markdown_
+.cm-qualifier {
+  color: $blue;
+} // #id
+.cm-builtin {
+  color: $blue;
+} // .class
+
+@include editorStyles(#ffffff, #999999, #cccccc, #cccccc);
+
+.box-title {
+  color: #555;
+}
+.powers {
+  .mini-button {
+    background: #999;
+    &:hover,
+    &:focus {
+      background: #635c48;
+    }
+  }
+}

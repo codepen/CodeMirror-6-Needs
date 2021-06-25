@@ -1,0 +1,89 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include dark-theme-stuff;
+
+.cm-keyword {
+  color: $yellow;
+}
+.cm-atom {
+  color: mix($yellow, $green);
+}
+.box-html .cm-atom {
+  color: $red;
+}
+.cm-def {
+  color: $blue;
+}
+.cm-variable {
+  color: $gray-light-3;
+}
+.cm-variable-2 {
+  color: $green;
+}
+.cm-variable-3 {
+  color: white;
+}
+.cm-header {
+  color: $red;
+}
+.cm-number {
+  color: mix($green, $blue);
+}
+.cm-property {
+  color: mix($blue, $purple);
+}
+.cm-attribute {
+  color: $gray-light-5;
+}
+.cm-builtin {
+  color: $purple;
+}
+.cm-qualifier {
+  color: $yellow;
+}
+.cm-operator {
+  color: $green;
+}
+.cm-meta {
+  color: $blue;
+}
+.cm-string {
+  color: mix($green, $blue);
+}
+.cm-string-2 {
+  color: mix($red, $purple);
+}
+.cm-tag {
+  color: $yellow;
+}
+.box-css .cm-tag {
+  color: mix($red, $yellow);
+}
+.cm-tag.cm-bracket {
+  color: $gray;
+}
+.cm-comment {
+  color: desaturate(mix($gray-light-2, $blue), 40%);
+}
+
+@include editorStyles(
+  $gray-dark-7,
+  $gray-light-4,
+  rgba($gray-dark-2, 0.6),
+  lighten($gray-dark-5, 5%)
+);
+
+.powers {
+  .mini-button {
+    background: $gray-dark-4;
+    &:hover,
+    &:focus {
+      background: $gray-light-3;
+      svg {
+        fill: black;
+      }
+    }
+  }
+}

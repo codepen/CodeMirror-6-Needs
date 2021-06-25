@@ -1,0 +1,81 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include dark-theme-stuff;
+
+$midGray: #c3c6c4;
+$darkGray: $gray-dark-2;
+$orange: #dd925f;
+$purple: #ae94c0;
+$yellow: #efc371;
+$green: #b5bc67;
+
+.cm-keyword {
+  color: $yellow;
+} // var
+.cm-atom {
+  color: $yellow;
+} // #tag
+.box-html .cm-atom {
+  color: $green;
+} // markdown blockquote
+.cm-number {
+  color: $orange;
+} // 20, 20px
+.cm-unit {
+  color: $orange;
+} // px
+.cm-def {
+  color: $yellow;
+} // function([this])
+.cm-variable {
+  color: $yellow;
+} // margin, coffeescript var
+.cm-variable-2 {
+  color: $purple;
+} // for (key in [this]), markdown li, decimals witout 0 in front
+.cm-property {
+  color: $purple;
+} // getElementById
+.cm-operator {
+  color: $midGray;
+} // CoffeeScript ->
+.cm-comment {
+  color: $darkGray;
+} // /* test */
+.cm-string {
+  color: $green;
+} // href=["val"]
+.cm-string-2 {
+  color: white;
+} // match([this])
+.cm-meta {
+  color: $green;
+} // @font-face
+.cm-header {
+  color: $orange;
+} //
+.cm-tag {
+  color: $yellow;
+} // body
+.box-css .cm-tag {
+  color: $yellow;
+} //
+.cm-attribute {
+  color: $midGray;
+} // e.g. href
+.cm-strong {
+  color: $yellow;
+} //
+.cm-em {
+  color: $yellow;
+} //
+.cm-qualifier {
+  color: $yellow;
+} // #id
+.cm-builtin {
+  color: $yellow;
+} // .class
+
+@include editorStyles(#1d1f20, #c3c6c4, #444444, #666666);

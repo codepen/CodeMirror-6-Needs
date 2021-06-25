@@ -1,0 +1,48 @@
+@import 'cpstyles/colors';
+@import 'cpstyles/bits';
+
+@import 'editor/themes/theme-bits';
+@include dark-theme-stuff;
+
+.cm-comment {
+  color: #65737e;
+}
+.cm-atom {
+  color: #c594c5;
+}
+.cm-number {
+  color: #c594c5;
+}
+.cm-property,
+.cm-attribute {
+  color: #99c794;
+}
+.cm-keyword {
+  color: #ec5f67;
+}
+.cm-string {
+  color: #fac863;
+}
+.cm-variable {
+  color: #99c794;
+}
+.cm-variable-2 {
+  color: #6699cc;
+}
+.cm-def {
+  color: #f99157;
+}
+.cm-error {
+  background: rgba(#ec5f67, 0.4);
+}
+.cm-bracket {
+  color: #cdd3de;
+}
+.cm-tag {
+  color: #ec5f67;
+} // this overrides .cm-error
+.cm-link {
+  color: #c594c5;
+}
+
+@include editorStyles(#1b2b34, #cdd3de, #5d5d5d, #666666);
