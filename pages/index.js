@@ -144,15 +144,122 @@ export default function Home() {
             indentWidth={indentWidth}
           />
           <CodeEditor
-            title={<h2>Markdown</h2>}
+            title={
+              <h2>
+                <a href="https://www.markdownguide.org/">Markdown</a>
+              </h2>
+            }
             className={styles.codeEditor}
             type="markdown"
             indentWidth={indentWidth}
           />
           <CodeEditor
-            title={<h2>Haml</h2>}
+            title={
+              <h2>
+                <a href="https://haml.info/">Haml</a>
+              </h2>
+            }
             className={styles.codeEditor}
             type="haml"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://pugjs.org/api/getting-started.html">Pug</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="pug"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="http://slim-lang.com/">Slim</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="slim"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://sass-lang.com/">SCSS</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="scss"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://sass-lang.com/">Sass</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="sass"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://lesscss.org/#">Less</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="less"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://coffeescript.org/">CoffeeScript</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="coffeescript"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://www.typescriptlang.org/">TypeScript</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="typescript"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://livescript.net/">LiveScript</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="livescript"
+            indentWidth={indentWidth}
+          />
+
+          <CodeEditor
+            title={
+              <h2>
+                <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a>
+              </h2>
+            }
+            className={styles.codeEditor}
+            type="nunjucks"
             indentWidth={indentWidth}
           />
         </div>

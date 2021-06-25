@@ -43,6 +43,7 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
     // To prevent Next.js fast refresh from adding additional editors
     if (container.current.children[0]) container.current.children[0].remove();
 
+    // These seem fine
     if (type === "html") lang = html;
     if (type === "css") lang = css;
     if (type === "markdown") lang = markdown;
@@ -50,8 +51,19 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
     // TODO Make JSX work
     if (type === "js") lang = javascript;
 
+    // TODO: Not quite right.
+    if (type === "scss") lang = css;
+    if (type === "sass") lang = css;
+    if (type === "less") lang = css;
+
     // TODO entirely
     if (type === "haml") lang = html;
+    if (type === "pug") lang = html;
+    if (type === "slim") lang = html;
+    if (type === "coffeescript") lang = javascript;
+    if (type === "typescript") lang = javascript;
+    if (type === "livescript") lang = javascript;
+    if (type === "nunjucks") lang = html;
 
     let startState = EditorState.create({
       doc: DATA[type],
