@@ -12,3 +12,8 @@ body {
   padding: 0.5rem;
   height: 250px;
 }
+.cm-scroller {
+  font-family: "Source Code Pro", monospace !important;
+}
+
+/* TODO: Styled Scrollbars */

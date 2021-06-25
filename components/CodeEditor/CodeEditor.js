@@ -5,7 +5,8 @@ import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultTabBinding } from "@codemirror/commands";
 
-import { oneDark } from "@codemirror/theme-one-dark";
+// import { oneDark } from "@codemirror/theme-one-dark";
+import { twilight } from "../../themes/twilight";
 
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
@@ -71,7 +72,7 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
         keymap.of(defaultTabBinding), // TODO: Do we definitely want default Tab handling?
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
         compartments.language.of(lang.call()),
-        oneDark,
+        twilight,
       ],
     });
 

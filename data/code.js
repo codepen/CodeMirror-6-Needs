@@ -13,6 +13,7 @@ export const DATA = {
 
   css: `body {
   background: red;
+  margin: 0;
 }`,
 
   js: `let foo = "bar";
