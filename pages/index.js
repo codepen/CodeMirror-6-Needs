@@ -12,7 +12,7 @@ export default function Home() {
       <Head>
         <title>CodeMirror 6 Needs</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
           rel="stylesheet"
