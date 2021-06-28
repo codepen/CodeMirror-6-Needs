@@ -100,7 +100,7 @@ html
 }
 `,
 
-  sass: `SASS SYNTAX
+  sass: `// SASS SYNTAX
 $font-stack:    Helvetica, sans-serif
 $primary-color: #333
 

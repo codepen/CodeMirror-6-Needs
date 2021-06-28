@@ -124,7 +124,6 @@ export default function CodeEditor({ title, type, indentWidth, ...props }) {
         console.error(err);
       }
     }
-    // TODO: Set editor value
   }
 
   return (
