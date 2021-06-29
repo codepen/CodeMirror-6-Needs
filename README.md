@@ -2,6 +2,8 @@
 
 It's a [Next.js](https://nextjs.org/docs) app as that is the context we hope to be using [CodeMirror 6](https://codemirror.net/6/) in.
 
+Here's [a quick Netlify deployment](https://objective-blackwell-d4efc9.netlify.app/) to see what we mean.
+
 # TODOs
 
 - Port all our [existing syntax highlighting](https://github.com/codepen/CodeMirror-6-Needs/tree/main/styles/OLD-THEMES) themes to the [new format](https://github.com/codepen/CodeMirror-6-Needs/blob/main/themes/twilight.js).
