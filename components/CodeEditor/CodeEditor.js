@@ -5,19 +5,16 @@ import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultTabBinding } from "@codemirror/commands";
 
+// TODO: Dynamic imports. Only import the themes and/or languages needed.
 // import { oneDark } from "@codemirror/theme-one-dark";
 import { twilight } from "../../themes/twilight";
-
-import { css } from "@codemirror/lang-css";
-import { html } from "@codemirror/lang-html";
-import { javascript } from "@codemirror/lang-javascript";
-import { markdown } from "@codemirror/lang-markdown";
 
 import { DATA } from "../../data/code";
 
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import parserHtml from "prettier/parser-html";
+import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
 
 // TODO: Search functionality:
 // https://codemirror.net/6/docs/ref/#search
@@ -32,40 +29,21 @@ import parserHtml from "prettier/parser-html";
 // We currently support a default, Sublime Text, and Vim
 
 export default function CodeEditor({ title, type, indentWidth, ...props }) {
-  const container = useRef(null);
-  let view = useRef();
+  const container = useRef();
+  const view = useRef();
   const compartments = {
     language: new Compartment(),
     tabSize: new Compartment(),
   };
+
   let lang;
 
+  // TODO: Dynamic language switching without destroying the whole instance. Do we need lifecycle Component methods?
   useEffect(() => {
     // To prevent Next.js fast refresh from adding additional editors
     if (container.current.children[0]) container.current.children[0].remove();
 
-    // These seem fine
-    if (type === "html") lang = html;
-    if (type === "css") lang = css;
-    if (type === "markdown") lang = markdown;
-
-    // TODO Make JSX work
-    if (type === "js") lang = javascript;
-
-    // TODO: Not quite right.
-    if (type === "scss") lang = css;
-    if (type === "sass") lang = css;
-    if (type === "less") lang = css;
-    if (type === "stylus") lang = css;
-
-    // TODO entirely
-    if (type === "haml") lang = html;
-    if (type === "pug") lang = html;
-    if (type === "slim") lang = html;
-    if (type === "coffeescript") lang = javascript;
-    if (type === "typescript") lang = javascript;
-    if (type === "livescript") lang = javascript;
-    if (type === "nunjucks") lang = html;
+    const lang = CodeMirrorLanguageByType(type);
 
     let startState = EditorState.create({
       doc: DATA[type],
