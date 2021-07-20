@@ -28,6 +28,8 @@ import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
 // TODO: Decide if what to do about key bindings...
 // We currently support a default, Sublime Text, and Vim
 
+// TODO: EditorSettings - rebuild with new settings or try to update compartments?
+
 export default function CodeEditor({ title, type, indentWidth, ...props }) {
   const container = useRef();
   const view = useRef();

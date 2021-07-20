@@ -4,6 +4,12 @@ import CodeEditor from "../components/CodeEditor";
 import { useState } from "react";
 
 export default function Home() {
+  // TODO: Get controls working via editorSettings object.
+  const [editorSettings, setEditorSettings] = useState({
+    fontSize: 16,
+    indentWidth: 2,
+    theme: "twilight",
+  });
   const [fontSize, setFontSize] = useState(16);
   const [indentWidth, setIndentWidth] = useState(2);
 

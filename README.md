@@ -17,9 +17,13 @@ Here's [a quick Netlify deployment](https://objective-blackwell-d4efc9.netlify.a
   - Sass (.sass format)
   - Less
   - Stylus
-  - JSX
+  - JSX (supported with JS package?)
   - CoffeeScript
   - TypeScript
   - LiveScript
 
 - Make [Emmet Work](https://github.com/emmetio/codemirror-plugin/issues/13)
+
+# Concerns
+
+- **Bundle Size**: With all the various packages needed for CM6, will the final bundle come down to an acceptable size? Rough estimate shows around 2mb worth of JS in this simple setup.

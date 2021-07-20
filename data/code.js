@@ -1,3 +1,5 @@
+// TODO: `supported` boolean and/or notes to show in UI for each language.
+
 export const DATA = {
   html: `<!DOCTYPE html>
 <html lang="en">
@@ -30,7 +32,20 @@ function render() {
 
   markdown: `# This is markdown
 
-Just some *copy* here.`,
+Just some *copy* here.
+
+> blockquote
+
+Ordered List
+1. First item
+2. Second item
+3. Third item
+
+Unordered List
+- First item
+- Second item
+- Third item
+`,
 
   haml: `- (1..16).each do |i|
   %div #{i}
@@ -42,7 +57,7 @@ Just some *copy* here.`,
           "Cuatro", "Cinco", "Seis"]
 each item in list
   li= item
-  
+
 p
   | The pipe always goes at the beginning of its own line,
   | not counting indentation.`,
