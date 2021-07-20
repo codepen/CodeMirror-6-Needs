@@ -16,6 +16,7 @@ export function CodeMirrorLanguageByType(type) {
 
     // TODO Make JSX work
     case "js":
+    case "jsx":
       return javascript;
 
     // TODO: Not quite right.

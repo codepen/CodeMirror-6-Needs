@@ -1,7 +1,17 @@
-// TODO: `supported` boolean and/or notes to show in UI for each language.
+export const SUPPORT_LEVELS = {
+  SUPPORTED: "SUPPORTED",
+  NOT_SUPPORTED: "NOT_SUPPORTED",
+  PARTIAL_SUPPORT: "PARTIAL_SUPPORT",
+};
 
-export const DATA = {
-  html: `<!DOCTYPE html>
+/* Languages! https://codemirror.net/6/examples/lang-package/ */
+export const CODE_SAMPLES = [
+  {
+    language: "html",
+    label: "HTML",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: null,
+    code: `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,25 +22,53 @@ export const DATA = {
 
 </body>
 </html>`,
-
-  css: `body {
+  },
+  {
+    language: "css",
+    label: "CSS",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: null,
+    code: `body {
   background: red;
   margin: 0;
 }`,
+  },
+  {
+    language: "js",
+    label: "JavaScript",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: null,
+    code: `import gsap from 'gsap';
 
-  js: `let foo = "bar";
+  let foo = "bar";
 
 const data = {
   age: 12
 };
 
 console.log(data.age);
+`,
+  },
+  {
+    language: "jsx",
+    label: "JSX",
+    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    notes: `JSX doesn't seem to highlight well`,
+    code: `import React from 'react';
 
-function render() {
+function App() {
   return <div>text</div>;
-}`,
+}
 
-  markdown: `# This is markdown
+export default App;
+`,
+  },
+  {
+    language: "markdown",
+    label: "Markdown",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Limited highlighting",
+    code: `# This is markdown
 
 Just some *copy* here with a [link](https://codepen.io) in it.
 
@@ -46,13 +84,22 @@ Unordered List
 - Second item
 - Third item
 `,
-
-  haml: `- (1..16).each do |i|
+  },
+  {
+    language: "haml",
+    label: <a href="https://haml.info/">Haml</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    notes: null,
+    code: `- (1..16).each do |i|
   %div #{i}
 
 %blockquote Hello, World!`,
-
-  pug: `-
+  },
+  {
+    language: "pug",
+    label: <a href="https://pugjs.org/api/getting-started.html">Pug</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    code: `-
   var list = ["Uno", "Dos", "Tres",
           "Cuatro", "Cinco", "Seis"]
 each item in list
@@ -61,8 +108,13 @@ each item in list
 p
   | The pipe always goes at the beginning of its own line,
   | not counting indentation.`,
-
-  slim: `doctype html
+  },
+  {
+    language: "slim",
+    label: <a href="http://slim-lang.com/">Slim</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    notes: null,
+    code: `doctype html
 html
   head
     title Slim Examples
@@ -93,8 +145,13 @@ html
     div id="footer"
       = render 'footer'
       | Copyright © #{year} #{author}`,
-
-  scss: `@mixin cool {
+  },
+  {
+    language: "scss",
+    label: <a href="https://sass-lang.com/">SCSS</a>,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: null,
+    code: `@mixin cool {
   padding: 1rem;
 }
 
@@ -114,16 +171,26 @@ html
   }
 }
 `,
-
-  sass: `// SASS SYNTAX
+  },
+  {
+    language: "sass",
+    label: <a href="https://sass-lang.com/">Sass</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    notes: "Shouldn't this essentially be the same as SCSS?",
+    code: `// SASS SYNTAX
 $font-stack:    Helvetica, sans-serif
 $primary-color: #333
 
 body
   font: 100% $font-stack
   color: $primary-color`,
-
-  less: `// Variables
+  },
+  {
+    language: "less",
+    label: <a href="https://lesscss.org/#">Less</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    notes: null,
+    code: `// Variables
 @link-color:        #428bca; // sea blue
 @link-color-hover:  darken(@link-color, 10%);
 
@@ -139,8 +206,13 @@ a:hover {
   color: #fff;
   background: @link-color;
 }`,
-
-  stylus: `border-radius()
+  },
+  {
+    language: "stylus",
+    label: <a href="https://stylus-lang.com/">Stylus</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    notes: null,
+    code: `border-radius()
   -webkit-border-radius: arguments
   -moz-border-radius: arguments
   border-radius: arguments
@@ -150,8 +222,13 @@ body
 
 a.button
   border-radius(5px)`,
-
-  coffeescript: `# Assignment:
+  },
+  {
+    language: "coffeescript",
+    label: <a href="https://coffeescript.org/">CoffeeScript</a>,
+    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    notes: "Not an official mode but seems to work fairly well?",
+    code: `# Assignment:
 number   = 42
 opposite = true
 
@@ -179,8 +256,13 @@ alert "I knew it!" if elvis?
 
 # Array comprehensions:
 cubes = (math.cube num for num in list)`,
-
-  typescript: `type Cat = { meows: true };
+  },
+  {
+    language: "typescript",
+    label: <a href="https://www.typescriptlang.org/">TypeScript</a>,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: null,
+    code: `type Cat = { meows: true };
 type Dog = { barks: true };
 type Cheetah = { meows: true; fast: true };
 type Wolf = { barks: true; howls: true };
@@ -197,8 +279,13 @@ type NeverCat = ExtractDogish<Cat>;
 // A wolf will bark, so it returns the wolf shape
 type Wolfish = ExtractDogish<Wolf>;
 `,
-
-  livescript: `# Easy listing of implicit objects
+  },
+  {
+    language: "livescript",
+    label: <a href="https://livescript.net/">LiveScript</a>,
+    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    notes: "Perhaps works well enough for this little-used language.",
+    code: `# Easy listing of implicit objects
 table1 =
   * id: 1
     name: 'george'
@@ -214,8 +301,13 @@ table2 =
     age: 20
   * id: 3
     age: 26`,
-
-  nunjucks: `{% extends "base.html" %}
+  },
+  {
+    language: "nunjucks",
+    label: <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a>,
+    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    notes: null,
+    code: `{% extends "base.html" %}
 
 {% block header %}
 <h1>{{ title }}</h1>
@@ -228,4 +320,5 @@ table2 =
   {% endfor %}
 </ul>
 {% endblock %}`,
-};
+  },
+];

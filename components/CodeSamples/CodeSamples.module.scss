@@ -1,4 +1,10 @@
 .root {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sample {
   padding: 1.5rem;
   border-radius: 8px;
   &,
@@ -8,7 +14,8 @@
   h2 {
     margin: 0 0 0.5rem 0;
   }
-  &[data-working="true"] {
+
+  &[data-supported="SUPPORTED"] {
     background-image: linear-gradient(
       45deg,
       #0cba00 25%,
@@ -24,7 +31,8 @@
       content: "✅ ";
     }
   }
-  &[data-working="false"] {
+
+  &[data-supported="NOT_SUPPORTED"] {
     background-image: linear-gradient(
       45deg,
       #451919 25%,
@@ -40,7 +48,8 @@
       content: "❌ ";
     }
   }
-  &[data-working="partial"] {
+
+  &[data-supported="PARTIAL_SUPPORT"] {
     background-image: linear-gradient(
       45deg,
       #878700 25%,

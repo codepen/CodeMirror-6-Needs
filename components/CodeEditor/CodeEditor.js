@@ -9,15 +9,11 @@ import { defaultTabBinding } from "@codemirror/commands";
 // import { oneDark } from "@codemirror/theme-one-dark";
 import { twilight } from "../../themes/twilight";
 
-import { DATA } from "../../data/code";
-
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import parserHtml from "prettier/parser-html";
 import parserCss from "prettier/parser-postcss";
 import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
-
-import styles from "./CodeEditor.module.scss";
 
 // TODO: Search functionality:
 // https://codemirror.net/6/docs/ref/#search
@@ -35,7 +31,8 @@ import styles from "./CodeEditor.module.scss";
 
 export default function CodeEditor({
   title,
-  type,
+  language,
+  value,
   editorSettings,
   working,
   workingNotes,
@@ -49,21 +46,19 @@ export default function CodeEditor({
     tabSize: new Compartment(),
   };
 
-  let lang;
-
   // TODO: Dynamic language switching without destroying the whole instance. Do we need lifecycle Component methods?
   useEffect(() => {
     // To prevent Next.js fast refresh from adding additional editors
     if (container.current.children[0]) container.current.children[0].remove();
 
-    const lang = CodeMirrorLanguageByType(type);
+    const lang = CodeMirrorLanguageByType(language);
 
     let startState = EditorState.create({
-      doc: DATA[type],
+      doc: value,
       extensions: [
         keymap.of(defaultTabBinding), // TODO: Do we definitely want default Tab handling?
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
-        compartments.language.of(lang.call()),
+        compartments.language.of(lang && lang.call()),
         twilight,
       ],
     });
@@ -88,21 +83,22 @@ export default function CodeEditor({
     // https://prettier.io/docs/en/browser.html
 
     let parser = "babel";
-    if (type === "html") parser = "html";
-    if (type === "scss" || type === "css" || parser === "less") parser = "css";
+    if (language === "html") parser = "html";
+    if (language === "scss" || language === "css" || parser === "less")
+      parser = "css";
 
     // TODO: Do Prettier on the other supported languages
     if (
-      type === "js" ||
-      type === "html" ||
-      type === "css" ||
-      type === "scss" ||
-      type === "less"
+      language === "js" ||
+      language === "html" ||
+      language === "css" ||
+      language === "scss" ||
+      language === "less"
     ) {
       // prettier can throw hard errors if the parser fails.
       try {
         // replace entire document with prettified version
-        const newDoc = prettier.format(DATA[type], {
+        const newDoc = prettier.format(value, {
           parser: parser,
           plugins: [parserBabel, parserHtml, parserCss],
           tabWidth: indentWidth,
@@ -127,11 +123,5 @@ export default function CodeEditor({
     }
   }
 
-  return (
-    <div {...props} className={styles.root} data-working={working}>
-      {title}
-      {workingNotes && <p className={styles.notes}>{workingNotes}</p>}
-      <div ref={container}></div>
-    </div>
-  );
+  return <div ref={container} {...props}></div>;
 }
