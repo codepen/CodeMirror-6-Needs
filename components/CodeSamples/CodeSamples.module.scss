@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 3rem;
+  margin: 2rem;
 }
 
 .sample {
@@ -12,54 +13,9 @@
   h2 {
     margin: 0 0 0.5rem 0;
   }
-
-  &[data-supported="SUPPORTED"]::before {
-    content: "✅ Working";
-    display: block;
-    border-bottom: 3px solid rgb(59, 250, 59);
-    margin: 0.5rem 0;
-  }
-
-  &[data-supported="NOT_SUPPORTED"]::before {
-    background-image: linear-gradient(
-      45deg,
-      #451919 25%,
-      #2e1818 25%,
-      #2e1818 50%,
-      #451919 50%,
-      #451919 75%,
-      #2e1818 75%,
-      #2e1818 100%
-    );
-    background-size: 56.57px 56.57px;
-    content: "❌ Not Working";
-    display: block;
-    padding: 0.5rem;
-    border-bottom: 3px solid red;
-    margin: 0.5rem 0;
-  }
-
-  &[data-supported="PARTIAL_SUPPORT"]::before {
-    background-image: linear-gradient(
-      45deg,
-      #878700 25%,
-      #969219 25%,
-      #969219 50%,
-      #878700 50%,
-      #878700 75%,
-      #969219 75%,
-      #969219 100%
-    );
-    background-size: 56.57px 56.57px;
-    content: "🤏 Partially Working";
-    display: block;
-    padding: 0.5rem;
-    border-bottom: 3px solid yellow;
-    margin: 0.5rem 0;
-  }
 }
 
 .notes {
   font-size: 0.9rem;
-  color: #999;
+  opacity: 0.66;
 }

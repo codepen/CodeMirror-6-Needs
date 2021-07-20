@@ -14,6 +14,10 @@ h1 {
   font-family: "Telefon Black", Sans-Serif;
 }
 
+a {
+  color: inherit;
+}
+
 .cm-editor {
   padding: 0.5rem;
   height: 250px;
@@ -23,3 +27,40 @@ h1 {
 }
 
 /* TODO: Styled Scrollbars */
+
+[data-supported="SUPPORTED"] {
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #004700, transparent);
+}
+[data-supported="SUPPORTED"]::before {
+  content: "✅ Working";
+  display: block;
+  border-bottom: 3px solid rgb(59, 250, 59);
+  margin: 0 0 0.5rem 0;
+}
+
+[data-supported="NOT_SUPPORTED"] {
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #730000, transparent);
+}
+[data-supported="NOT_SUPPORTED"]::before {
+  background-size: 56.57px 56.57px;
+  content: "❌ Not Working";
+  display: block;
+  border-bottom: 3px solid red;
+  margin: 0 0 0.5rem 0;
+}
+
+[data-supported="PARTIAL_SUPPORT"] {
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #504d00, transparent);
+}
+[data-supported="PARTIAL_SUPPORT"]::before {
+  content: "🤏 Partially Working";
+  display: block;
+  border-bottom: 3px solid yellow;
+  margin: 0 0 0.5rem 0;
+}

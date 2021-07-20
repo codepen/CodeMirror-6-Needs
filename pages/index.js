@@ -29,7 +29,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1>CodeMirror 6 Needs on CodePen</h1>
+        <header className={styles.header}>
+          <h1>CodeMirror 6 Needs on CodePen</h1>
+          <p>
+            This page shows live{" "}
+            <a href="https://codemirror.net/6/">CodeMirror 6</a> editors in all
+            the modes that we need (so far) on{" "}
+            <a href="https://codepen.io">CodePen</a>. It also has dropdowns for
+            settings that we need to support.{" "}
+          </p>
+        </header>
 
         <EditorSettings
           editorSettings={editorSettings}
