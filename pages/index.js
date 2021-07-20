@@ -10,8 +10,17 @@ export default function Home() {
     indentWidth: 2,
     theme: "twilight",
   });
-  const [fontSize, setFontSize] = useState(16);
-  const [indentWidth, setIndentWidth] = useState(2);
+
+  console.log(editorSettings);
+
+  function changeEditorSetting(newSettings) {
+    return setEditorSettings((editorSettings) => {
+      return {
+        ...editorSettings,
+        ...newSettings,
+      };
+    });
+  }
 
   return (
     <div className={styles.container}>
@@ -33,8 +42,9 @@ export default function Home() {
             <label htmlFor="indent-width">Indent Width</label>
             <select
               id="indent-width"
+              value={editorSettings.indentWidth}
               onChange={(e) => {
-                setIndentWidth(parseInt(e.target.value));
+                changeEditorSetting({ indentWidth: e.target.value });
               }}
             >
               <option>2</option>
@@ -77,8 +87,9 @@ export default function Home() {
             <label htmlFor="font-size">Font Size</label>
             <select
               id="font-size"
+              value={editorSettings.fontSize}
               onChange={(e) => {
-                setFontSize(e.target.value);
+                changeEditorSetting({ fontSize: e.target.value });
               }}
             >
               <option value="16">16px</option>
@@ -141,19 +152,19 @@ export default function Home() {
             title={<h2>HTML</h2>}
             className={styles.codeEditor}
             type="html"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
           <CodeEditor
             title={<h2>CSS</h2>}
             className={styles.codeEditor}
             type="css"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
           <CodeEditor
             title={<h2>JavaScript / JSX</h2>}
             className={styles.codeEditor}
             type="js"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
           <CodeEditor
             title={
@@ -163,7 +174,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="markdown"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
           <CodeEditor
             title={
@@ -173,7 +184,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="haml"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -184,7 +195,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="pug"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -195,7 +206,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="slim"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -206,7 +217,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="scss"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -217,7 +228,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="sass"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -228,7 +239,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="less"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -239,7 +250,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="stylus"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -250,7 +261,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="coffeescript"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -261,7 +272,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="typescript"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -272,7 +283,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="livescript"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
 
           <CodeEditor
@@ -283,7 +294,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="nunjucks"
-            indentWidth={indentWidth}
+            indentWidth={editorSettings.indentWidth}
           />
         </div>
       </main>

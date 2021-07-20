@@ -30,7 +30,13 @@ import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
 
 // TODO: EditorSettings - rebuild with new settings or try to update compartments?
 
-export default function CodeEditor({ title, type, indentWidth, ...props }) {
+export default function CodeEditor({
+  title,
+  type,
+  indentWidth: indentWidthString,
+  ...props
+}) {
+  const indentWidth = Number(indentWidthString);
   const container = useRef();
   const view = useRef();
   const compartments = {
