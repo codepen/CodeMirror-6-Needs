@@ -14,7 +14,10 @@ import { DATA } from "../../data/code";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import parserHtml from "prettier/parser-html";
+import parserCss from "prettier/parser-postcss";
 import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
+
+import styles from "./CodeEditor.module.scss";
 
 // TODO: Search functionality:
 // https://codemirror.net/6/docs/ref/#search
@@ -33,10 +36,12 @@ import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
 export default function CodeEditor({
   title,
   type,
-  indentWidth: indentWidthString,
+  editorSettings,
+  working,
+  workingNotes,
   ...props
 }) {
-  const indentWidth = Number(indentWidthString);
+  const indentWidth = Number(editorSettings.indentWidth);
   const container = useRef();
   const view = useRef();
   const compartments = {
@@ -82,14 +87,24 @@ export default function CodeEditor({
     // Do Prettier!
     // https://prettier.io/docs/en/browser.html
 
+    let parser = "babel";
+    if (type === "html") parser = "html";
+    if (type === "scss" || type === "css" || parser === "less") parser = "css";
+
     // TODO: Do Prettier on the other supported languages
-    if (type === "js") {
+    if (
+      type === "js" ||
+      type === "html" ||
+      type === "css" ||
+      type === "scss" ||
+      type === "less"
+    ) {
       // prettier can throw hard errors if the parser fails.
       try {
         // replace entire document with prettified version
         const newDoc = prettier.format(DATA[type], {
-          parser: "babel",
-          plugins: [parserBabel, parserHtml],
+          parser: parser,
+          plugins: [parserBabel, parserHtml, parserCss],
           tabWidth: indentWidth,
           //    semi: true,
           trailingComma: "none",
@@ -113,8 +128,9 @@ export default function CodeEditor({
   }
 
   return (
-    <div {...props}>
+    <div {...props} className={styles.root} data-working={working}>
       {title}
+      {workingNotes && <p className={styles.notes}>{workingNotes}</p>}
       <div ref={container}></div>
     </div>
   );
