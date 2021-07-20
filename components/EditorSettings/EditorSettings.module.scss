@@ -1,0 +1,15 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin: 0 0 1rem 0;
+  > div {
+    flex: 1;
+  }
+  label {
+    display: block;
+  }
+  select {
+    width: 100%;
+  }
+}
