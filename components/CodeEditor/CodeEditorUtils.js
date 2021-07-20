@@ -1,3 +1,5 @@
+import { LANGUAGES } from "../../data/languages";
+
 // TODO: Dynamic imports
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
@@ -7,35 +9,35 @@ import { markdown } from "@codemirror/lang-markdown";
 export function CodeMirrorLanguageByType(type) {
   switch (type) {
     // These seem fine
-    case "html":
+    case LANGUAGES.HTML:
       return html;
-    case "css":
+    case LANGUAGES.CSS:
       return css;
-    case "markdown":
+    case LANGUAGES.MARKDOWN:
       return markdown;
 
     // TODO Make JSX work
-    case "js":
-    case "jsx":
+    case LANGUAGES.JAVASCRIPT:
+    case LANGUAGES.JSX:
       return javascript;
 
     // TODO: Not quite right.
-    case "scss":
-    case "sass":
-    case "less":
-    case "stylus":
+    case LANGUAGES.SCSS:
+    case LANGUAGES.SASS:
+    case LANGUAGES.LESS:
+    case LANGUAGES.STYLUS:
       return css;
 
     // TODO entirely
-    case "haml":
-    case "pug":
-    case "slim":
-    case "nunjucks":
+    case LANGUAGES.HAML:
+    case LANGUAGES.PUG:
+    case LANGUAGES.SLIM:
+    case LANGUAGES.NUNJUCKS:
       return html;
 
-    case "coffeescript":
-    case "typescript":
-    case "livescript":
+    case LANGUAGES.COFFEESCRIPT:
+    case LANGUAGES.TYPESCRIPT:
+    case LANGUAGES.LIVESCRIPT:
       return javascript;
   }
 }

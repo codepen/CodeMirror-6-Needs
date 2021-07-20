@@ -1,3 +1,5 @@
+import { LANGUAGES } from "./languages";
+
 export const SUPPORT_LEVELS = {
   SUPPORTED: "SUPPORTED",
   NOT_SUPPORTED: "NOT_SUPPORTED",
@@ -7,7 +9,7 @@ export const SUPPORT_LEVELS = {
 /* Languages! https://codemirror.net/6/examples/lang-package/ */
 export const CODE_SAMPLES = [
   {
-    language: "html",
+    language: LANGUAGES.HTML,
     label: "HTML",
     supported: SUPPORT_LEVELS.SUPPORTED,
     notes: null,
@@ -24,7 +26,7 @@ export const CODE_SAMPLES = [
 </html>`,
   },
   {
-    language: "css",
+    language: LANGUAGES.CSS,
     label: "CSS",
     supported: SUPPORT_LEVELS.SUPPORTED,
     notes: null,
@@ -34,7 +36,7 @@ export const CODE_SAMPLES = [
 }`,
   },
   {
-    language: "js",
+    language: LANGUAGES.JAVASCRIPT,
     label: "JavaScript",
     supported: SUPPORT_LEVELS.SUPPORTED,
     notes: null,
@@ -50,7 +52,7 @@ console.log(data.age);
 `,
   },
   {
-    language: "jsx",
+    language: LANGUAGES.JSX,
     label: "JSX",
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes: `JSX doesn't seem to highlight well`,
@@ -64,7 +66,7 @@ export default App;
 `,
   },
   {
-    language: "markdown",
+    language: LANGUAGES.MARKDOWN,
     label: "Markdown",
     supported: SUPPORT_LEVELS.SUPPORTED,
     notes: "Limited highlighting",
@@ -86,7 +88,7 @@ Unordered List
 `,
   },
   {
-    language: "haml",
+    language: LANGUAGES.HAML,
     label: <a href="https://haml.info/">Haml</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes: null,
@@ -96,7 +98,7 @@ Unordered List
 %blockquote Hello, World!`,
   },
   {
-    language: "pug",
+    language: LANGUAGES.PUG,
     label: <a href="https://pugjs.org/api/getting-started.html">Pug</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     code: `-
@@ -110,7 +112,7 @@ p
   | not counting indentation.`,
   },
   {
-    language: "slim",
+    language: LANGUAGES.SLIM,
     label: <a href="http://slim-lang.com/">Slim</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes: null,
@@ -147,7 +149,7 @@ html
       | Copyright © #{year} #{author}`,
   },
   {
-    language: "scss",
+    language: LANGUAGES.SCSS,
     label: <a href="https://sass-lang.com/">SCSS</a>,
     supported: SUPPORT_LEVELS.SUPPORTED,
     notes: null,
@@ -173,7 +175,7 @@ html
 `,
   },
   {
-    language: "sass",
+    language: LANGUAGES.SASS,
     label: <a href="https://sass-lang.com/">Sass</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes: "Shouldn't this essentially be the same as SCSS?",
@@ -186,7 +188,7 @@ body
   color: $primary-color`,
   },
   {
-    language: "less",
+    language: LANGUAGES.SCSS,
     label: <a href="https://lesscss.org/#">Less</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes: null,
@@ -208,7 +210,7 @@ a:hover {
 }`,
   },
   {
-    language: "stylus",
+    language: LANGUAGES.STYLUS,
     label: <a href="https://stylus-lang.com/">Stylus</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes: null,
@@ -224,7 +226,7 @@ a.button
   border-radius(5px)`,
   },
   {
-    language: "coffeescript",
+    language: LANGUAGES.COFFEESCRIPT,
     label: <a href="https://coffeescript.org/">CoffeeScript</a>,
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes: "Not an official mode but seems to work fairly well?",
@@ -258,7 +260,7 @@ alert "I knew it!" if elvis?
 cubes = (math.cube num for num in list)`,
   },
   {
-    language: "typescript",
+    language: LANGUAGES.TYPESCRIPT,
     label: <a href="https://www.typescriptlang.org/">TypeScript</a>,
     supported: SUPPORT_LEVELS.SUPPORTED,
     notes: null,
@@ -281,7 +283,7 @@ type Wolfish = ExtractDogish<Wolf>;
 `,
   },
   {
-    language: "livescript",
+    language: LANGUAGES.LIVESCRIPT,
     label: <a href="https://livescript.net/">LiveScript</a>,
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes: "Perhaps works well enough for this little-used language.",
@@ -303,7 +305,7 @@ table2 =
     age: 26`,
   },
   {
-    language: "nunjucks",
+    language: LANGUAGES.NUNJUCKS,
     label: <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes: null,

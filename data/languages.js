@@ -1,0 +1,18 @@
+export const LANGUAGES = {
+  HTML: "html",
+  CSS: "css",
+  MARKDOWN: "markdown",
+  JAVASCRIPT: "js",
+  JSX: "jsx",
+  SCSS: "scss",
+  SASS: "sass",
+  LESS: "less",
+  STYLUS: "stylus",
+  HAML: "haml",
+  PUG: "pug",
+  SLIM: "slim",
+  NUNJUCKS: "nunjucks",
+  COFFEESCRIPT: "coffeescript",
+  TYPESCRIPT: "typescript",
+  LIVESCRIPT: "livescript",
+};
