@@ -11,8 +11,6 @@ export default function Home() {
     theme: "twilight",
   });
 
-  console.log(editorSettings);
-
   function changeEditorSetting(newSettings) {
     return setEditorSettings((editorSettings) => {
       return {
@@ -35,7 +33,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1>CodeMirror 6 Needs</h1>
+        <h1>CodeMirror 6 Needs on CodePen</h1>
 
         <div className={styles.options}>
           <div>
@@ -149,24 +147,30 @@ export default function Home() {
 
         <div className={styles.codeEditors}>
           <CodeEditor
+            working={true}
             title={<h2>HTML</h2>}
             className={styles.codeEditor}
             type="html"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
           <CodeEditor
+            working={true}
             title={<h2>CSS</h2>}
             className={styles.codeEditor}
             type="css"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
           <CodeEditor
+            working="partial"
+            workingNotes="JSX doesn't seem to highlight well."
             title={<h2>JavaScript / JSX</h2>}
             className={styles.codeEditor}
             type="js"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
           <CodeEditor
+            working="partial"
+            workingNotes="Seems to be very limited highlighting."
             title={
               <h2>
                 <a href="https://www.markdownguide.org/">Markdown</a>
@@ -174,9 +178,10 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="markdown"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
           <CodeEditor
+            working={false}
             title={
               <h2>
                 <a href="https://haml.info/">Haml</a>
@@ -184,10 +189,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="haml"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="false"
             title={
               <h2>
                 <a href="https://pugjs.org/api/getting-started.html">Pug</a>
@@ -195,10 +201,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="pug"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="false"
             title={
               <h2>
                 <a href="http://slim-lang.com/">Slim</a>
@@ -206,10 +213,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="slim"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="true"
             title={
               <h2>
                 <a href="https://sass-lang.com/">SCSS</a>
@@ -217,10 +225,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="scss"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="false"
             title={
               <h2>
                 <a href="https://sass-lang.com/">Sass</a>
@@ -228,10 +237,12 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="sass"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="false"
+            workingNotes="Shouldn't this essentially be the same as SCSS?"
             title={
               <h2>
                 <a href="https://lesscss.org/#">Less</a>
@@ -239,10 +250,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="less"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="false"
             title={
               <h2>
                 <a href="https://stylus-lang.com/">Stylus</a>
@@ -250,10 +262,12 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="stylus"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="partial"
+            workingNotes="Not an official mode but seems to work fairly well?"
             title={
               <h2>
                 <a href="https://coffeescript.org/">CoffeeScript</a>
@@ -261,10 +275,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="coffeescript"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="true"
             title={
               <h2>
                 <a href="https://www.typescriptlang.org/">TypeScript</a>
@@ -272,10 +287,12 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="typescript"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="partial"
+            workingNotes="Perhaps works well enough for this little-used language."
             title={
               <h2>
                 <a href="https://livescript.net/">LiveScript</a>
@@ -283,10 +300,11 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="livescript"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
 
           <CodeEditor
+            working="false"
             title={
               <h2>
                 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a>
@@ -294,7 +312,7 @@ export default function Home() {
             }
             className={styles.codeEditor}
             type="nunjucks"
-            indentWidth={editorSettings.indentWidth}
+            editorSettings={editorSettings}
           />
         </div>
       </main>

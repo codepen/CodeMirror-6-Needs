@@ -1,0 +1,59 @@
+.root {
+  padding: 1.5rem;
+  border-radius: 8px;
+  &,
+  a {
+    color: white;
+  }
+  h2 {
+    margin: 0 0 0.5rem 0;
+  }
+  &[data-working="true"] {
+    background-image: linear-gradient(
+      45deg,
+      #0cba00 25%,
+      #31bd44 25%,
+      #31bd44 50%,
+      #0cba00 50%,
+      #0cba00 75%,
+      #31bd44 75%,
+      #31bd44 100%
+    );
+    background-size: 56.57px 56.57px;
+    h2::before {
+      content: "✅ ";
+    }
+  }
+  &[data-working="false"] {
+    background-image: linear-gradient(
+      45deg,
+      #451919 25%,
+      #2e1818 25%,
+      #2e1818 50%,
+      #451919 50%,
+      #451919 75%,
+      #2e1818 75%,
+      #2e1818 100%
+    );
+    background-size: 56.57px 56.57px;
+    h2::before {
+      content: "❌ ";
+    }
+  }
+  &[data-working="partial"] {
+    background-image: linear-gradient(
+      45deg,
+      #878700 25%,
+      #969219 25%,
+      #969219 50%,
+      #878700 50%,
+      #878700 75%,
+      #969219 75%,
+      #969219 100%
+    );
+    background-size: 56.57px 56.57px;
+    h2::before {
+      content: "🤏 ";
+    }
+  }
+}

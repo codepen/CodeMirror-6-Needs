@@ -32,7 +32,7 @@ function render() {
 
   markdown: `# This is markdown
 
-Just some *copy* here.
+Just some *copy* here with a [link](https://codepen.io) in it.
 
 > blockquote
 
