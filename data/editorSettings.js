@@ -7,7 +7,7 @@ export const EDITOR_SETTINGS = {
     options: [2, 4, 6, 8],
     supported: "PARTIAL_SUPPORT",
     notes:
-      "Works by re-processing code through Prettier—but is there an official CodeMirror way of altering indent width of pre-authored code?",
+      "Works by re-processing code through <a href='https://prettier.io/docs/en/api.html'>Prettier</a> — but is there an official CodeMirror way of altering indent width of pre-authored code?",
   },
 
   /* https://codemirror.net/6/docs/ref/#gutter.lineNumbers */
@@ -16,7 +16,8 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: "PARTIAL_SUPPORT",
-    notes: "Officially supported — we just need to implement",
+    notes:
+      "<a href='https://codemirror.net/6/docs/ref/#gutter.lineNumbers'>Officially supported</a> — we just need to figure out and implement.",
   },
 
   lineWrapping: {

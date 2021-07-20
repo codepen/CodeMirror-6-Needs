@@ -15,18 +15,6 @@ import parserHtml from "prettier/parser-html";
 import parserCss from "prettier/parser-postcss";
 import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
 
-// TODO: Search functionality:
-// https://codemirror.net/6/docs/ref/#search
-
-// TODO: Commenting
-// https://codemirror.net/6/docs/ref/#comment
-
-// TODO: Rectangular selection?
-// https://codemirror.net/6/docs/ref/#rectangular-selection
-
-// TODO: Decide if what to do about key bindings...
-// We currently support a default, Sublime Text, and Vim
-
 // TODO: EditorSettings - rebuild with new settings or try to update compartments?
 
 export default function CodeEditor({
