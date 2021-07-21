@@ -24,9 +24,9 @@ export const EDITOR_SETTINGS = {
     label: "Line Wrapping",
     default: true,
     options: [true, false],
-    supported: "PARTIAL_SUPPORT",
+    supported: "NOT_SUPPORTED",
     notes:
-      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.moveToLineBoundary'>supported</a>, but unclear exactly how to do.",
+      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping'>supported</a>, but unclear exactly how to make it work or dispatch changes.",
   },
 
   codeFolding: {
@@ -46,7 +46,7 @@ export const EDITOR_SETTINGS = {
     options: [true, false],
     supported: "PARTIAL_SUPPORT",
     notes:
-      "<a href='https://codemirror.net/6/docs/ref/#matchbrackets'>Officially supported</a>, just need to implement. CodePen has traditionally paired this concept with <a href='https://codemirror.net/6/docs/ref/#closebrackets'>Close Brackets</a>, but they are different plugins, so gotta figure that out.",
+      "<a href='https://codemirror.net/6/docs/ref/#matchbrackets'>Officially supported</a>, just need to implement. CodePen has traditionally paired this concept with <a href='https://codemirror.net/6/docs/ref/#closebrackets'>Close Brackets</a>, but they are different plugins, so we'll need to decide if we want to keep the settings combined or separate.",
   },
 
   /* https://codemirror.net/6/docs/ref/#autocomplete */
@@ -73,7 +73,8 @@ export const EDITOR_SETTINGS = {
     default: 16,
     options: [12, 14, 16, 18, 20],
     supported: "PARTIAL_SUPPORT",
-    notes: "Does CodeMirror care? Or do we just alter some on-page CSS?",
+    notes:
+      "Does CodeMirror care? Or do we just alter some on-page CSS? It probably effects line wrapping so at least we'd need to “refresh” the editors?",
   },
 
   fontFamily: {
@@ -124,7 +125,8 @@ export const EDITOR_SETTINGS = {
       "High Contrast Light",
     ],
     supported: "PARTIAL_SUPPORT",
-    notes: "Lots of themes to port over.",
+    notes:
+      "Lots of themes to port over. And probably support any good looking pre-built themes.",
   },
 };
 
