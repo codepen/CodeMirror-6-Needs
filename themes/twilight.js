@@ -31,7 +31,7 @@ const twilightTheme = EditorView.theme(
     },
     ".cm-gutters": {
       backgroundColor: "#1d1e22",
-      color: "white",
+      color: "#34363e",
       border: "none",
     },
     ".cm-activeLineGutter": {
