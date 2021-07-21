@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-import { basicSetup } from "@codemirror/basic-setup";
+import { editorSetup } from "./CodeEditorSetup";
 import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultTabBinding } from "@codemirror/commands";
@@ -44,7 +44,14 @@ export default function CodeEditor({
     let startState = EditorState.create({
       doc: value,
       extensions: [
-        keymap.of(defaultTabBinding), // TODO: Do we definitely want default Tab handling?
+        /*
+        codeFolding = true,
+        lineNumbers = true,
+        autocompletion = true,
+        matchBrackets = true
+        */
+        editorSetup(true, true, true, true),
+        keymap.of(defaultTabBinding),
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
         compartments.language.of(lang && lang.call()),
         twilight,
@@ -54,9 +61,6 @@ export default function CodeEditor({
     view.current = new EditorView({
       state: startState,
       parent: container.current,
-      lineWrapping: true,
-      editable: false,
-      extensions: [basicSetup],
     });
   }, []);
 
