@@ -4,10 +4,11 @@ import styles from "./EditorSettings.module.scss";
 export default function EditorSettings({ editorSettings, setEditorSettings }) {
   function changeEditorSetting(newSettings) {
     return setEditorSettings((editorSettings) => {
-      return {
+      const updatedSettings = {
         ...editorSettings,
         ...newSettings,
       };
+      return updatedSettings;
     });
   }
 
