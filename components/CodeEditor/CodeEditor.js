@@ -44,13 +44,12 @@ export default function CodeEditor({
     let startState = EditorState.create({
       doc: value,
       extensions: [
-        /*
-        codeFolding = true,
-        lineNumbers = true,
-        autocompletion = true,
-        matchBrackets = true
-        */
-        editorSetup(true, true, true, true),
+        editorSetup(
+          editorSettings.codeFolding,
+          editorSettings.lineNumbers,
+          editorSettings.autocomplete,
+          editorSettings.matchBrackets
+        ),
         keymap.of(defaultTabBinding),
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
         compartments.language.of(lang && lang.call()),
@@ -61,8 +60,12 @@ export default function CodeEditor({
     view.current = new EditorView({
       state: startState,
       parent: container.current,
+      lineWrapping: editorSettings.lineWrapping,
     });
-  }, []);
+
+    // TODO: This doesn't work, but the idea is to entirely rebuild the editors when these change.
+    // Ideal situation is to "dispatch" as many of the changes as we can to prevent re-building the editors, but anything we can't, so be it.
+  }, [editorSettings.lineNumbers, editorSettings.lineWrapping]);
 
   if (view.current) {
     view.current.dispatch({
@@ -71,6 +74,8 @@ export default function CodeEditor({
       ),
     });
 
+    // TODO: Only do Prettier on an Indent Width change.
+    // TODO: See if CodeMirror has an official way of doing indentation changes.
     // Do Prettier!
     // https://prettier.io/docs/en/browser.html
 
