@@ -73,20 +73,22 @@ function editorSetup(
 ) {
   let completeSetup = [...alwaysOn];
 
-  if (codeFoldingSetting) {
-    completeSetup.push(foldGutter());
-  }
-
-  if (lineNumbersSetting) {
+  // NOTE: Order matters here!
+  // If foldGutter went first, it will render to the left of the line numbers in the gutter.
+  if (lineNumbersSetting === true) {
     completeSetup.push(lineNumbers());
     completeSetup.push(highlightActiveLineGutter());
   }
 
-  if (autocompletionSetting) {
+  if (codeFoldingSetting === true) {
+    completeSetup.push(foldGutter());
+  }
+
+  if (autocompletionSetting === true) {
     completeSetup.push(autocompletion());
   }
 
-  if (matchBracketsSetting) {
+  if (matchBracketsSetting === true) {
     completeSetup.push(bracketMatching());
     completeSetup.push(closeBrackets());
   }
