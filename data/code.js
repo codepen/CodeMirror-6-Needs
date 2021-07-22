@@ -1,10 +1,5 @@
 import { LANGUAGES } from "./languages";
-
-export const SUPPORT_LEVELS = {
-  SUPPORTED: "SUPPORTED",
-  NOT_SUPPORTED: "NOT_SUPPORTED",
-  PARTIAL_SUPPORT: "PARTIAL_SUPPORT",
-};
+import { SUPPORT_LEVELS } from "./supportLevels";
 
 /* Languages! https://codemirror.net/6/examples/lang-package/ */
 export const CODE_SAMPLES = [

@@ -23,7 +23,10 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
               id={key}
               value={editorSettings[key]}
               onChange={(e) => {
-                changeEditorSetting({ [key]: e.target.value });
+                let value = e.target.value;
+                if (value === "true") value = true;
+                if (value === "false") value = false;
+                changeEditorSetting({ [key]: value });
               }}
             >
               {options.map((option) => {

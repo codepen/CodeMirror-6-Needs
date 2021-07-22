@@ -65,30 +65,24 @@ const alwaysOn = [
   ]),
 ];
 
-function editorSetup(
-  codeFoldingSetting = true,
-  lineNumbersSetting = true,
-  autocompletionSetting = true,
-  matchBracketsSetting = true
-) {
+function editorSetup(editorSettings) {
   let completeSetup = [...alwaysOn];
 
   // NOTE: Order matters here!
   // If foldGutter went first, it will render to the left of the line numbers in the gutter.
-  if (lineNumbersSetting === true) {
+  if (editorSettings.lineNumbers) {
     completeSetup.push(lineNumbers());
     completeSetup.push(highlightActiveLineGutter());
   }
 
-  if (codeFoldingSetting === true) {
+  if (editorSettings.codeFolding) {
     completeSetup.push(foldGutter());
   }
-
-  if (autocompletionSetting === true) {
+  if (editorSettings.autocomplete) {
     completeSetup.push(autocompletion());
   }
 
-  if (matchBracketsSetting === true) {
+  if (editorSettings.matchBrackets) {
     completeSetup.push(bracketMatching());
     completeSetup.push(closeBrackets());
   }
