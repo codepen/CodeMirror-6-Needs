@@ -9,6 +9,9 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
         ...newSettings,
       };
       return updatedSettings;
+
+      // for font-size and font-family....
+      // .cm-editor .cm-content { font-family: "Consolas" }
     });
   }
 

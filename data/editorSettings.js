@@ -12,10 +12,11 @@ export const EDITOR_SETTINGS = {
 
   indentUnit: {
     label: "Tabs or Spaces",
-    default: 2,
-    options: ["Tabs", "Spaces"],
+    default: "  ",
+    options: [" ", "  "],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes: "Why is this linked to a language?",
+    notes:
+      "Not working. <a href='https://codemirror.net/6/docs/ref/#language.indentUnit'>Docs?</a>",
   },
 
   /* https://codemirror.net/6/docs/ref/#gutter.lineNumbers */
@@ -31,10 +32,10 @@ export const EDITOR_SETTINGS = {
   lineWrapping: {
     label: "Line Wrapping",
     default: true,
-    options: [true, false],
+    options: ["true", "false"],
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes:
-      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping'>supported</a>, but unclear exactly how to make it work or dispatch changes.",
+      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping'>supported</a>, but unclear exactly how to make it work or dispatch changes. We tried passing `pre` and `pre-wrap`.",
   },
 
   codeFolding: {
@@ -46,13 +47,11 @@ export const EDITOR_SETTINGS = {
       "<a href='https://codemirror.net/6/docs/ref/#fold'>Officially supported</a>, just need to implement.",
   },
 
-  /* https://codemirror.net/6/docs/ref/#matchbrackets */
-  /* https://codemirror.net/6/docs/ref/#closebrackets */
   matchBrackets: {
-    label: "Match Brackets",
+    label: "Match & Close Brackets",
     default: true,
     options: [true, false],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     notes:
       "<a href='https://codemirror.net/6/docs/ref/#matchbrackets'>Officially supported</a>, just need to implement. CodePen has traditionally paired this concept with <a href='https://codemirror.net/6/docs/ref/#closebrackets'>Close Brackets</a>, but they are different plugins, so we'll need to decide if we want to keep the settings combined or separate.",
   },
@@ -64,7 +63,7 @@ export const EDITOR_SETTINGS = {
     options: [true, false],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes:
-      "<a href='https://codemirror.net/6/docs/ref/#autocomplete'>Officially supported</a>, just need to implement. Need to figure out which languages it works on.",
+      "<a href='https://codemirror.net/6/docs/ref/#autocomplete'>Officially supported</a>. Need to figure out which languages it works on. Doesn't seem to do simple stuff in JavaScript like `var`, `const`, or `querySelector`. Also we need to pipe in authored JavaScript.",
   },
 
   emmet: {

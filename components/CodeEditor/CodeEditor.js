@@ -32,6 +32,7 @@ export default function CodeEditor({
   const compartments = {
     language: new Compartment(),
     tabSize: new Compartment(),
+    // indentUnit: new Compartment(),
   };
 
   // TODO: Dynamic language switching without destroying the whole instance. Do we need lifecycle Component methods?
@@ -41,14 +42,13 @@ export default function CodeEditor({
 
     const lang = CodeMirrorLanguageByType(language);
 
-    console.log("setting up editors");
-
     let startState = EditorState.create({
       doc: value,
       extensions: [
         editorSetup(editorSettings),
         keymap.of(defaultTabBinding),
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
+        // compartments.indentUnit.of(EditorState.indentUnit.of(indentUnit)),
         compartments.language.of(lang && lang.call()),
         twilight,
       ],
