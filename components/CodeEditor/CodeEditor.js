@@ -65,9 +65,17 @@ export default function CodeEditor({
     return () => {
       editorView.destroy();
     };
-  }, [editorSettings]);
+  }, [
+    editorSettings.indentUnit,
+    editorSettings.lineWrapping,
+    editorSettings.lineNumbers,
+    editorSettings.codeFolding,
+    editorSettings.autocomplete,
+    editorSettings.matchBrackets,
+  ]);
 
   useEffect(() => {
+    console.log("second useeffect");
     if (view.current) {
       // TODO: Try to dispatch rather than rebuild.
       // view.current.dispatch({
@@ -75,50 +83,53 @@ export default function CodeEditor({
       //     EditorState.tabSize.of(indentWidth)
       //   ),
       // });
+
+      console.log("trying prettier");
+
       // TODO: Only do Prettier on an Indent Width change.
       // TODO: See if CodeMirror has an official way of doing indentation changes.
       // Do Prettier!
       // https://prettier.io/docs/en/browser.html
-      //   let parser = "babel";
-      //   if (language === "html") parser = "html";
-      //   if (language === "scss" || language === "css" || parser === "less")
-      //     parser = "css";
-      //   // TODO: Do Prettier on the other supported languages
-      //   if (
-      //     language === "js" ||
-      //     language === "html" ||
-      //     language === "css" ||
-      //     language === "scss" ||
-      //     language === "less"
-      //   ) {
-      //     // prettier can throw hard errors if the parser fails.
-      //     try {
-      //       // replace entire document with prettified version
-      //       const newDoc = prettier.format(value, {
-      //         parser: parser,
-      //         plugins: [parserBabel, parserHtml, parserCss],
-      //         tabWidth: indentWidth,
-      //         //    semi: true,
-      //         trailingComma: "none",
-      //         //    useTabs: indentWith === "tabs",
-      //         bracketSpacing: true,
-      //         jsxBracketSameLine: false,
-      //       });
-      //       view.current.dispatch(
-      //         view.current.state.update({
-      //           changes: {
-      //             from: 0,
-      //             to: view.current.state.doc.length,
-      //             insert: newDoc,
-      //           },
-      //         })
-      //       );
-      //     } catch (err) {
-      //       console.error(err);
-      //     }
-      //   }
+      let parser = "babel";
+      if (language === "html") parser = "html";
+      if (language === "scss" || language === "css" || parser === "less")
+        parser = "css";
+      // TODO: Do Prettier on the other supported languages
+      if (
+        language === "js" ||
+        language === "html" ||
+        language === "css" ||
+        language === "scss" ||
+        language === "less"
+      ) {
+        // prettier can throw hard errors if the parser fails.
+        try {
+          // replace entire document with prettified version
+          const newDoc = prettier.format(value, {
+            parser: parser,
+            plugins: [parserBabel, parserHtml, parserCss],
+            tabWidth: indentWidth,
+            //    semi: true,
+            trailingComma: "none",
+            //    useTabs: indentWith === "tabs",
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+          });
+          view.current.dispatch(
+            view.current.state.update({
+              changes: {
+                from: 0,
+                to: view.current.state.doc.length,
+                insert: newDoc,
+              },
+            })
+          );
+        } catch (err) {
+          console.error(err);
+        }
+      }
     }
-  }, [view, value]);
+  }, [editorSettings.indentWidth]);
 
   return <div ref={container} {...props}></div>;
 }

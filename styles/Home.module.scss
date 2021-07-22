@@ -1,13 +1,13 @@
 .main {
   display: grid;
   grid-template-columns: minmax(auto, 18em) 2fr;
-  gap: 3rem;
+  gap: 1rem 3rem;
   padding: 2rem;
 }
 
 .header {
   grid-column: 1 / -1;
-  background: black;
+  border-bottom: 3px solid #333;
   h1 {
     margin: 0;
   }

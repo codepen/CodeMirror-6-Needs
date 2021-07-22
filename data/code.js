@@ -173,7 +173,6 @@ html
     language: LANGUAGES.SASS,
     label: <a href="https://sass-lang.com/">Sass</a>,
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes: "Shouldn't this essentially be the same as SCSS?",
     code: `// SASS SYNTAX
 $font-stack:    Helvetica, sans-serif
 $primary-color: #333

@@ -16,7 +16,7 @@ export const EDITOR_SETTINGS = {
     options: [" ", "  "],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes:
-      "Not working. <a href='https://codemirror.net/6/docs/ref/#language.indentUnit'>Docs?</a>",
+      "Not working. <a href='https://codemirror.net/6/docs/ref/#language.indentUnit'>Docs?</a>. What do you pass and where? Can it be dispatched?",
   },
 
   /* https://codemirror.net/6/docs/ref/#gutter.lineNumbers */
@@ -35,7 +35,7 @@ export const EDITOR_SETTINGS = {
     options: ["true", "false"],
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
     notes:
-      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping'>supported</a>, but unclear exactly how to make it work or dispatch changes. We tried passing `pre` and `pre-wrap`.",
+      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping'>supported</a>, but unclear exactly how to make it work or dispatch changes. We tried passing `pre` and `pre-wrap` as well as true/false.",
   },
 
   codeFolding: {
