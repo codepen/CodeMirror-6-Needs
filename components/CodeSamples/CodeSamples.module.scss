@@ -1,8 +1,7 @@
 .root {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 3rem;
-  margin: 2rem;
+  gap: 2rem;
 }
 
 .sample {
@@ -18,4 +17,8 @@
 .notes {
   font-size: 0.9rem;
   opacity: 0.66;
+}
+
+.codeEditor {
+  border: solid 2px #555;
 }

@@ -29,12 +29,20 @@ export default function Home() {
           </p>
         </header>
 
-        <EditorSettings
-          editorSettings={editorSettings}
-          setEditorSettings={setEditorSettings}
-        />
+        <section className={styles.settings}>
+          <h3>Settings</h3>
 
-        <CodeSamples editorSettings={editorSettings} />
+          <EditorSettings
+            editorSettings={editorSettings}
+            setEditorSettings={setEditorSettings}
+          />
+        </section>
+
+        <section className={styles.samples}>
+          <h3>Samples</h3>
+
+          <CodeSamples editorSettings={editorSettings} />
+        </section>
       </main>
     </div>
   );
