@@ -66,6 +66,7 @@ export default function CodeEditor({
       editorView.destroy();
     };
   }, [
+    indentWidth,
     editorSettings.indentUnit,
     editorSettings.lineWrapping,
     editorSettings.lineNumbers,
@@ -129,7 +130,7 @@ export default function CodeEditor({
         }
       }
     }
-  }, [editorSettings.indentWidth]);
+  }, [indentWidth, language, value]);
 
   return <div ref={container} {...props}></div>;
 }
