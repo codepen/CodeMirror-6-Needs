@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import classNames from "classnames";
 
 import { editorSetup } from "./CodeEditorSetup";
 import { EditorState, Compartment } from "@codemirror/state";
@@ -9,21 +10,21 @@ import { defaultTabBinding } from "@codemirror/commands";
 // import { oneDark } from "@codemirror/theme-one-dark";
 import { twilight } from "../../themes/twilight";
 
-import prettier from "prettier/standalone";
-import parserBabel from "prettier/parser-babel";
-import parserHtml from "prettier/parser-html";
-import parserCss from "prettier/parser-postcss";
-import { CodeMirrorLanguageByType } from "./CodeEditorUtils";
+import { adjustIndentWidth, CodeMirrorLanguageByType } from "./CodeEditorUtils";
+
+import styles from "./CodeEditor.module.scss";
 
 // TODO: EditorSettings - rebuild with new settings or try to update compartments?
 
 export default function CodeEditor({
+  className,
   title,
   language,
   value,
   editorSettings,
   working,
   workingNotes,
+  style,
   ...props
 }) {
   const indentWidth = Number(editorSettings.indentWidth);
@@ -86,51 +87,39 @@ export default function CodeEditor({
       // });
 
       console.log("trying prettier");
-
-      // TODO: Only do Prettier on an Indent Width change.
-      // TODO: See if CodeMirror has an official way of doing indentation changes.
-      // Do Prettier!
-      // https://prettier.io/docs/en/browser.html
-      let parser = "babel";
-      if (language === "html") parser = "html";
-      if (language === "scss" || language === "css" || parser === "less")
-        parser = "css";
-      // TODO: Do Prettier on the other supported languages
-      if (
-        language === "js" ||
-        language === "html" ||
-        language === "css" ||
-        language === "scss" ||
-        language === "less"
-      ) {
-        // prettier can throw hard errors if the parser fails.
-        try {
-          // replace entire document with prettified version
-          const newDoc = prettier.format(value, {
-            parser: parser,
-            plugins: [parserBabel, parserHtml, parserCss],
-            tabWidth: indentWidth,
-            //    semi: true,
-            trailingComma: "none",
-            //    useTabs: indentWith === "tabs",
-            bracketSpacing: true,
-            jsxBracketSameLine: false,
-          });
-          view.current.dispatch(
-            view.current.state.update({
-              changes: {
-                from: 0,
-                to: view.current.state.doc.length,
-                insert: newDoc,
-              },
-            })
-          );
-        } catch (err) {
-          console.error(err);
-        }
-      }
+      const formattedValue = adjustIndentWidth({
+        indentWidth,
+        language,
+        value,
+      });
+      view.current.dispatch(
+        view.current.state.update({
+          changes: {
+            from: 0,
+            to: view.current.state.doc.length,
+            insert: formattedValue,
+          },
+        })
+      );
     }
   }, [indentWidth, language, value]);
 
-  return <div ref={container} {...props}></div>;
+  const { fontSize, fontFamily } = editorSettings;
+  useEffect(() => {
+    // Is there a better way to "refresh" the view if font-size and such change?
+    view.current.requestMeasure();
+  }, [fontSize, fontFamily]);
+
+  return (
+    <div
+      {...props}
+      ref={container}
+      className={classNames(className, styles.editor)}
+      style={{
+        ...style,
+        "--font-size": `${editorSettings.fontSize}px`,
+        "--font-family": `"${editorSettings.fontFamily}", monospace`,
+      }}
+    ></div>
+  );
 }

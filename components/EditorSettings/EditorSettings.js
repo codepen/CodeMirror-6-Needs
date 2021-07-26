@@ -44,12 +44,7 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
               })}
             </select>
 
-            {notes && (
-              <div
-                className={styles.notes}
-                dangerouslySetInnerHTML={{ __html: notes }}
-              ></div>
-            )}
+            {notes && <div className={styles.notes}>{notes}</div>}
           </div>
         );
       })}
