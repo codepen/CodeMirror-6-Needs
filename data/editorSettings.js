@@ -19,7 +19,6 @@ export const EDITOR_SETTINGS = {
       "Not working. <a href='https://codemirror.net/6/docs/ref/#language.indentUnit'>Docs?</a>. What do you pass and where? Can it be dispatched?",
   },
 
-  /* https://codemirror.net/6/docs/ref/#gutter.lineNumbers */
   lineNumbers: {
     label: "Line Numbers",
     default: true,
