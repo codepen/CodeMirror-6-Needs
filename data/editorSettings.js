@@ -71,9 +71,8 @@ export const EDITOR_SETTINGS = {
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#fold">
-          Officially supported
+          Officially supported.
         </a>
-        , just need to implement.
       </>
     ),
   },
@@ -86,15 +85,14 @@ export const EDITOR_SETTINGS = {
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#matchbrackets">
-          Officially supported
-        </a>
-        , just need to implement. CodePen has traditionally paired this concept
-        with{" "}
+          Officially supported.
+        </a>{" "}
+        TODO: CodePen has traditionally paired this concept with{" "}
         <a href="https://codemirror.net/6/docs/ref/#closebrackets">
           Close Brackets
         </a>
-        , but they are different plugins, so we'll need to decide if we want to
-        keep the settings combined or separate.
+        , but they are different plugins in CodeMirror. Should we seperate or
+        combine?
       </>
     ),
   },
@@ -112,7 +110,8 @@ export const EDITOR_SETTINGS = {
         </a>
         . Need to figure out which languages it works on. Doesn't seem to do
         simple stuff in JavaScript like `var`, `const`, or `querySelector`. Also
-        we need to pipe in authored JavaScript.
+        we need to pipe in authored JavaScript, so autocomplete works on
+        user-authored code.
       </>
     ),
   },
