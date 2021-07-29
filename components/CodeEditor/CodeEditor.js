@@ -1,18 +1,31 @@
 import { useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
 import classNames from "classnames";
-
 import { editorSetup } from "./CodeEditorSetup";
 import { EditorState, Compartment } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultTabBinding } from "@codemirror/commands";
-
-// TODO: Dynamic imports. Only import the themes and/or languages needed.
-// import { oneDark } from "@codemirror/theme-one-dark";
-import { twilight } from "../../themes/twilight";
-
 import { adjustIndentWidth, CodeMirrorLanguageByType } from "./CodeEditorUtils";
-
 import styles from "./CodeEditor.module.scss";
+
+// TODO: Attempt dynamic imports
+// https://nextjs.org/docs/advanced-features/dynamic-import#with-named-exports
+// const DynamicComponent = dynamic(
+//   () =>
+//     import("../../themes/twilight").then((mod) => {
+//       console.log("mod", { mod });
+//       return mod.twilight;
+//     }),
+//   {
+//     ssr: false,
+//   }
+// );
+// console.log(DynamicComponent);
+
+// import { oneDark } from "@codemirror/theme-one-dark";
+
+// TODO: Convert more themes, dynamically load them when requested.
+import { twilight } from "../../themes/twilight";
 
 // TODO: EditorSettings - rebuild with new settings or try to update compartments?
 
@@ -77,7 +90,6 @@ export default function CodeEditor({
   ]);
 
   useEffect(() => {
-    console.log("second useeffect");
     if (view.current) {
       // TODO: Try to dispatch rather than rebuild.
       // view.current.dispatch({
@@ -86,7 +98,6 @@ export default function CodeEditor({
       //   ),
       // });
 
-      console.log("trying prettier");
       const formattedValue = adjustIndentWidth({
         indentWidth,
         language,
