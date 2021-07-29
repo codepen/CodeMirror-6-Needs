@@ -6,8 +6,14 @@ export const EDITOR_SETTINGS = {
     default: 2,
     options: [2, 4, 6, 8],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes:
-      "Works by re-processing code through <a href='https://prettier.io/docs/en/api.html'>Prettier</a> — but is there an official CodeMirror way of altering indent width of pre-authored code?",
+    notes: (
+      <>
+        Works by re-processing code through{" "}
+        <a href="https://prettier.io/docs/en/api.html">Prettier</a> — but is
+        there an official CodeMirror way of altering indent width of
+        pre-authored code?
+      </>
+    ),
   },
 
   indentUnit: {
@@ -15,8 +21,15 @@ export const EDITOR_SETTINGS = {
     default: "  ",
     options: [" ", "  "],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes:
-      "Not working. <a href='https://codemirror.net/6/docs/ref/#language.indentUnit'>Docs?</a>. What do you pass and where? Can it be dispatched?",
+    notes: (
+      <>
+        Not working.{" "}
+        <a href="https://codemirror.net/6/docs/ref/#language.indentUnit">
+          Docs?
+        </a>
+        . What do you pass and where? Can it be dispatched?
+      </>
+    ),
   },
 
   lineNumbers: {
@@ -24,8 +37,13 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
-    notes:
-      "<a href='https://codemirror.net/6/docs/ref/#gutter.lineNumbers'>Officially supported</a>",
+    notes: (
+      <>
+        <a href="https://codemirror.net/6/docs/ref/#gutter.lineNumbers">
+          Officially supported
+        </a>
+      </>
+    ),
   },
 
   lineWrapping: {
@@ -33,8 +51,16 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: ["true", "false"],
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes:
-      "Seems <a href='https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping'>supported</a>, but unclear exactly how to make it work or dispatch changes. We tried passing `pre` and `pre-wrap` as well as true/false.",
+    notes: (
+      <>
+        Seems{" "}
+        <a href="https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping">
+          supported
+        </a>
+        , but unclear exactly how to make it work or dispatch changes. We tried
+        passing `pre` and `pre-wrap` as well as true/false.
+      </>
+    ),
   },
 
   codeFolding: {
@@ -42,8 +68,14 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
-    notes:
-      "<a href='https://codemirror.net/6/docs/ref/#fold'>Officially supported</a>, just need to implement.",
+    notes: (
+      <>
+        <a href="https://codemirror.net/6/docs/ref/#fold">
+          Officially supported
+        </a>
+        , just need to implement.
+      </>
+    ),
   },
 
   matchBrackets: {
@@ -51,8 +83,20 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
-    notes:
-      "<a href='https://codemirror.net/6/docs/ref/#matchbrackets'>Officially supported</a>, just need to implement. CodePen has traditionally paired this concept with <a href='https://codemirror.net/6/docs/ref/#closebrackets'>Close Brackets</a>, but they are different plugins, so we'll need to decide if we want to keep the settings combined or separate.",
+    notes: (
+      <>
+        <a href="https://codemirror.net/6/docs/ref/#matchbrackets">
+          Officially supported
+        </a>
+        , just need to implement. CodePen has traditionally paired this concept
+        with{" "}
+        <a href="https://codemirror.net/6/docs/ref/#closebrackets">
+          Close Brackets
+        </a>
+        , but they are different plugins, so we'll need to decide if we want to
+        keep the settings combined or separate.
+      </>
+    ),
   },
 
   /* https://codemirror.net/6/docs/ref/#autocomplete */
@@ -61,8 +105,16 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes:
-      "<a href='https://codemirror.net/6/docs/ref/#autocomplete'>Officially supported</a>. Need to figure out which languages it works on. Doesn't seem to do simple stuff in JavaScript like `var`, `const`, or `querySelector`. Also we need to pipe in authored JavaScript.",
+    notes: (
+      <>
+        <a href="https://codemirror.net/6/docs/ref/#autocomplete">
+          Officially supported
+        </a>
+        . Need to figure out which languages it works on. Doesn't seem to do
+        simple stuff in JavaScript like `var`, `const`, or `querySelector`. Also
+        we need to pipe in authored JavaScript.
+      </>
+    ),
   },
 
   emmet: {
@@ -70,14 +122,21 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes:
-      "Might be being <a href='https://github.com/emmetio/codemirror-plugin/issues/13'>worked on</a> by Sergey.",
+    notes: (
+      <>
+        Might be being{" "}
+        <a href="https://github.com/emmetio/codemirror-plugin/issues/13">
+          worked on
+        </a>{" "}
+        by Sergey.
+      </>
+    ),
   },
 
   fontSize: {
     label: "Font Size",
-    default: 16,
-    options: [12, 14, 16, 18, 20],
+    default: 12,
+    options: [10, 12, 14, 16, 18, 20, 22, 24],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes:
       "Does CodeMirror care? Or do we just alter some on-page CSS? It probably effects line wrapping so at least we'd need to “refresh” the editors?",
@@ -107,8 +166,14 @@ export const EDITOR_SETTINGS = {
       "Comic Code",
     ],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes:
-      "Need to lazy-load the font files and alter some <a href='https://codemirror.net/6/examples/styling/'>on-page CSS</a>.",
+    notes: (
+      <>
+        Need to lazy-load the font files and alter some{" "}
+        <a href="https://codemirror.net/6/examples/styling/">on-page CSS</a>.
+        For some reason, the default CodeMirror 6 styles for .cm-scroller have
+        an <code>!important</code> font family declaration.
+      </>
+    ),
   },
 
   theme: {
