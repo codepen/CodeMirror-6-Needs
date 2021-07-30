@@ -137,8 +137,13 @@ export const EDITOR_SETTINGS = {
     default: 12,
     options: [10, 12, 14, 16, 18, 20, 22, 24],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes:
-      "Does CodeMirror care? Or do we just alter some on-page CSS? It probably effects line wrapping so at least we'd need to “refresh” the editors?",
+    notes: (
+      <>
+        Does CodeMirror care? Or do we just alter some on-page CSS? It probably
+        effects line wrapping so at least we&apos;d need to “refresh” (e.g.{" "}
+        <code>requestMeasure</code>?) the editors?
+      </>
+    ),
   },
 
   fontFamily: {
@@ -177,26 +182,27 @@ export const EDITOR_SETTINGS = {
 
   theme: {
     label: "Syntax Highlighting",
-    default: "Twilight",
+    default: "twilight",
     options: [
-      "Twilight",
-      "Solarized Dark",
-      "Tomorrow Night",
-      "Oceanic Dark",
-      "Panda",
-      "DuoTone Dark",
-      "High Contrast Dark",
-      "Classic",
-      "Solarized Light",
-      "XQ Light",
-      "Oceanic Light",
-      "MDN Like",
-      "DuoTone Light",
-      "High Contrast Light",
+      "twilight",
+      "oneDark",
+      // "Solarized Dark",
+      // "Tomorrow Night",
+      // "Oceanic Dark",
+      // "Panda",
+      // "DuoTone Dark",
+      // "High Contrast Dark",
+      // "Classic",
+      // "Solarized Light",
+      // "XQ Light",
+      // "Oceanic Light",
+      // "MDN Like",
+      // "DuoTone Light",
+      // "High Contrast Light",
     ],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     notes:
-      "Lots of themes to port over. And probably support any good looking pre-built themes.",
+      "1) Do we have to re-initialize the editor to change the theme or can we dispatch a change for a dynamically imported theme? 2) We have lots of themes to port over.",
   },
 };
 
