@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import classNames from "classnames";
 import { editorSetup } from "./CodeEditorSetup";
 import { EditorState, Compartment } from "@codemirror/state";
@@ -26,6 +26,8 @@ import styles from "./CodeEditor.module.scss";
 
 // TODO: Convert more themes, dynamically load them when requested.
 import { twilight } from "../../themes/twilight";
+// TODO: In reality we won't load multiple themes at once.
+import { oneDark } from "../../themes/oneDark";
 
 // TODO: EditorSettings - rebuild with new settings or try to update compartments?
 
@@ -56,6 +58,11 @@ export default function CodeEditor({
 
     const lang = CodeMirrorLanguageByType(language);
 
+    let theme = twilight;
+    if (editorSettings.theme === "oneDark") {
+      theme = oneDark;
+    }
+
     let startState = EditorState.create({
       doc: value,
       extensions: [
@@ -64,7 +71,7 @@ export default function CodeEditor({
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
         // compartments.indentUnit.of(EditorState.indentUnit.of(indentUnit)),
         compartments.language.of(lang && lang.call()),
-        twilight,
+        theme,
       ],
     });
 
@@ -87,6 +94,7 @@ export default function CodeEditor({
     editorSettings.codeFolding,
     editorSettings.autocomplete,
     editorSettings.matchBrackets,
+    editorSettings.theme,
   ]);
 
   useEffect(() => {
@@ -120,6 +128,21 @@ export default function CodeEditor({
     // Is there a better way to "refresh" the view if font-size and such change?
     view.current.requestMeasure();
   }, [fontSize, fontFamily]);
+
+  // TODO: This doesn't work. But it feels like it would be better to dispatch a change to the theme.
+  const { theme } = editorSettings;
+  // useEffect(() => {
+  //   if (theme === "twilight") {
+  //     view.current.dispatch({
+  //       effects: compartments.theme.reconfigure(twilight),
+  //     });
+  //   }
+  //   if (theme === "oneDark") {
+  //     view.current.dispatch({
+  //       effects: compartments.theme.reconfigure(oneDark),
+  //     });
+  //   }
+  // }, [theme]);
 
   return (
     <div
