@@ -32,6 +32,6 @@ Here's [a quick Netlify deployment](https://objective-blackwell-d4efc9.netlify.a
 
 # Concerns
 
-- **Bundle Size**: With all the various packages needed for CM6, will the final bundle come down to an acceptable size? Rough estimate shows around 2mb worth of JS in this simple setup.
+- **Bundle Size**: With all the various packages needed for CM6, will the final bundle come down to an acceptable size? This repo is odd in that it includes Prettier at the moment to replicate our cody tidying features and for changing indentation, and that represents most of the JavaScript in the bundle. How can we see _only_ what CodeMirror contributes? `yarn run analyze` makes a visualization, so if we could remove Prettier from that it would be more accurate.
 
 - **Key Bindings**: CodeMirror 5 support Sublime Text and Vim key bindings. It's not clear if CodeMirror 6 does. Do we absolutely need them or not?
