@@ -7,6 +7,7 @@ import { EditorView, keymap } from "@codemirror/view";
 import { defaultTabBinding } from "@codemirror/commands";
 import { adjustIndentWidth, CodeMirrorLanguageByType } from "./CodeEditorUtils";
 import styles from "./CodeEditor.module.scss";
+import { LANGUAGES } from "../../data/languages";
 
 // TODO: Attempt dynamic imports
 // https://nextjs.org/docs/advanced-features/dynamic-import#with-named-exports
@@ -57,6 +58,10 @@ export default function CodeEditor({
     if (container.current.children[0]) container.current.children[0].remove();
 
     const lang = CodeMirrorLanguageByType(language);
+    let langOptions = {};
+    if (language === LANGUAGES.JSX) {
+      langOptions.jsx = true;
+    }
 
     let theme = twilight;
     if (editorSettings.theme === "oneDark") {
@@ -70,7 +75,7 @@ export default function CodeEditor({
         keymap.of(defaultTabBinding),
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
         // compartments.indentUnit.of(EditorState.indentUnit.of(indentUnit)),
-        compartments.language.of(lang && lang.call()),
+        compartments.language.of(lang && lang.call(langOptions)),
         theme,
       ],
     });
