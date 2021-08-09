@@ -75,7 +75,7 @@ export default function CodeEditor({
         keymap.of(defaultTabBinding),
         compartments.tabSize.of(EditorState.tabSize.of(indentWidth)),
         // compartments.indentUnit.of(EditorState.indentUnit.of(indentUnit)),
-        compartments.language.of(lang && lang.call(langOptions)),
+        compartments.language.of(lang && lang(langOptions)),
         theme,
       ],
     });
