@@ -49,8 +49,8 @@ console.log(data.age);
   {
     language: LANGUAGES.JSX,
     label: "JSX",
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes: `JSX doesn't seem to highlight well`,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: null,
     code: `import React from 'react';
 
 function App() {

@@ -21,7 +21,6 @@ export function CodeMirrorLanguageByType(type) {
     case LANGUAGES.MARKDOWN:
       return markdown;
 
-    // TODO Make JSX work
     case LANGUAGES.JAVASCRIPT:
     case LANGUAGES.JSX:
       return javascript;
