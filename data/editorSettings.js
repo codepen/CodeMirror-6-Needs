@@ -6,6 +6,7 @@ export const EDITOR_SETTINGS = {
     default: 2,
     options: [2, 4, 6, 8],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: false,
     notes: (
       <>
         Works by re-processing code through{" "}
@@ -21,6 +22,7 @@ export const EDITOR_SETTINGS = {
     default: "  ",
     options: [" ", "  "],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: false,
     notes: (
       <>
         Not working.{" "}
@@ -37,6 +39,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: false,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#gutter.lineNumbers">
@@ -51,6 +54,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: ["true", "false"],
     supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    implemented: false,
     notes: (
       <>
         Seems{" "}
@@ -68,6 +72,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: false,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#fold">
@@ -82,6 +87,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: false,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#matchbrackets">
@@ -103,6 +109,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: false,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#autocomplete">
@@ -120,7 +127,8 @@ export const EDITOR_SETTINGS = {
     label: "Emmet",
     default: true,
     options: [true, false],
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
     notes: (
       <>
         Might be being{" "}
@@ -137,6 +145,7 @@ export const EDITOR_SETTINGS = {
     default: 12,
     options: [10, 12, 14, 16, 18, 20, 22, 24],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: false,
     notes: (
       <>
         Does CodeMirror care? Or do we just alter some on-page CSS? It probably
@@ -170,6 +179,7 @@ export const EDITOR_SETTINGS = {
       "Comic Code",
     ],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: false,
     notes: (
       <>
         Need to lazy-load the font files and alter some{" "}
@@ -201,6 +211,7 @@ export const EDITOR_SETTINGS = {
       // "High Contrast Light",
     ],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: false,
     notes:
       "1) Do we have to re-initialize the editor to change the theme or can we dispatch a change for a dynamically imported theme? 2) We have lots of themes to port over.",
   },

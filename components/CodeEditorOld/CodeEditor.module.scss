@@ -1,0 +1,7 @@
+.editor {
+  :global(.cm-scroller) {
+    font-size: var(--font-size);
+    /* For some reason, the default .cm-scroller styles have an !important font family declaration. */
+    font-family: var(--font-family) !important;
+  }
+}

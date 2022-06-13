@@ -18,9 +18,14 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
   return (
     <div className={styles.root}>
       {Object.entries(EDITOR_SETTINGS).map(([key, value]) => {
-        const { label, options, supported, notes } = value;
+        const { label, options, supported, notes, implemented } = value;
         return (
-          <div key={key} className={styles.option} data-supported={supported}>
+          <div
+            key={key}
+            className={styles.option}
+            data-supported={supported}
+            data-implemented={implemented}
+          >
             <label htmlFor={key}>{label}</label>
             <select
               id={key}
