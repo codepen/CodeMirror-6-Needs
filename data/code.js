@@ -17,6 +17,10 @@ export const CODE_SAMPLES = [
 </head>
 <body>
 
+  <p>Lorem ipsum dolor sit amet, <a href="#" target="_blank">consectetur</a> adipiscing elit. Praesent <strong>bibendum</strong>, lorem vel tincidunt imperdiet, nibh elit laoreet felis, a bibendum nisl tortor non orci.</p>
+
+  <p>Vestibulum nunc massa, gravida quis porta nec, feugiat id metus. Nunc ac arcu dolor, quis vestibulum leo. Cras viverra mollis ipsum, non rhoncus lectus aliquam et. Morbi faucibus purus sit amet lacus aliquet elementum. Donec sit amet posuere enim.</p>
+
 </body>
 </html>`,
   },
