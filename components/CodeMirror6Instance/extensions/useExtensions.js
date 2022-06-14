@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { basicSetup } from "codemirror";
 import { useEmmetExtension } from "./emmet";
 import { useLanguageExtension } from "./languages";
@@ -7,35 +8,55 @@ import { useLineWrapping } from "./lineWrapping";
 import { useIndentation } from "./indentation";
 
 export function useExtensions(props, editorView) {
-  const emmet = useEmmetExtension({
-    enabled: true,
-    editorView,
-  });
+  const language = useLanguageExtension(
+    {
+      language: props.language,
+    },
+    editorView
+  );
 
-  const language = useLanguageExtension({
-    language: props.language,
-    editorView,
-  });
+  const { editorSettings } = props;
+  // console.log("useExtensions", editorSettings);
 
-  const theme = useThemeExtension({
-    theme: props.theme,
-    editorView,
-  });
+  const emmet = useEmmetExtension(
+    {
+      enabled: editorSettings.emmet,
+    },
+    editorView
+  );
 
-  const readOnly = useReadOnly({
-    readOnly: props.readOnly,
-    editorView,
-  });
+  const theme = useThemeExtension(
+    {
+      theme: editorSettings.theme,
+    },
+    editorView
+  );
 
-  const lineWrapping = useLineWrapping({
-    lineWrapping: props.lineWrapping || true,
-    editorView,
-  });
+  const readOnly = useReadOnly(
+    {
+      readOnly: editorSettings.readOnly,
+    },
+    editorView
+  );
 
-  const indentation = useIndentation({
-    indentWith: props.indentWith || "tab",
-    editorView,
-  });
+  const lineWrapping = useLineWrapping(
+    {
+      lineWrapping: editorSettings.lineWrapping,
+    },
+    editorView
+  );
+
+  const indentation = useIndentation(
+    {
+      indentWidth: editorSettings.indentWidth,
+      indentUnit: editorSettings.indentUnit || "tab",
+    },
+    editorView
+  );
+
+  useEffect(() => {
+    editorView && editorView.requestMeasure();
+  }, [editorView, editorSettings.fontSize, editorSettings.fontFamily]);
 
   return [
     basicSetup,

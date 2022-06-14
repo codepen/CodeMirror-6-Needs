@@ -12,7 +12,7 @@ function getCodeMirrorLanguageData(language) {
   return languageData;
 }
 
-export function useLanguageExtension({ language, editorView }) {
+export function useLanguageExtension({ language }, editorView) {
   const [languageCompartment, updateCompartment] =
     useExtensionCompartment(editorView);
 

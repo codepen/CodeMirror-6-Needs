@@ -15,6 +15,8 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
     });
   }
 
+  console.log(editorSettings);
+
   return (
     <div className={styles.root}>
       {Object.entries(EDITOR_SETTINGS).map(([key, value]) => {

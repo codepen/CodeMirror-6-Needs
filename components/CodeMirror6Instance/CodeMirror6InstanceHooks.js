@@ -12,12 +12,12 @@ export function useCodeMirror6Instance(props) {
   // Initialize CodeMirror6 View
   useEffect(() => {
     // TODO: Handle FileDoc scenario of shared state https://codemirror.net/examples/split/
-    let editorState = EditorState.create({
+    const editorState = EditorState.create({
       doc: props.value,
       extensions,
     });
 
-    let editorView = new EditorView({
+    const editorView = new EditorView({
       state: editorState,
       parent: ref.current,
     });
@@ -25,9 +25,7 @@ export function useCodeMirror6Instance(props) {
     setEditorView(editorView);
 
     // Destroy when unmounted.
-    return () => {
-      editorView.destroy();
-    };
+    return () => editorView.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

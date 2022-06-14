@@ -53,16 +53,13 @@ export const EDITOR_SETTINGS = {
     label: "Line Wrapping",
     default: true,
     options: ["true", "false"],
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    implemented: false,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
     notes: (
       <>
-        Seems{" "}
         <a href="https://codemirror.net/6/docs/ref/#view.EditorView.lineWrapping">
-          supported
+          Officially supported
         </a>
-        , but unclear exactly how to make it work or dispatch changes. We tried
-        passing `pre` and `pre-wrap` as well as true/false.
       </>
     ),
   },

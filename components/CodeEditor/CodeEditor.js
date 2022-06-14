@@ -21,7 +21,11 @@ export default function CodeEditor({
         "--font-family": `"${editorSettings.fontFamily}", monospace`,
       }}
     >
-      <CodeMirror6Instance value={value} language={language} />
+      <CodeMirror6Instance
+        value={value}
+        language={language}
+        editorSettings={editorSettings}
+      />
     </div>
   );
 }

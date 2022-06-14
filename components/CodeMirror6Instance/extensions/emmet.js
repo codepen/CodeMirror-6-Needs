@@ -5,7 +5,7 @@ import { keymap } from "@codemirror/view";
 import { expandAbbreviation } from "@emmetio/codemirror6-plugin";
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
-export function useEmmetExtension({ enabled, editorView }) {
+export function useEmmetExtension({ enabled }, editorView) {
   const [compartment, updateCompartment] = useExtensionCompartment(editorView);
 
   useEffect(() => {
