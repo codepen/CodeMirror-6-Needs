@@ -8,8 +8,6 @@ export default function CodeEditor({
   language,
   value,
   editorSettings,
-  working,
-  workingNotes,
   style,
   ...props
 }) {

@@ -16,7 +16,6 @@ export default function CodeSamples({ editorSettings }) {
             <h2>{label}</h2>
             {notes && <p className={styles.notes}>{notes}</p>}
             <CodeEditor
-              working={true}
               className={styles.codeEditor}
               language={language}
               value={code}
