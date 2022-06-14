@@ -9,7 +9,7 @@ export function useThemeExtension({ editorView }) {
   const [compartment, updateCompartment] = useExtensionCompartment(editorView);
 
   useEffect(() => {
-    console.log({ oneDark });
+    // console.log({ oneDark });
     updateCompartment(oneDark);
   }, [updateCompartment]);
 

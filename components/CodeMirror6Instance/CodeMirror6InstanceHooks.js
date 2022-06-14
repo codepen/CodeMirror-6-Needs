@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
-import { EditorView, basicSetup } from "codemirror";
-import { useEmmetExtension } from "./extensions/emmet";
-import { useLanguageExtension } from "./extensions/languages";
-import { useThemeExtension } from "./extensions/themes";
+import { EditorView } from "codemirror";
+import { useExtensions } from "./extensions/useExtensions";
 
 export function useCodeMirror6Instance(props) {
   const ref = useRef();
@@ -13,6 +11,7 @@ export function useCodeMirror6Instance(props) {
 
   // Initialize CodeMirror6 View
   useEffect(() => {
+    // TODO: Handle FileDoc scenario of shared state https://codemirror.net/examples/split/
     let editorState = EditorState.create({
       doc: props.value,
       extensions,
@@ -43,23 +42,4 @@ export function useCodeMirror6Instance(props) {
   }, [value, editorView]);
 
   return { ref };
-}
-
-export function useExtensions(props, editorView) {
-  const emmet = useEmmetExtension({
-    enabled: true,
-    editorView,
-  });
-
-  const language = useLanguageExtension({
-    language: props.language,
-    editorView,
-  });
-
-  const theme = useThemeExtension({
-    theme: props.theme,
-    editorView,
-  });
-
-  return [basicSetup, theme, language, emmet];
 }

@@ -9,8 +9,6 @@ function getCodeMirrorLanguageData(language) {
     (lang) => lang.name === language || lang.alias.includes(language)
   );
 
-  console.log(language, languageData);
-
   return languageData;
 }
 
