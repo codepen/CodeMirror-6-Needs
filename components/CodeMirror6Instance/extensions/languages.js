@@ -1,49 +1,17 @@
 import { useEffect, useMemo } from "react";
 import { Compartment } from "@codemirror/state";
-import { StreamLanguage } from "@codemirror/language";
-
-import { html } from "@codemirror/lang-html";
-import { javascript } from "@codemirror/lang-javascript";
-import { markdown } from "@codemirror/lang-markdown";
-import { css } from "@codemirror/lang-css";
-import { coffeeScript } from "@codemirror/legacy-modes/mode/coffeescript";
-import { liveScript } from "@codemirror/legacy-modes/mode/livescript";
-import { stylus } from "@codemirror/legacy-modes/mode/stylus";
-
-import { LANGUAGES } from "../../../data/languages";
+import { languages } from "@codemirror/language-data";
 
 // TODO: Detect language by file extension
-// TODO: Lazy Load with dynamic `import()`
 // NOTE: May be able to use @codemirror/language-data for file extensions and lazy loading certain languages https://codemirror.net/docs/ref/#language.LanguageDescription
-function getCodeMirrorLanguage(language) {
-  switch (language) {
-    case LANGUAGES.HTML:
-      return html();
-    case LANGUAGES.CSS:
-      return css();
-    case LANGUAGES.JAVASCRIPT:
-      return javascript();
-    case LANGUAGES.JSX:
-      return javascript({ jsx: true });
-    case LANGUAGES.TYPESCRIPT:
-      return javascript({ typescript: true });
+function getCodeMirrorLanguageData(language) {
+  const languageData = languages.find(
+    (lang) => lang.name === language || lang.alias.includes(language)
+  );
 
-    case LANGUAGES.MARKDOWN:
-      return markdown();
+  console.log(language, languageData);
 
-    // LEGACY MODES
-    case LANGUAGES.COFFEESCRIPT:
-      return StreamLanguage.define(coffeeScript);
-
-    case LANGUAGES.LIVESCRIPT:
-      return StreamLanguage.define(liveScript);
-
-    case LANGUAGES.STYLUS:
-      return StreamLanguage.define(stylus);
-
-    default:
-      return undefined;
-  }
+  return languageData;
 }
 
 export function useLanguageExtension({ language, editorView }) {
@@ -51,13 +19,19 @@ export function useLanguageExtension({ language, editorView }) {
 
   useEffect(() => {
     if (!editorView) return;
-    const lang = getCodeMirrorLanguage(language);
 
-    if (lang) {
-      editorView.dispatch({
-        effects: languageCompartment.reconfigure(lang),
-      });
+    async function loadLanguage() {
+      const lang = getCodeMirrorLanguageData(language);
+
+      if (lang) {
+        const languageExtension = await lang.load();
+        editorView.dispatch({
+          effects: languageCompartment.reconfigure(languageExtension),
+        });
+      }
     }
+
+    loadLanguage();
   }, [language, languageCompartment, editorView]);
 
   return languageCompartment.of([]);
