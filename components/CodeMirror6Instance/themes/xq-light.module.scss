@@ -1,0 +1,105 @@
+.root {
+  --white: white;
+  --black: black;
+  --purple: #5a5cad;
+  --darkPurple: #7f007f;
+  --lightBlue: #6c8cd5;
+  --blue: #0080ff;
+  --darkGreen: #164;
+  --green: #7ea656;
+  --lightGreen: #cc7;
+  --teal: #3f7f7f;
+  --gray: #999;
+  --red: #f00;
+
+  background: var(--white);
+  color: var(--black);
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--purple);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--lightBlue);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--black);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--black);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--black);
+    }
+    .cm-variable-3 {
+      color: var(--black);
+    }
+    .cm-header {
+      color: var(--black);
+    }
+    .cm-number {
+      color: var(--darkGreen);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--gray);
+    }
+    .cm-attribute {
+      color: var(--darkPurple);
+    }
+    .cm-builtin {
+      color: var(--green);
+    }
+    .cm-qualifier {
+      color: var(--gray);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--purple);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--blue);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--red);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--black);
+    }
+    .cm-tag {
+      color: var(--teal);
+    }
+    .cm-bracket {
+      color: var(--teal);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--blue);
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: black;
+    }
+    .CodeMirror-selected {
+      background: rgba(black, 0.05);
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: rgba(black, 0.1);
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(black, 0.5);
+    }
+  }
+}

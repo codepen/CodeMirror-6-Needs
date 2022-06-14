@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView, basicSetup } from "codemirror";
-import { emmet, useEmmetExtension } from "./extensions/emmet";
+import { useEmmetExtension } from "./extensions/emmet";
 import { useLanguageExtension } from "./extensions/languages";
+import { useThemeExtension } from "./extensions/themes";
 
 export function useCodeMirror6Instance(props) {
   const ref = useRef();
@@ -18,11 +19,16 @@ export function useCodeMirror6Instance(props) {
     editorView,
   });
 
+  const theme = useThemeExtension({
+    theme: props.theme,
+    editorView,
+  });
+
   // Initialize CodeMirror6 View
   useEffect(() => {
     let editorState = EditorState.create({
       doc: props.value,
-      extensions: [basicSetup, language, emmet],
+      extensions: [basicSetup, theme, language, emmet],
     });
 
     let editorView = new EditorView({

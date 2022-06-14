@@ -1,0 +1,109 @@
+.root {
+  background: #1d1e22;
+  color: var(--cp-color-1);
+
+  --yellow: #ddca7e;
+  --blue: #809bbd;
+  --purple: #9a8297;
+  --brown: #a7925a;
+  --orange: #ff6400;
+  --burnt: #d0782a;
+  --green: #96b38a;
+
+  :global {
+    .cm-keyword {
+      color: var(--yellow);
+    }
+    .cm-atom {
+      color: var(--yellow);
+    }
+    .cm-def {
+      color: var(--blue);
+    }
+    .cm-variable {
+      color: var(--yellow);
+    }
+    .cm-variable-2 {
+      color: var(--blue);
+    }
+    .cm-variable-3 {
+      color: var(--blue);
+    }
+    .cm-header {
+      color: var(--orange);
+    }
+    .cm-number {
+      color: var(--burnt);
+    }
+    .cm-property {
+      color: var(--purple);
+    }
+    .cm-attribute {
+      color: var(--yellow);
+    }
+    .cm-builtin {
+      color: var(--yellow);
+    }
+    .cm-qualifier {
+      color: var(--yellow);
+    }
+    .cm-operator {
+      color: var(--cp-color-5);
+    }
+    .cm-meta {
+      color: var(--purple);
+    }
+    .cm-string {
+      color: var(--green);
+    }
+    .cm-string-2 {
+      color: var(--green);
+    }
+    .cm-tag {
+      color: var(--brown);
+    }
+    .cm-tag.cm-bracket {
+      // so that the entire HTML <tag> is the same color.
+      color: var(--brown);
+    }
+    .cm-bracket {
+      color: inherit;
+    }
+    .cm-comment {
+      color: var(--cp-color-12);
+    }
+  }
+
+  // Mode Overrides
+  &[data-mode='text/css'] {
+    :global {
+      .cm-tag {
+        color: var(--yellow);
+      }
+    }
+  }
+  &[data-mode='htmlmixed'] {
+    :global {
+      .cm-atom {
+        color: var(--green);
+      }
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: white;
+    }
+    .CodeMirror-selected {
+      background: #222427;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #2a2e33;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(white, 0.5);
+    }
+  }
+}

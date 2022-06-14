@@ -1,0 +1,100 @@
+.root {
+  --lightTan: #b6ad9a;
+  --tan: #b29762;
+  --medTan: #896724;
+  --darkTan: #2d2006;
+  --blue: #1657da;
+  --medBlue: #0e4ecd;
+  --darkBlue: #063289;
+
+  background: #faf8f5;
+  color: var(--tan);
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--tan);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--tan);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--darkTan);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--tan);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--tan);
+    }
+    .cm-variable-3 {
+      color: var(--tan);
+    }
+    .cm-header {
+      color: var(--darkTan);
+    }
+    .cm-number {
+      color: var(--tan);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--blue);
+    }
+    .cm-attribute {
+      color: var(--tan);
+    }
+    .cm-builtin {
+      color: var(--darkTan);
+    }
+    .cm-qualifier {
+      color: var(--darkTan);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--medBlue);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--tan);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--darkBlue);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--tan);
+    }
+    .cm-tag {
+      color: var(--darkTan);
+    }
+    .cm-bracket {
+      color: var(--lightTan);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--lightTan);
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: black;
+    }
+    .CodeMirror-selected {
+      background: #e9e7e0;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #e7e0d0;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(black, 0.5);
+    }
+  }
+}

@@ -1,0 +1,122 @@
+.root {
+  --blue: #268bd2;
+  --green: #859900;
+  --red: #cb4b16;
+  --pink: #d33682;
+  --brown: #b58900;
+  --slate: #839496;
+  --lightSlate: #93a1a1;
+  --darkSlate: #586e75;
+  --teal: #2aa198;
+  --purple: #6c71c4;
+
+  background: #002b36;
+  color: #77897e;
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--blue);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--green);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--brown);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--slate);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--green);
+    }
+    .cm-variable-3 {
+      color: var(--lightSlate);
+    }
+    .cm-header {
+      color: var(--red);
+    }
+    .cm-number {
+      color: var(--teal);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--brown);
+    }
+    .cm-attribute {
+      color: var(--slate);
+    }
+    .cm-builtin {
+      color: var(--purple);
+    }
+    .cm-qualifier {
+      color: var(--blue);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--green);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--blue);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--teal);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--pink);
+    }
+    .cm-tag {
+      color: var(--blue);
+    }
+    .cm-tag.cm-bracket {
+      color: var(--slate);
+    }
+    .cm-bracket {
+      color: var(--slate);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--darkSlate);
+    }
+  }
+
+  // Mode Overrides
+  &[data-mode='htmlmixed'] {
+    :global {
+      .cm-atom {
+        color: var(--red);
+      }
+    }
+  }
+  &[data-mode='text/css'] {
+    :global {
+      .cm-tag {
+        color: var(--green);
+      }
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: white;
+    }
+    .CodeMirror-selected {
+      background: #04252f;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #00181f;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(white, 0.5);
+    }
+  }
+}

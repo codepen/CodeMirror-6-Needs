@@ -1,0 +1,101 @@
+.root {
+  --gray: #65737e;
+  --pink: #c594c5;
+  --green: #99c794;
+  --red: #ec5f67;
+  --yellow: #fac863;
+  --blue: #6699cc;
+  --lightBlue: #cdd3de;
+  --orange: #f99157;
+
+  background: #1b2b34;
+  color: var(--lightBlue);
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--pink);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--pink);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--orange);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--green);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--blue);
+    }
+    .cm-variable-3 {
+      color: var(--blue);
+    }
+    .cm-header {
+      color: var(--lightBlue);
+    }
+    .cm-number {
+      color: var(--pink);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--green);
+    }
+    .cm-attribute {
+      color: var(--green);
+    }
+    .cm-builtin {
+      color: var(--lightBlue);
+    }
+    .cm-qualifier {
+      color: var(--lightBlue);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--lightBlue);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--lightBlue);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--yellow);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--yellow);
+    }
+    .cm-tag {
+      color: var(--red);
+    }
+    .cm-bracket {
+      color: var(--lightBlue);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--gray);
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: white;
+    }
+    .CodeMirror-selected {
+      background: #161e23;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #04151f;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(white, 0.5);
+    }
+  }
+}
