@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView, basicSetup } from "codemirror";
-import { emmet } from "./extensions/emmet";
+import { emmet, useEmmetExtension } from "./extensions/emmet";
 import { useLanguageExtension } from "./extensions/languages";
 
 export function useCodeMirror6Instance(props) {
   const ref = useRef();
   const [editorView, setEditorView] = useState(null);
+
+  const emmet = useEmmetExtension({
+    enabled: true,
+    editorView,
+  });
 
   const language = useLanguageExtension({
     language: props.language,
@@ -17,7 +22,7 @@ export function useCodeMirror6Instance(props) {
   useEffect(() => {
     let editorState = EditorState.create({
       doc: props.value,
-      extensions: [basicSetup, emmet(), language],
+      extensions: [basicSetup, language, emmet],
     });
 
     let editorView = new EditorView({

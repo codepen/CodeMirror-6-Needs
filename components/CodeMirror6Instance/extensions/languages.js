@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from "react";
-import { Compartment } from "@codemirror/state";
+import { useEffect } from "react";
 import { languages } from "@codemirror/language-data";
+import { useExtensionCompartment } from "./useExtensionCompartment";
 
 // TODO: Detect language by file extension
 // NOTE: May be able to use @codemirror/language-data for file extensions and lazy loading certain languages https://codemirror.net/docs/ref/#language.LanguageDescription
@@ -15,24 +15,21 @@ function getCodeMirrorLanguageData(language) {
 }
 
 export function useLanguageExtension({ language, editorView }) {
-  const languageCompartment = useMemo(() => new Compartment(), []);
+  const [languageCompartment, updateCompartment] =
+    useExtensionCompartment(editorView);
 
   useEffect(() => {
-    if (!editorView) return;
-
     async function loadLanguage() {
       const lang = getCodeMirrorLanguageData(language);
 
       if (lang) {
         const languageExtension = await lang.load();
-        editorView.dispatch({
-          effects: languageCompartment.reconfigure(languageExtension),
-        });
+        updateCompartment(languageExtension);
       }
     }
 
     loadLanguage();
-  }, [language, languageCompartment, editorView]);
+  }, [language, languageCompartment, updateCompartment]);
 
-  return languageCompartment.of([]);
+  return languageCompartment;
 }

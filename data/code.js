@@ -64,7 +64,7 @@ export default App;
     language: LANGUAGES.MARKDOWN,
     label: "Markdown",
     supported: SUPPORT_LEVELS.SUPPORTED,
-    notes: "Limited highlighting",
+    notes: null,
     code: `# This is markdown
 
 Just some *copy* here with a [link](https://codepen.io) in it.
@@ -184,8 +184,8 @@ body
   {
     language: LANGUAGES.SCSS,
     label: <a href="https://lesscss.org/#">Less</a>,
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes: null,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `// Variables
 @link-color:        #428bca; // sea blue
 @link-color-hover:  darken(@link-color, 10%);

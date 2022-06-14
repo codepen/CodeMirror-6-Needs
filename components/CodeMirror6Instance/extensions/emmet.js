@@ -1,18 +1,30 @@
+import { useEffect } from "react";
 import { keymap } from "@codemirror/view";
 
 // Import Expand Abbreviation command
-import { expandAbbreviation, toggleComment } from "@emmetio/codemirror6-plugin";
+import { expandAbbreviation } from "@emmetio/codemirror6-plugin";
+import { useExtensionCompartment } from "./useExtensionCompartment";
 
-export function emmet() {
-  // Bind Expand Abbreviation command to keyboard shortcut
-  return keymap.of([
-    {
-      key: "Tab",
-      run: expandAbbreviation,
-    },
-    // {
-    //   key: "Cmd-/",
-    //   run: toggleComment,
-    // },
-  ]);
+export function useEmmetExtension({ enabled, editorView }) {
+  const [compartment, updateCompartment] = useExtensionCompartment(editorView);
+
+  useEffect(() => {
+    updateCompartment(
+      enabled
+        ? // Bind Expand Abbreviation command to keyboard shortcut
+          keymap.of([
+            {
+              key: "Tab",
+              run: expandAbbreviation,
+            },
+            // {
+            //   key: "Cmd-/",
+            //   run: toggleComment,
+            // },
+          ])
+        : []
+    );
+  }, [enabled, updateCompartment]);
+
+  return compartment;
 }
