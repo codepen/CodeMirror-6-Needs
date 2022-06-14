@@ -206,8 +206,8 @@ a:hover {
   {
     language: LANGUAGES.STYLUS,
     label: <a href="https://stylus-lang.com/">Stylus</a>,
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes: null,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `border-radius()
   -webkit-border-radius: arguments
   -moz-border-radius: arguments
@@ -222,8 +222,8 @@ a.button
   {
     language: LANGUAGES.COFFEESCRIPT,
     label: <a href="https://coffeescript.org/">CoffeeScript</a>,
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes: "Not an official mode but seems to work fairly well?",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `# Assignment:
 number   = 42
 opposite = true
@@ -279,8 +279,8 @@ type Wolfish = ExtractDogish<Wolf>;
   {
     language: LANGUAGES.LIVESCRIPT,
     label: <a href="https://livescript.net/">LiveScript</a>,
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes: "Perhaps works well enough for this little-used language.",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `# Easy listing of implicit objects
 table1 =
   * id: 1
