@@ -9,26 +9,13 @@ export function useCodeMirror6Instance(props) {
   const ref = useRef();
   const [editorView, setEditorView] = useState(null);
 
-  const emmet = useEmmetExtension({
-    enabled: true,
-    editorView,
-  });
-
-  const language = useLanguageExtension({
-    language: props.language,
-    editorView,
-  });
-
-  const theme = useThemeExtension({
-    theme: props.theme,
-    editorView,
-  });
+  const extensions = useExtensions(props, editorView);
 
   // Initialize CodeMirror6 View
   useEffect(() => {
     let editorState = EditorState.create({
       doc: props.value,
-      extensions: [basicSetup, theme, language, emmet],
+      extensions,
     });
 
     let editorView = new EditorView({
@@ -56,4 +43,23 @@ export function useCodeMirror6Instance(props) {
   }, [value, editorView]);
 
   return { ref };
+}
+
+export function useExtensions(props, editorView) {
+  const emmet = useEmmetExtension({
+    enabled: true,
+    editorView,
+  });
+
+  const language = useLanguageExtension({
+    language: props.language,
+    editorView,
+  });
+
+  const theme = useThemeExtension({
+    theme: props.theme,
+    editorView,
+  });
+
+  return [basicSetup, theme, language, emmet];
 }
