@@ -31,12 +31,12 @@ a {
 /* TODO: Styled Scrollbars */
 
 [data-supported] {
-  padding: 1rem;
+  padding: .75rem;
   border-radius: 8px;
 }
 [data-supported]::before {
   display: block;
-  padding: 2px 0;
+  padding: 0 0 0.25rem;
   border-bottom: 3px solid;
   margin: 0 0 0.5rem 0;
 }

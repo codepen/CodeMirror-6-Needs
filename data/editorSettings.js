@@ -83,19 +83,28 @@ export const EDITOR_SETTINGS = {
     label: "Match & Close Brackets",
     default: true,
     options: [true, false],
-    supported: SUPPORT_LEVELS.SUPPORTED,
-    implemented: false,
+    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    implemented: true,
     notes: (
       <>
-        <a href="https://codemirror.net/docs/ref/#language.bracketMatching">
-          Officially supported.
-        </a>{" "}
-        TODO: CodePen has traditionally paired this concept with{" "}
-        <a href="https://codemirror.net/docs/ref/#autocomplete.closeBrackets">
-          Close Brackets
-        </a>
-        , but they are different plugins in CodeMirror. Should we separate or
-        combine?
+        <p>
+          <a href="https://codemirror.net/docs/ref/#language.bracketMatching">
+            Officially supported.
+          </a>
+        </p>
+        <p>
+          Seems that languages themselves may automatically add `matchBrackets`
+          and/or `closeBrackets` without a way to override them... Can this be
+          disabled in some way?
+        </p>
+        <p>
+          TODO: CodePen has traditionally paired this concept with{" "}
+          <a href="https://codemirror.net/docs/ref/#autocomplete.closeBrackets">
+            Close Brackets
+          </a>
+          , but they are different plugins in CodeMirror. Should we separate or
+          combine?
+        </p>
       </>
     ),
   },
@@ -183,16 +192,9 @@ export const EDITOR_SETTINGS = {
       "Codelia",
       "Comic Code",
     ],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    implemented: false,
-    notes: (
-      <>
-        Need to lazy-load the font files and alter some{" "}
-        <a href="https://codemirror.net/6/examples/styling/">on-page CSS</a>.
-        For some reason, the default CodeMirror 6 styles for .cm-scroller have
-        an <code>!important</code> font family declaration.
-      </>
-    ),
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
+    notes: null,
   },
 
   theme: {
