@@ -902,6 +902,11 @@ cluster-key-slot@^1.1.0:
   resolved "https://registry.yarnpkg.com/cluster-key-slot/-/cluster-key-slot-1.1.0.tgz#30474b2a981fb12172695833052bc0d01336d10d"
   integrity sha512-2Nii8p3RwAPiFwsnZvukotvow2rIHM+yQ6ZcBXGHdniadkYGZYiGmkHJIbZPIV9nfv7m/U1IPMVVcAhoWFeklw==
 
+cm6-theme-material-dark@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/cm6-theme-material-dark/-/cm6-theme-material-dark-0.2.0.tgz#c733243a8a31da5d953fa551b2548f358aa37a64"
+  integrity sha512-H09JZihzg4w0mTtOqo5bQdxItkQWw+ergKlk7BSfwYjaR2nOi+wIN0R+ByAo7bON8GbFODvjTxH3EIqdhovFeA==
+
 cm6-theme-solarized-dark@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/cm6-theme-solarized-dark/-/cm6-theme-solarized-dark-0.2.0.tgz#f4238aa74289b6c4cb8aedb70e430acb18b774c7"

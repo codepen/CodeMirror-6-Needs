@@ -3,6 +3,8 @@ import { useEffect } from "react";
 
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
+import * as themeMirror from "thememirror";
+
 // TODO: Port themes
 // https://codemirror.net/examples/styling/
 // https://codemirror.net/docs/migration/#dom-structure
@@ -10,9 +12,10 @@ import { useExtensionCompartment } from "./useExtensionCompartment";
 export const THEMES = {
   TWILIGHT: "Twilight",
   ONE_DARK: "One Dark",
+  // https://github.com/craftzdog/cm6-themes/
   SOLARIZED_DARK: "Solarized Dark",
   SOLARIZED_LIGHT: "Solarized Light",
-  DRACULA: "Dracula",
+  MATERIAL_DARK: "Material Dark",
 };
 
 export const THEME_LOADERS = {
@@ -28,8 +31,17 @@ export const THEME_LOADERS = {
     import("cm6-theme-solarized-light").then(
       ({ solarizedLight }) => solarizedLight
     ),
-  [THEMES.DRACULA]: () => import("thememirror").then(({ dracula }) => dracula),
+  [THEMES.MATERIAL_DARK]: () =>
+    import("cm6-theme-material-dark").then(({ materialDark }) => materialDark),
+
+  // [THEMES.DRACULA]: () => import("thememirror").then(({ dracula }) => dracula),
 };
+
+// Automatically adding the ThemeMirror instead of manually setting up the lazy loading for each of these themes.
+Object.entries(themeMirror).forEach(([key, theme]) => {
+  THEMES[key] = key;
+  THEME_LOADERS[key] = () => theme;
+});
 
 export function useThemeExtension({ theme }, editorView) {
   const [compartment, updateCompartment] = useExtensionCompartment(editorView);
