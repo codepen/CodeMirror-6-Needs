@@ -69,7 +69,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
-    implemented: false,
+    implemented: true,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#fold">
@@ -87,14 +87,14 @@ export const EDITOR_SETTINGS = {
     implemented: false,
     notes: (
       <>
-        <a href="https://codemirror.net/6/docs/ref/#matchbrackets">
+        <a href="https://codemirror.net/docs/ref/#language.bracketMatching">
           Officially supported.
         </a>{" "}
         TODO: CodePen has traditionally paired this concept with{" "}
-        <a href="https://codemirror.net/6/docs/ref/#closebrackets">
+        <a href="https://codemirror.net/docs/ref/#autocomplete.closeBrackets">
           Close Brackets
         </a>
-        , but they are different plugins in CodeMirror. Should we seperate or
+        , but they are different plugins in CodeMirror. Should we separate or
         combine?
       </>
     ),

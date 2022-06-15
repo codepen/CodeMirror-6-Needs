@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useExtensionCompartment } from "./useExtensionCompartment";
-import { codeFolding, foldGutter } from "@codemirror/language";
+import { codeFolding, foldGutter, foldKeymap } from "@codemirror/language";
+import { keymap } from "@codemirror/view";
 
 export function useCodeFolding(editorSettings, editorView) {
   const [compartment, updateCompartment] = useExtensionCompartment(editorView);
@@ -11,6 +12,7 @@ export function useCodeFolding(editorSettings, editorView) {
         ? [
             // https://codemirror.net/docs/ref/#language.codeFolding
             codeFolding(),
+            keymap.of(foldKeymap),
             // https://codemirror.net/docs/ref/#language.foldGutter
             foldGutter(),
           ]
