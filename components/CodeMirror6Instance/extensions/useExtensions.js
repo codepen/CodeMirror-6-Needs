@@ -11,6 +11,8 @@ import { useLineNumbers } from "./lineNumbers";
 import { useCodeFolding } from "./codeFolding";
 import { useMatchBrackets } from "./matchBrackets";
 import { useAutocomplete } from "./autocomplete";
+import { keymap } from "@codemirror/view";
+import { indentWithTab } from "@codemirror/commands";
 
 export function useExtensions(props, editorView) {
   const languageExtension = useLanguageExtension(props, editorView);
@@ -34,6 +36,7 @@ export function useExtensions(props, editorView) {
   );
 
   return [
+    emmetExtension,
     defaultExtensions,
     readOnlyExtension,
 
@@ -49,7 +52,6 @@ export function useExtensions(props, editorView) {
     fontsExtension,
     lineWrappingExtension,
     indentationExtension,
-    emmetExtension,
     // TODO: set selections
     // TODO: onChange listener
     /* EditorView.updateListener.of((v:ViewUpdate) => {

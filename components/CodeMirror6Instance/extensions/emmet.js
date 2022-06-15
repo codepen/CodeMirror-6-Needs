@@ -40,7 +40,6 @@ export function useEmmetExtension(language, editorSettings, editorView) {
         ? [
             abbreviationTracker(),
             // Bind Expand Abbreviation command to keyboard shortcut
-            // TODO: Regular tab shortcut
             keymap.of([
               {
                 key: "Tab",

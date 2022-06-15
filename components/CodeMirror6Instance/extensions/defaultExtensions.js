@@ -8,7 +8,12 @@ import {
   keymap,
   rectangularSelection,
 } from "@codemirror/view";
-import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentWithTab,
+} from "@codemirror/commands";
 import { EditorState } from "@codemirror/state";
 import {
   defaultHighlightStyle,
@@ -29,6 +34,7 @@ export const defaultKeymaps = keymap.of([
   ...historyKeymap,
   // ...completionKeymap,
   ...lintKeymap,
+  indentWithTab,
 ]);
 
 export const defaultExtensions = [
