@@ -32,8 +32,11 @@ export const defaultKeymaps = keymap.of([
   ...defaultKeymap,
   ...searchKeymap,
   ...historyKeymap,
-  // ...completionKeymap,
   ...lintKeymap,
+
+  // NOTE: `indentWithTab` should be loaded after Emmet to ensure Emmet completions can take precendence
+  // NOTE: Warn users about ESC + Tab https://codemirror.net/examples/tab/
+  // TODO: Confirm works with tabs/spaces
   indentWithTab,
 ]);
 
