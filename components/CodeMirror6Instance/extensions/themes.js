@@ -39,8 +39,10 @@ export const THEME_LOADERS = {
 
 // Automatically adding the ThemeMirror instead of manually setting up the lazy loading for each of these themes.
 Object.entries(themeMirror).forEach(([key, theme]) => {
-  THEMES[key] = key;
-  THEME_LOADERS[key] = () => theme;
+  if (key !== "createTheme") {
+    THEMES[key] = key;
+    THEME_LOADERS[key] = () => theme;
+  }
 });
 
 export function useThemeExtension({ theme }, editorView) {
