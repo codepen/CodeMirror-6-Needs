@@ -6,6 +6,7 @@ import { useThemeExtension } from "./themes";
 import { useReadOnly } from "./readOnly";
 import { useLineWrapping } from "./lineWrapping";
 import { useIndentation } from "./indentation";
+import { useFonts } from "./fonts";
 
 export function useExtensions(props, editorView) {
   const language = useLanguageExtension(
@@ -18,52 +19,24 @@ export function useExtensions(props, editorView) {
   const { editorSettings } = props;
   // console.log("useExtensions", editorSettings);
 
-  const emmet = useEmmetExtension(
-    {
-      enabled: editorSettings.emmet,
-    },
-    editorView
-  );
+  const readOnly = useReadOnly(editorSettings, editorView);
+  const emmet = useEmmetExtension(editorSettings, editorView);
+  const theme = useThemeExtension(editorSettings, editorView);
+  const fonts = useFonts(editorSettings, editorView);
+  const lineWrapping = useLineWrapping(editorSettings, editorView);
+  const indentation = useIndentation(editorSettings, editorView);
 
-  const theme = useThemeExtension(
-    {
-      theme: editorSettings.theme,
-    },
-    editorView
-  );
-
-  const readOnly = useReadOnly(
-    {
-      readOnly: editorSettings.readOnly,
-    },
-    editorView
-  );
-
-  const lineWrapping = useLineWrapping(
-    {
-      lineWrapping: editorSettings.lineWrapping,
-    },
-    editorView
-  );
-
-  const indentation = useIndentation(
-    {
-      indentWidth: editorSettings.indentWidth,
-      indentUnit: editorSettings.indentUnit || "tab",
-    },
-    editorView
-  );
-
-  useEffect(() => {
-    editorView && editorView.requestMeasure();
-  }, [editorView, editorSettings.fontSize, editorSettings.fontFamily]);
+  // useEffect(() => {
+  //   editorView && editorView.requestMeasure();
+  // }, [editorView, editorSettings.fontSize, editorSettings.fontFamily]);
 
   return [
     basicSetup,
     readOnly,
+    theme,
+    fonts,
     lineWrapping,
     indentation,
-    theme,
     language,
     emmet,
   ];

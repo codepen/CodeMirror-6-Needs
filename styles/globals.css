@@ -22,11 +22,11 @@ a {
   padding: 0.5rem;
   height: 250px;
 }
-.cm-scroller {
+/* .cm-scroller {
   font-size: 13px;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
   line-height: 1.5 !important;
-}
+} */
 
 /* TODO: Styled Scrollbars */
 

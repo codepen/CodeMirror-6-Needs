@@ -8,19 +8,10 @@ export default function CodeEditor({
   language,
   value,
   editorSettings,
-  style,
   ...props
 }) {
   return (
-    <div
-      {...props}
-      className={classNames(className, styles.editor)}
-      style={{
-        ...style,
-        "--font-size": `${editorSettings.fontSize}px`,
-        "--font-family": `"${editorSettings.fontFamily}", monospace`,
-      }}
-    >
+    <div {...props} className={classNames(className, styles.editor)}>
       <CodeMirror6Instance
         value={value}
         language={language}
