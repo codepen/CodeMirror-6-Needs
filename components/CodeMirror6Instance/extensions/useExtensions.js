@@ -10,6 +10,7 @@ import { useFonts } from "./fonts";
 import { useLineNumbers } from "./lineNumbers";
 import { useCodeFolding } from "./codeFolding";
 import { useMatchBrackets } from "./matchBrackets";
+import { useAutocomplete } from "./autocomplete";
 
 export function useExtensions(props, editorView) {
   const language = useLanguageExtension(props, editorView);
@@ -26,6 +27,7 @@ export function useExtensions(props, editorView) {
   const lineWrapping = useLineWrapping(editorSettings, editorView);
   const indentation = useIndentation(editorSettings, editorView);
   const matchBrackets = useMatchBrackets(editorSettings, editorView);
+  const autocomplete = useAutocomplete(editorSettings, editorView);
 
   return [
     defaultExtensions,
@@ -38,6 +40,7 @@ export function useExtensions(props, editorView) {
 
     // TODO: language overrides matchBrackets ??
     matchBrackets,
+    autocomplete,
     theme,
     fonts,
     lineWrapping,

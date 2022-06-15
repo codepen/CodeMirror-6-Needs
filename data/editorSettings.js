@@ -191,15 +191,15 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    implemented: false,
+    implemented: true,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#autocomplete">
           Officially supported
         </a>
         . Need to figure out which languages it works on. Doesn&apos;t seem to
-        do simple stuff in JavaScript like `var`, `const`, or `querySelector`.
-        Also we need to pipe in authored JavaScript, so autocomplete works on
+        do simple stuff in JavaScript like `document`, or `querySelector`. Also
+        we need to pipe in authored JavaScript, so autocomplete works on
         user-authored code.
       </>
     ),

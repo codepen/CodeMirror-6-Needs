@@ -22,6 +22,7 @@ export function useCodeMirror6Instance(props) {
       parent: ref.current,
     });
 
+    // NOTE: State is available as `editorView.state`
     setEditorView(editorView);
 
     // Destroy when unmounted.
