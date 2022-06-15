@@ -39,7 +39,7 @@ export const EDITOR_SETTINGS = {
     default: true,
     options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
-    implemented: false,
+    implemented: true,
     notes: (
       <>
         <a href="https://codemirror.net/6/docs/ref/#gutter.lineNumbers">
