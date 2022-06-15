@@ -32,10 +32,11 @@ export function useEmmetExtension(language, editorSettings, editorView) {
   const enabled = editorSettings.emmet;
 
   useEffect(() => {
-    const useEmmet = enabled && validEmmetEditorMode(language);
-    console.log({ language, useEmmet });
+    // Emmet only works properly on certain languages
+    const canUseEmmet = enabled && validEmmetEditorMode(language);
+
     updateCompartment(
-      useEmmet
+      canUseEmmet
         ? [
             abbreviationTracker(),
             // Bind Expand Abbreviation command to keyboard shortcut

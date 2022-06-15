@@ -21,17 +21,17 @@ export function useExtensions(props, editorView) {
   const lineNumbersExtension = useLineNumbers(editorSettings, editorView);
   const codeFoldingExtension = useCodeFolding(editorSettings, editorView);
   const readOnlyExtension = useReadOnly(editorSettings, editorView);
-  const emmetExtension = useEmmetExtension(
-    props.language,
-    editorSettings,
-    editorView
-  );
   const themeExtension = useThemeExtension(editorSettings, editorView);
   const fontsExtension = useFonts(editorSettings, editorView);
   const lineWrappingExtension = useLineWrapping(editorSettings, editorView);
   const indentationExtension = useIndentation(editorSettings, editorView);
   const matchBracketsExtension = useMatchBrackets(editorSettings, editorView);
   const autocompleteExtension = useAutocomplete(editorSettings, editorView);
+  const emmetExtension = useEmmetExtension(
+    props.language,
+    editorSettings,
+    editorView
+  );
 
   return [
     defaultExtensions,
@@ -50,6 +50,7 @@ export function useExtensions(props, editorView) {
     lineWrappingExtension,
     indentationExtension,
     emmetExtension,
+    // TODO: set selections
     // TODO: onChange listener
     /* EditorView.updateListener.of((v:ViewUpdate) => {
         if (v.docChanged) {
