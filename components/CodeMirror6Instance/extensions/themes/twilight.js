@@ -1,5 +1,6 @@
+import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { EditorView } from "@codemirror/view";
-import { HighlightStyle, tags } from "@codemirror/highlight";
+import { tags } from "@lezer/highlight";
 
 const twilightTheme = EditorView.theme(
   {
@@ -159,6 +160,6 @@ const twilightHighlightStyle = HighlightStyle.define([
   { tag: [tags.invalid, tags.deleted], color: "red" },
 ]);
 
-const twilight = [twilightTheme, twilightHighlightStyle];
+const twilight = [twilightTheme, syntaxHighlighting(twilightHighlightStyle)];
 
 export { twilight, twilightHighlightStyle, twilightTheme };

@@ -1,6 +1,82 @@
+import { THEMES } from "../components/CodeMirror6Instance/extensions/themes";
 import { SUPPORT_LEVELS } from "./supportLevels";
 
 export const EDITOR_SETTINGS = {
+  theme: {
+    label: "Syntax Highlighting",
+    default: THEMES.TWILIGHT,
+    options: Object.values(THEMES), // [THEMES.ONE_DARK, THEMES.TWILIGHT], //Object.values(THEMES),
+    // "Solarized Dark",
+    // "Tomorrow Night",
+    // "Oceanic Dark",
+    // "Panda",
+    // "DuoTone Dark",
+    // "High Contrast Dark",
+    // "Classic",
+    // "Solarized Light",
+    // "XQ Light",
+    // "Oceanic Light",
+    // "MDN Like",
+    // "DuoTone Light",
+    // "High Contrast Light",
+
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
+    notes: "We have lots of themes to port over; may want to drop ",
+  },
+
+  fontSize: {
+    label: "Font Size",
+    default: 14,
+    options: [10, 12, 14, 16, 18, 20, 22, 24],
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
+    notes: (
+      <>
+        <a href="https://discuss.codemirror.net/t/changing-the-font-size-of-cm6/2935">
+          Implemented via Theme
+        </a>
+      </>
+    ),
+  },
+
+  lineHeight: {
+    label: "Line Height",
+    default: 1.4,
+    options: [1, 1.2, 1.4, 1.6, 1.8, 2],
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
+    notes: null,
+  },
+
+  fontFamily: {
+    label: "Font",
+    default: "Source Code Pro",
+    options: [
+      "Monaco",
+      "Hack",
+      "Inconsolata",
+      "Source Code Pro",
+      "Monoid",
+      "Fantasque Sans Mono",
+      "Input Mono",
+      "DejaVu Sans Mono",
+      "FireCode Medium",
+      "Operator Mono",
+      "Dank Mono",
+      "Gintronic",
+      "Courier Prime",
+      "JetBrains Mono",
+      "Recursive",
+      "MonoLisa",
+      "Codelia",
+      "Comic Code",
+    ],
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
+    notes: null,
+  },
+
   indentWidth: {
     label: "Indent Width",
     default: 2,
@@ -143,84 +219,6 @@ export const EDITOR_SETTINGS = {
         by Sergey.
       </>
     ),
-  },
-
-  fontSize: {
-    label: "Font Size",
-    default: 14,
-    options: [10, 12, 14, 16, 18, 20, 22, 24],
-    supported: SUPPORT_LEVELS.SUPPORTED,
-    implemented: true,
-    notes: (
-      <>
-        <a href="https://discuss.codemirror.net/t/changing-the-font-size-of-cm6/2935">
-          Implemented via Theme
-        </a>
-      </>
-    ),
-  },
-
-  lineHeight: {
-    label: "Line Height",
-    default: 1.4,
-    options: [1, 1.2, 1.4, 1.6, 1.8, 2],
-    supported: SUPPORT_LEVELS.SUPPORTED,
-    implemented: true,
-    notes: null,
-  },
-
-  fontFamily: {
-    label: "Font",
-    default: "Source Code Pro",
-    options: [
-      "Monaco",
-      "Hack",
-      "Inconsolata",
-      "Source Code Pro",
-      "Monoid",
-      "Fantasque Sans Mono",
-      "Input Mono",
-      "DejaVu Sans Mono",
-      "FireCode Medium",
-      "Operator Mono",
-      "Dank Mono",
-      "Gintronic",
-      "Courier Prime",
-      "JetBrains Mono",
-      "Recursive",
-      "MonoLisa",
-      "Codelia",
-      "Comic Code",
-    ],
-    supported: SUPPORT_LEVELS.SUPPORTED,
-    implemented: true,
-    notes: null,
-  },
-
-  theme: {
-    label: "Syntax Highlighting",
-    default: "twilight",
-    options: [
-      "twilight",
-      "oneDark",
-      // "Solarized Dark",
-      // "Tomorrow Night",
-      // "Oceanic Dark",
-      // "Panda",
-      // "DuoTone Dark",
-      // "High Contrast Dark",
-      // "Classic",
-      // "Solarized Light",
-      // "XQ Light",
-      // "Oceanic Light",
-      // "MDN Like",
-      // "DuoTone Light",
-      // "High Contrast Light",
-    ],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    implemented: false,
-    notes:
-      "1) Do we have to re-initialize the editor to change the theme or can we dispatch a change for a dynamically imported theme? 2) We have lots of themes to port over.",
   },
 };
 

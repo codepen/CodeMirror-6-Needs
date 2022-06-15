@@ -902,6 +902,16 @@ cluster-key-slot@^1.1.0:
   resolved "https://registry.yarnpkg.com/cluster-key-slot/-/cluster-key-slot-1.1.0.tgz#30474b2a981fb12172695833052bc0d01336d10d"
   integrity sha512-2Nii8p3RwAPiFwsnZvukotvow2rIHM+yQ6ZcBXGHdniadkYGZYiGmkHJIbZPIV9nfv7m/U1IPMVVcAhoWFeklw==
 
+cm6-theme-solarized-dark@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/cm6-theme-solarized-dark/-/cm6-theme-solarized-dark-0.2.0.tgz#f4238aa74289b6c4cb8aedb70e430acb18b774c7"
+  integrity sha512-FWtYHcX8NLzNSs21yGbkLF+q/5m2u80ug0JytKoI9nMZWPP5dcnsFYp1iZBEegLehiZnpv1qcmTsLTUG2KD39w==
+
+cm6-theme-solarized-light@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/cm6-theme-solarized-light/-/cm6-theme-solarized-light-0.2.0.tgz#53948ec3efcbd4bbe592398931dff586c728c9f5"
+  integrity sha512-Iw7Xv+9A6NlT7sRGlM2pOwD3ZBETkAqpb7c6O0LPj5kjwcK6C3k+mvjzaQt1gzfBErMmhL1HHuK07zICeXkE+w==
+
 codemirror@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-6.0.0.tgz#48aac6370d188f0761807ad9c3b62da7e7f72446"
@@ -2971,6 +2981,11 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
+
+thememirror@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/thememirror/-/thememirror-2.0.0.tgz#7aa3b1ac7af6ae861d363191018623257f52ba4f"
+  integrity sha512-QzLVy4b9uIDwlPFk4ojCZxvyRpnP9Ntp7223HkXtxNijhUaD1odMa89sT3cezK+wDZFix2OKB/EXJsQiyQ2pCg==
 
 tiny-glob@^0.2.9:
   version "0.2.9"

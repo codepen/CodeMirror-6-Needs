@@ -22,7 +22,7 @@ export function useLanguageExtension({ language }, editorView) {
 
       if (lang) {
         const languageExtension = await lang.load();
-        console.log({ language, languageExtension });
+        // console.log({ language, languageExtension });
         updateCompartment(languageExtension);
       }
     }
