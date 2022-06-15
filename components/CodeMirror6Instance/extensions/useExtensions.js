@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { basicSetup } from "codemirror";
 import { useEmmetExtension } from "./emmet";
 import { useLanguageExtension } from "./languages";
@@ -26,18 +25,14 @@ export function useExtensions(props, editorView) {
   const lineWrapping = useLineWrapping(editorSettings, editorView);
   const indentation = useIndentation(editorSettings, editorView);
 
-  // useEffect(() => {
-  //   editorView && editorView.requestMeasure();
-  // }, [editorView, editorSettings.fontSize, editorSettings.fontFamily]);
-
   return [
     basicSetup,
+    language,
     readOnly,
     theme,
     fonts,
     lineWrapping,
     indentation,
-    language,
     emmet,
   ];
 }

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { EditorView } from "@codemirror/view";
+import { EditorView } from "codemirror";
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
 export function useLineWrapping({ lineWrapping }, editorView) {

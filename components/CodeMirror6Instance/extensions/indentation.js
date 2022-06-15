@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
-import { EditorState } from "@codemirror/state";
-import { keymap } from "@codemirror/view";
-import { indentWithTab /*, indentSelection */ } from "@codemirror/commands";
+import {
+  EditorState,
+  keymap,
+  indentWithTab /*, indentSelection */,
+} from "codemirror";
 
 // TODO: Indent with tab on tab press, update indentation on the current state value?
 // https://discuss.codemirror.net/t/codemirror-6-auto-select-and-indent/4175/2

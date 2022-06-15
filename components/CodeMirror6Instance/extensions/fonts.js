@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { EditorView } from "@codemirror/view";
+import { EditorView } from "codemirror";
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
 export function useFonts({ fontSize, fontFamily, lineHeight }, editorView) {

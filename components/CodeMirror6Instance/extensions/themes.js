@@ -1,8 +1,7 @@
 import { useEffect } from "react";
+import { oneDark } from "@codemirror/theme-one-dark";
 
 import { useExtensionCompartment } from "./useExtensionCompartment";
-
-import { oneDark } from "@codemirror/theme-one-dark";
 
 // TODO: Port themes
 // https://codemirror.net/examples/styling/
