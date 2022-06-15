@@ -128,9 +128,8 @@ export const EDITOR_SETTINGS = {
     implemented: true,
     notes: (
       <>
-        Might be being{" "}
-        <a href="https://github.com/emmetio/codemirror-plugin/issues/13">
-          worked on
+        <a href="https://github.com/emmetio/codemirror6-plugin">
+          Implemented as a plugin
         </a>{" "}
         by Sergey.
       </>
@@ -139,17 +138,26 @@ export const EDITOR_SETTINGS = {
 
   fontSize: {
     label: "Font Size",
-    default: 12,
+    default: 14,
     options: [10, 12, 14, 16, 18, 20, 22, 24],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    implemented: false,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
     notes: (
       <>
-        Does CodeMirror care? Or do we just alter some on-page CSS? It probably
-        effects line wrapping so at least we&apos;d need to “refresh” (e.g.{" "}
-        <code>requestMeasure</code>?) the editors?
+        <a href="https://discuss.codemirror.net/t/changing-the-font-size-of-cm6/2935">
+          Implemented via Theme
+        </a>
       </>
     ),
+  },
+
+  lineHeight: {
+    label: "Line Height",
+    default: 1.4,
+    options: [1, 1.2, 1.4, 1.6, 1.8, 2],
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    implemented: true,
+    notes: null,
   },
 
   fontFamily: {

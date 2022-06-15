@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { EditorView } from "@codemirror/view";
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
-export function useFonts({ fontSize, fontFamily }, editorView) {
+export function useFonts({ fontSize, fontFamily, lineHeight }, editorView) {
   const [compartment, updateCompartment] = useExtensionCompartment(editorView);
 
   // const Theme = useMemo(
@@ -15,13 +15,13 @@ export function useFonts({ fontSize, fontFamily }, editorView) {
       "&": {
         fontSize: `${fontSize}px`,
       },
-      ".cm-content": {
+      ".cm-scroller": {
         fontFamily: fontFamily,
+        lineHeight: lineHeight,
       },
     });
-    console.log("updating font", fontSize, fontFamily);
     updateCompartment([Theme]);
-  }, [fontSize, fontFamily, updateCompartment]);
+  }, [lineHeight, fontSize, fontFamily, updateCompartment]);
 
   return compartment;
 }
