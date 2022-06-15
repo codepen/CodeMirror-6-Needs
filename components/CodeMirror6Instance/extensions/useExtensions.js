@@ -13,38 +13,48 @@ import { useMatchBrackets } from "./matchBrackets";
 import { useAutocomplete } from "./autocomplete";
 
 export function useExtensions(props, editorView) {
-  const language = useLanguageExtension(props, editorView);
+  const languageExtension = useLanguageExtension(props, editorView);
 
   const { editorSettings } = props;
   // console.log("useExtensions", editorSettings);
 
-  const lineNumbers = useLineNumbers(editorSettings, editorView);
-  const codeFolding = useCodeFolding(editorSettings, editorView);
-  const readOnly = useReadOnly(editorSettings, editorView);
-  const emmet = useEmmetExtension(editorSettings, editorView);
-  const theme = useThemeExtension(editorSettings, editorView);
-  const fonts = useFonts(editorSettings, editorView);
-  const lineWrapping = useLineWrapping(editorSettings, editorView);
-  const indentation = useIndentation(editorSettings, editorView);
-  const matchBrackets = useMatchBrackets(editorSettings, editorView);
-  const autocomplete = useAutocomplete(editorSettings, editorView);
+  const lineNumbersExtension = useLineNumbers(editorSettings, editorView);
+  const codeFoldingExtension = useCodeFolding(editorSettings, editorView);
+  const readOnlyExtension = useReadOnly(editorSettings, editorView);
+  const emmetExtension = useEmmetExtension(
+    props.language,
+    editorSettings,
+    editorView
+  );
+  const themeExtension = useThemeExtension(editorSettings, editorView);
+  const fontsExtension = useFonts(editorSettings, editorView);
+  const lineWrappingExtension = useLineWrapping(editorSettings, editorView);
+  const indentationExtension = useIndentation(editorSettings, editorView);
+  const matchBracketsExtension = useMatchBrackets(editorSettings, editorView);
+  const autocompleteExtension = useAutocomplete(editorSettings, editorView);
 
   return [
     defaultExtensions,
-    readOnly,
+    readOnlyExtension,
 
     // Order can affect gutter layout and cascade precedence.
-    lineNumbers,
-    codeFolding,
-    language,
+    lineNumbersExtension,
+    codeFoldingExtension,
+    languageExtension,
 
     // TODO: language overrides matchBrackets ??
-    matchBrackets,
-    autocomplete,
-    theme,
-    fonts,
-    lineWrapping,
-    indentation,
-    emmet,
+    matchBracketsExtension,
+    autocompleteExtension,
+    themeExtension,
+    fontsExtension,
+    lineWrappingExtension,
+    indentationExtension,
+    emmetExtension,
+    // TODO: onChange listener
+    /* EditorView.updateListener.of((v:ViewUpdate) => {
+        if (v.docChanged) {
+          // Document changed
+        }
+      }); */
   ];
 }
