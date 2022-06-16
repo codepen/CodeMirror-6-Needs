@@ -32,11 +32,12 @@ const twilightTheme = EditorView.theme(
     },
     ".cm-gutters": {
       backgroundColor: "#1d1e22",
-      color: "#34363e",
+      color: "#44464e",
       border: "none",
     },
     ".cm-activeLineGutter": {
       backgroundColor: "#333438",
+      color: "#54565e",
     },
     ".cm-foldPlaceholder": {
       backgroundColor: "transparent",
