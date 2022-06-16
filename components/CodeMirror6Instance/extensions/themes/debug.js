@@ -6,7 +6,7 @@ import { tags } from "@lezer/highlight";
 console.log(tags);
 const debugHighlightStyle = HighlightStyle.define(
   Object.entries(tags).map(([key, value]) => {
-    return { tag: value, "--tag": `tag.${key}` };
+    return { tag: value, "--tags": `tag.${key}` };
   })
 );
 

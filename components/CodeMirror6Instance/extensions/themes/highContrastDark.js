@@ -105,7 +105,7 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
 
     // ???
     {
-      tag: [tags.character, tags.macroName],
+      tag: [tags.character, tags.macroName, tags.meta],
       color: COLORS.blue,
     },
 
@@ -115,11 +115,21 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
       color: COLORS.teal,
     },
 
+    {
+      tag: tags.angleBracket,
+      color: COLORS.gray,
+    },
+
     // ???
     {
       tag: [tags.color, tags.constant(tags.name), tags.standard(tags.name)],
       color: COLORS.yellow,
     },
+
+    // {
+    //   tag: tags.tagName,
+    //   color: COLORS.orange,
+    // },
 
     // variable name
     {
@@ -169,7 +179,7 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
     },
 
     // Comments
-    { tag: [tags.meta, tags.comment], color: COLORS.blueSlate },
+    { tag: [tags.comment], color: COLORS.blueSlate },
 
     { tag: tags.strong, fontWeight: "bold" },
     { tag: tags.emphasis, fontStyle: "italic" },

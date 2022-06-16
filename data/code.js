@@ -41,7 +41,7 @@ export const CODE_SAMPLES = [
     notes: null,
     code: `import gsap from 'gsap';
 
-  let foo = "bar";
+let foo = "bar";
 
 const data = {
   age: 12
