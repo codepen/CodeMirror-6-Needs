@@ -34,7 +34,7 @@ export const defaultKeymaps = keymap.of([
   ...historyKeymap,
   ...lintKeymap,
 
-  // NOTE: `indentWithTab` should be loaded after Emmet to ensure Emmet completions can take precendence
+  // NOTE: `indentWithTab` should be loaded after Emmet to ensure Emmet completions can take precedence
   // NOTE: Warn users about ESC + Tab https://codemirror.net/examples/tab/
   // TODO: Confirm works with tabs/spaces
   indentWithTab,
@@ -44,7 +44,6 @@ export const defaultExtensions = [
   syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
   highlightSpecialChars(),
   highlightActiveLine(),
-  // https://codemirror.net/docs/ref/#view.highlightActiveLineGutter
   highlightActiveLineGutter(),
   history(),
 
@@ -52,9 +51,7 @@ export const defaultExtensions = [
   // Multi cursor/select
   [
     EditorState.allowMultipleSelections.of(true),
-    // https://codemirror.net/docs/ref/#view.rectangularSelection
     rectangularSelection(),
-    // https://codemirror.net/docs/ref/#view.crosshairCursor
     crosshairCursor(),
   ],
 
