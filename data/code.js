@@ -47,7 +47,9 @@ const data = {
   age: 12
 };
 
-console.log(data.age);
+function hello(){
+  console.log(data.age);
+}
 `,
   },
   {

@@ -10,6 +10,7 @@ import * as themeMirror from "thememirror";
 // https://codemirror.net/docs/migration/#dom-structure
 
 export const THEMES = {
+  HIGH_CONTRAST_DARK: "High Contrast Dark",
   TWILIGHT: "Twilight",
   ONE_DARK: "One Dark",
   // https://github.com/craftzdog/cm6-themes/
@@ -23,6 +24,10 @@ export const THEME_LOADERS = {
     import("@codemirror/theme-one-dark").then(({ oneDark }) => oneDark),
   [THEMES.TWILIGHT]: () =>
     import("./themes/twilight").then(({ twilight }) => twilight),
+  [THEMES.HIGH_CONTRAST_DARK]: () =>
+    import("./themes/highContrastDark").then(
+      ({ highContrastDark }) => highContrastDark
+    ),
   [THEMES.SOLARIZED_DARK]: () =>
     import("cm6-theme-solarized-dark").then(
       ({ solarizedDark }) => solarizedDark
