@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useExtensionCompartment } from "./useExtensionCompartment";
 
 import * as themeMirror from "thememirror";
+import { debugTheme } from "./themes/debug";
 
 // TODO: Port themes
 // https://codemirror.net/examples/styling/
@@ -58,7 +59,7 @@ export function useThemeExtension({ theme }, editorView) {
       const themeLoader = THEME_LOADERS[theme];
       if (themeLoader) {
         const loadedTheme = await themeLoader();
-        updateCompartment(loadedTheme);
+        updateCompartment([debugTheme, loadedTheme]);
       }
     }
 

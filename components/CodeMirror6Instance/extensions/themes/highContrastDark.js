@@ -9,9 +9,10 @@ const COLORS = {
   darkerGray: "#272c3b",
   white: "#fff",
   yellow: "#ffdd40",
-  green: "#a3d65a",
+  green: "#47cf73",
   teal: "#2bc7b9",
   blue: "#5e91f2",
+  lightBlue: "#0ebeff",
   purple: "#ae63e4",
   blueSlate: "#88afbf",
   red: "#ff3c41",
@@ -46,7 +47,7 @@ const highContrastDarkTheme = EditorView.theme(
     },
     ".cm-selectionMatch": { backgroundColor: "#aafe661a" },
     ".cm-matchingBracket, .cm-nonmatchingBracket": {
-      backgroundColor: "#bad0f847",
+      backgroundColor: COLORS.darkGray,
       outline: `1px solid ${COLORS.darkGray}`,
     },
     ".cm-gutters": {
@@ -91,6 +92,11 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
       color: COLORS.blue,
     },
 
+    {
+      tag: tags.attributeName,
+      color: COLORS.white,
+    },
+
     // JavaScript property name
     {
       tag: tags.propertyName,
@@ -105,8 +111,8 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
 
     // JavaScript function name
     {
-      tag: [tags.function(tags.variableName), tags.labelName],
-      color: COLORS.gray,
+      tag: [tags.function(tags.variableName)],
+      color: COLORS.teal,
     },
 
     // ???
@@ -118,7 +124,11 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
     // variable name
     {
       tag: [tags.definition(tags.name)],
-      color: COLORS.gray,
+      color: COLORS.lightBlue,
+    },
+    {
+      tag: tags.operator,
+      color: COLORS.green,
     },
 
     // Semicolon
@@ -147,7 +157,7 @@ const highContrastDarkHighlightStyle = HighlightStyle.define(
     // +
     {
       tag: [
-        tags.operator,
+        // tags.operator,
         tags.operatorKeyword,
         tags.url,
         tags.escape,
