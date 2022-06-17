@@ -6,6 +6,7 @@ export default function CodeEditor({
   language,
   value,
   editorSettings,
+  onInit,
   ...props
 }) {
   return (
@@ -14,6 +15,7 @@ export default function CodeEditor({
         value={value}
         language={language}
         editorSettings={editorSettings}
+        onInit={onInit}
       />
     </div>
   );

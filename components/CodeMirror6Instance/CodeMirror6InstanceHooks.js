@@ -12,18 +12,27 @@ export function useCodeMirror6Instance(props) {
   // Initialize CodeMirror6 View
   useEffect(() => {
     // TODO: Handle FileDoc scenario of shared state https://codemirror.net/examples/split/
-    const editorState = EditorState.create({
-      doc: props.value,
-      extensions,
-    });
+    const editorState =
+      props.state ||
+      EditorState.create({
+        doc: props.value,
+        extensions,
+      });
 
     const editorView = new EditorView({
       state: editorState,
       parent: ref.current,
+      // dispatch: function (tr) {
+      // //   console.log("dispatch!", this, tr);
+      //   this.update([tr]);
+      //   props.dispatch
+      // },
     });
 
     // NOTE: State is available as `editorView.state`
     setEditorView(editorView);
+
+    props.onInit && props.onInit(editorView, setEditorView);
 
     // Destroy when unmounted.
     return () => editorView.destroy();
@@ -32,7 +41,7 @@ export function useCodeMirror6Instance(props) {
 
   const { value } = props;
   useEffect(() => {
-    if (!editorView) return;
+    if (!editorView || !value) return;
     // TODO: If value !== current value
     // https://codemirror.net/docs/migration/#making-changes
     editorView.dispatch({
