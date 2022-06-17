@@ -11,6 +11,7 @@ import { useLineNumbers } from "./lineNumbers";
 import { useCodeFolding } from "./codeFolding";
 import { useMatchBrackets } from "./matchBrackets";
 import { useAutocomplete } from "./autocomplete";
+import { useOnChange } from "./onChange";
 
 export function useExtensions(props, editorView) {
   const languageExtension = useLanguageExtension(props, editorView);
@@ -32,6 +33,7 @@ export function useExtensions(props, editorView) {
     editorSettings,
     editorView
   );
+  const onChangeExtension = useOnChange(props, editorView);
 
   return [
     emmetExtension,
@@ -50,12 +52,6 @@ export function useExtensions(props, editorView) {
     fontsExtension,
     lineWrappingExtension,
     indentationExtension,
-    // TODO: set selections
-    // TODO: onChange listener
-    /* EditorView.updateListener.of((v:ViewUpdate) => {
-        if (v.docChanged) {
-          // Document changed
-        }
-      }); */
+    onChangeExtension,
   ];
 }

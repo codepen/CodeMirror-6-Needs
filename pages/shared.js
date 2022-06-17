@@ -40,22 +40,32 @@ class SyncedState {
     return (tr) => {
       view.update([tr]);
       // If not an empty change and not a sync change, then apply the change to all other views.
-      if (
-        !tr.annotation(syncAnnotation) &&
-        (!tr.effects.empty || !tr.changes.empty)
-      ) {
-        views
-          .filter((v) => v !== view)
-          .forEach((v) => {
-            v.dispatch({
-              // Mark this as a sync transaction.
-              annotations: syncAnnotation.of(true),
-              // Changes = content changes
-              changes: tr.changes,
-              // Effects = extension updates
-              effects: tr.effects,
-            });
+      if (!tr.annotation(syncAnnotation)) {
+        console.log("sync dispatch", views.indexOf(view), tr);
+
+        // Mark this as a sync transaction.
+        const annotations = syncAnnotation.of(true);
+        let transaction;
+
+        if (!tr.changes.empty) {
+          transaction = {
+            // Mark this as a sync transaction.
+            annotations,
+            changes: tr.changes,
+          };
+        } else if (tr.effects.length) {
+          transaction = {
+            annotations,
+            effects: tr.effects,
+          };
+        }
+
+        if (transaction) {
+          views.forEach((v) => {
+            if (v === view) return;
+            v.dispatch(transaction);
           });
+        }
       }
     };
   }
@@ -66,17 +76,29 @@ export default function Shared() {
     EDITOR_SETTINGS_DEFAULTS
   );
 
-  const [syncedState, setSyncedState] = useState();
-  useEffect(() => {
-    if (!syncedState) {
-      let s = new SyncedState();
-      setSyncedState(s);
-      console.log("syncedState", s);
-    }
-  }, [syncedState]);
+  const syncedStateRef = useRef(new SyncedState());
+  const syncedState = syncedStateRef.current;
 
   function onInit(editorView) {
     syncedState.addView(editorView);
+  }
+
+  const [fileValue, setFileValue] = useState(
+    `<html>\n  <body>\n    Hello World\n  </body>\n</html>`
+  );
+  const [submittedValue, setSubmittedValue] = useState(fileValue);
+
+  function onSubmit() {
+    console.log("onSubmit", fileValue);
+    setSubmittedValue(fileValue);
+  }
+
+  function onChange(update) {
+    if (update.docChanged) {
+      console.log("onChange", update);
+      let value = update.state.doc.toString();
+      setFileValue(value);
+    }
   }
 
   return (
@@ -91,6 +113,16 @@ export default function Shared() {
         </header>
 
         <section className={styles.settings}>
+          <div style={{ display: "grid" }}>
+            <h3 onClick={() => setFileValue("hello")}>File Contents</h3>
+            <textarea
+              value={fileValue}
+              onInput={(e) => setFileValue(e.currentTarget.value)}
+              rows="6"
+            />
+            <button onClick={onSubmit}>Submit</button>
+          </div>
+          <hr />
           <EditorSettings
             editorSettings={editorSettings}
             setEditorSettings={setEditorSettings}
@@ -107,8 +139,9 @@ export default function Shared() {
             <CodeMirror6Instance
               editorSettings={editorSettings}
               language={LANGUAGES.HTML}
-              value={`<html>\nTest 1\n</html>`}
+              value={submittedValue}
               onInit={onInit}
+              onChange={onChange}
             />
 
             <CodeMirror6Instance onInit={onInit} />
