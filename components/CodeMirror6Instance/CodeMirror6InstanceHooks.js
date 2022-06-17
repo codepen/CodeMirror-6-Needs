@@ -43,14 +43,14 @@ export function useCodeMirror6Instance(props) {
     if (!editorView || !value) return;
     let currentValue = editorView.state.doc.toString();
 
-    console.log("value changed", { value, currentValue });
     if (value !== currentValue) {
+      console.log("value changed", { value, currentValue });
       // https://codemirror.net/docs/migration/#making-changes
       editorView.dispatch({
         changes: { from: 0, to: editorView.state.doc.length, insert: value },
       });
     }
-  }, []);
+  }, [value, editorView]);
 
   return { ref };
 }
