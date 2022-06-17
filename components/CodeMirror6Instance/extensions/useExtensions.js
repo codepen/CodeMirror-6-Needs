@@ -12,6 +12,9 @@ import { useCodeFolding } from "./codeFolding";
 import { useMatchBrackets } from "./matchBrackets";
 import { useAutocomplete } from "./autocomplete";
 import { useOnChange } from "./onChange";
+import { useExtensionCompartment } from "./useExtensionCompartment";
+import { useEffect } from "react/cjs/react.production.min";
+import { useExtraExtensions } from "./extensions";
 
 export function useExtensions(props, editorView) {
   const languageExtension = useLanguageExtension(props, editorView);
@@ -34,6 +37,7 @@ export function useExtensions(props, editorView) {
     editorView
   );
   const onChangeExtension = useOnChange(props, editorView);
+  const extraExtensions = useExtraExtensions(props, editorView);
 
   return [
     emmetExtension,
@@ -53,5 +57,6 @@ export function useExtensions(props, editorView) {
     lineWrappingExtension,
     indentationExtension,
     onChangeExtension,
+    extraExtensions,
   ];
 }
