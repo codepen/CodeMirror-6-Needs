@@ -49,7 +49,6 @@ export function useExtensions(props, editorView) {
     codeFoldingExtension,
     languageExtension,
 
-    // TODO: language overrides matchBrackets ??
     matchBracketsExtension,
     autocompleteExtension,
     themeExtension,

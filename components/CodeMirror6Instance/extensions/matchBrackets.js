@@ -10,7 +10,7 @@ export function useMatchBrackets({ matchBrackets }, editorView) {
   useEffect(() => {
     updateCompartment(
       matchBrackets
-        ? [bracketMatching(), closeBrackets()] //, keymap.of(closeBracketsKeymap)]
+        ? [bracketMatching(), closeBrackets(), keymap.of(closeBracketsKeymap)]
         : []
     );
   }, [matchBrackets, updateCompartment]);
