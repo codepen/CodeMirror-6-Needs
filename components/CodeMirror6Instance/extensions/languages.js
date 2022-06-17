@@ -13,9 +13,6 @@ function getLanguageFallback(language) {
     case LANGUAGES.HAML:
     case LANGUAGES.SLIM:
       return LANGUAGES.HTML;
-
-    case LANGUAGES.SASS:
-      return LANGUAGES.SCSS;
   }
 
   return language;

@@ -178,7 +178,7 @@ html
   {
     language: LANGUAGES.SASS,
     label: <a href="https://sass-lang.com/">Sass</a>,
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     code: `// SASS SYNTAX
 $font-stack:    Helvetica, sans-serif
 $primary-color: #333
@@ -191,7 +191,6 @@ body
     language: LANGUAGES.SCSS,
     label: <a href="https://lesscss.org/#">Less</a>,
     supported: SUPPORT_LEVELS.SUPPORTED,
-    notes: "Legacy mode",
     code: `// Variables
 @link-color:        #428bca; // sea blue
 @link-color-hover:  darken(@link-color, 10%);

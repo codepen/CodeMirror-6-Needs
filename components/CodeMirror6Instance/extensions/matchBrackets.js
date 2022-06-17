@@ -8,7 +8,6 @@ export function useMatchBrackets({ matchBrackets }, editorView) {
   const [compartment, updateCompartment] = useExtensionCompartment(editorView);
 
   useEffect(() => {
-    console.log("match brackets!", matchBrackets);
     updateCompartment(
       matchBrackets
         ? [bracketMatching(), closeBrackets()] //, keymap.of(closeBracketsKeymap)]

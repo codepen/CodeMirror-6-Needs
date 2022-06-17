@@ -11,13 +11,11 @@ import { useLineNumbers } from "./lineNumbers";
 import { useCodeFolding } from "./codeFolding";
 import { useMatchBrackets } from "./matchBrackets";
 import { useAutocomplete } from "./autocomplete";
-import { keymap } from "@codemirror/view";
-import { indentWithTab } from "@codemirror/commands";
 
 export function useExtensions(props, editorView) {
   const languageExtension = useLanguageExtension(props, editorView);
 
-  const { editorSettings } = props;
+  const editorSettings = props.editorSettings || {};
   // console.log("useExtensions", editorSettings);
 
   const lineNumbersExtension = useLineNumbers(editorSettings, editorView);
