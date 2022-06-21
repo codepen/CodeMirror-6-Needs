@@ -86,7 +86,7 @@ export const EDITOR_SETTINGS = {
     label: "Indent Width",
     default: 2,
     options: [2, 4, 6, 8],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     implemented: true,
     notes: (
       <>
@@ -103,7 +103,7 @@ export const EDITOR_SETTINGS = {
     label: "Tabs or Spaces",
     default: INDENT_VALUES.SPACES,
     options: [INDENT_VALUES.SPACES, INDENT_VALUES.TABS],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     implemented: true,
     notes: (
       <>NOTE: Does not convert previous indentations to the new indent unit. </>
