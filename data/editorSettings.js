@@ -87,13 +87,14 @@ export const EDITOR_SETTINGS = {
     default: 2,
     options: [2, 4, 6, 8],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    implemented: false,
+    implemented: true,
     notes: (
       <>
-        Works by re-processing code through{" "}
-        <a href="https://prettier.io/docs/en/api.html">Prettier</a> — but is
-        there an official CodeMirror way of altering indent width of
-        pre-authored code?
+        NOTE: Does not convert previous indentations to a new width. There are
+        some ways to do that through{" "}
+        <a href="https://prettier.io/docs/en/api.html">Prettier</a>. Is there an
+        official CodeMirror way of altering indent width of pre-authored code
+        for spaces?
       </>
     ),
   },
@@ -103,15 +104,9 @@ export const EDITOR_SETTINGS = {
     default: INDENT_VALUES.SPACES,
     options: [INDENT_VALUES.SPACES, INDENT_VALUES.TABS],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    implemented: false,
+    implemented: true,
     notes: (
-      <>
-        Not working.{" "}
-        <a href="https://codemirror.net/6/docs/ref/#language.indentUnit">
-          Docs?
-        </a>
-        . What do you pass and where? Can it be dispatched?
-      </>
+      <>NOTE: Does not convert previous indentations to the new indent unit. </>
     ),
   },
 

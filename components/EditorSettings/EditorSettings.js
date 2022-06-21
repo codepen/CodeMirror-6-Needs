@@ -31,6 +31,7 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
                 if (value === "true") value = true;
                 if (value === "false") value = false;
                 changeEditorSetting({ [key]: value });
+                console.log(key, value);
               }}
             >
               {options.map((option) => {
