@@ -4,18 +4,12 @@ import styles from "./EditorSettings.module.scss";
 export default function EditorSettings({ editorSettings, setEditorSettings }) {
   function changeEditorSetting(newSettings) {
     return setEditorSettings((editorSettings) => {
-      const updatedSettings = {
+      return {
         ...editorSettings,
         ...newSettings,
       };
-      return updatedSettings;
-
-      // for font-size and font-family....
-      // .cm-editor .cm-content { font-family: "Consolas" }
     });
   }
-
-  console.log(editorSettings);
 
   return (
     <div className={styles.root}>

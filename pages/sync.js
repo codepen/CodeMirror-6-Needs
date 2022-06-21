@@ -125,6 +125,7 @@ export default function Shared() {
           </div>
           <hr />
           <EditorSettings
+            key="settings"
             editorSettings={editorSettings}
             setEditorSettings={setEditorSettings}
           />
