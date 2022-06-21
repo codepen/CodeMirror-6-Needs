@@ -34,9 +34,9 @@ export const defaultKeymaps = keymap.of([
   ...historyKeymap,
   ...lintKeymap,
 
+  // NOTE: This keymap refers to the `tab` key, NOT tabs vs spaces.
   // NOTE: `indentWithTab` should be loaded after Emmet to ensure Emmet completions can take precedence
   // NOTE: Warn users about ESC + Tab https://codemirror.net/examples/tab/
-  // TODO: Confirm works with tabs/spaces
   indentWithTab,
 ]);
 

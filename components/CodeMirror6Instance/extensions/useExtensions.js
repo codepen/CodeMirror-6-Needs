@@ -1,4 +1,3 @@
-// import { basicSetup } from "codemirror";
 import { defaultExtensions } from "./defaultExtensions";
 import { useEmmetExtension } from "./emmet";
 import { useLanguageExtension } from "./languages";
@@ -12,8 +11,6 @@ import { useCodeFolding } from "./codeFolding";
 import { useMatchBrackets } from "./matchBrackets";
 import { useAutocomplete } from "./autocomplete";
 import { useOnChange } from "./onChange";
-import { useExtensionCompartment } from "./useExtensionCompartment";
-import { useEffect } from "react/cjs/react.production.min";
 import { useExtraExtensions } from "./extensions";
 
 export function useExtensions(props, editorView) {
@@ -40,9 +37,9 @@ export function useExtensions(props, editorView) {
   const extraExtensions = useExtraExtensions(props, editorView);
 
   return [
+    // Order for Emmet & default is important to allow `tab` key indentation to work.
     emmetExtension,
     defaultExtensions,
-    readOnlyExtension,
 
     // Order can affect gutter layout and cascade precedence.
     lineNumbersExtension,
@@ -51,6 +48,7 @@ export function useExtensions(props, editorView) {
 
     matchBracketsExtension,
     autocompleteExtension,
+    readOnlyExtension,
     themeExtension,
     fontsExtension,
     lineWrappingExtension,

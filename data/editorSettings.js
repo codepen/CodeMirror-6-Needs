@@ -156,10 +156,10 @@ export const EDITOR_SETTINGS = {
   },
 
   matchBrackets: {
-    label: "Match & Close Brackets",
+    label: "Match & Close Brackets / Tags",
     default: true,
     options: [true, false],
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     implemented: true,
     notes: (
       <>
@@ -180,6 +180,15 @@ export const EDITOR_SETTINGS = {
           </a>
           , but they are different plugins in CodeMirror. Should we separate or
           combine?
+        </p>
+
+        <p>
+          TODO: There&apos;s also the concept of{" "}
+          <a href="https://github.com/codemirror/lang-html#api-reference">
+            `matchClosingTags` and `autoCloseTags` for HTML
+          </a>{" "}
+          (possibly JSX as well?). Do we want this all linked to one option? In
+          the interest of simplicity, they do all seem related.
         </p>
       </>
     ),

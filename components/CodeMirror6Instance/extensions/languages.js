@@ -18,23 +18,40 @@ function getLanguageFallback(language) {
   return language;
 }
 
-function getCodeMirrorLanguageData(language) {
+const htmlLanguage = languages.find((lang) => lang.name === "HTML");
+
+function getCodeMirrorLanguageData(language, matchBrackets) {
   language = getLanguageFallback(language);
 
-  const languageData = languages.find(
+  let languageData = languages.find(
     (lang) => lang.name === language || lang.alias.includes(language)
   );
+
+  if (languageData === htmlLanguage) {
+    console.log("HTML!", language);
+    // For HTML, we need to manually override the loader here to turn off `matchClosingTags` and `autoCloseTags` so that we can enable them
+    languageData.load = function () {
+      return import("@codemirror/lang-html").then((m) =>
+        m.html({
+          matchClosingTags: matchBrackets,
+          autoCloseTags: matchBrackets,
+        })
+      );
+    };
+  }
 
   return languageData;
 }
 
-export function useLanguageExtension({ language }, editorView) {
+export function useLanguageExtension({ language, editorSettings }, editorView) {
   const [languageCompartment, updateCompartment] =
     useExtensionCompartment(editorView);
 
+  const matchBrackets = editorSettings?.matchBrackets ? true : false;
+
   useEffect(() => {
     async function loadLanguage() {
-      const lang = getCodeMirrorLanguageData(language);
+      const lang = getCodeMirrorLanguageData(language, matchBrackets);
 
       if (lang) {
         const languageExtension = await lang.load();
@@ -43,7 +60,7 @@ export function useLanguageExtension({ language }, editorView) {
     }
 
     loadLanguage();
-  }, [language, updateCompartment]);
+  }, [language, matchBrackets, updateCompartment]);
 
   return languageCompartment;
 }
