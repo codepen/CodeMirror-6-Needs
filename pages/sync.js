@@ -26,33 +26,36 @@ class SyncedState {
         constructor(view) {
           views.push(view);
           this.view = view;
-          this.syncValue();
+          this.mounted = false;
+          // Have to delay the setState because we can't call it directly in an `update` call.
+          requestAnimationFrame(() => {
+            if (views.length > 1 && view !== views[0]) {
+              const value = views[0].state.doc.toString();
+              // this.view.setState(views[0].state);
+              // console.log(
+              //   "view.state.doc.length",
+              //   view.state.doc.length,
+              //   view.state.doc.toString()
+              // );
+              view.dispatch({
+                annotations: syncAnnotation,
+                changes: {
+                  from: 0,
+                  to: view.state.doc.length,
+                  insert: value,
+                },
+              });
+            }
+            this.mounted = true;
+          });
         }
 
         destroy() {
           views.splice(views.indexOf(this.view), 1);
         }
 
-        async syncValue() {
-          // TODO: Figure out a way to sync the initial value.
-          if (views.length > 1 && this.view !== views[0]) {
-            // view.setState(views[0].state);
-            let value = views[0].state.doc.toString();
-            console.log("syncing with 0", this, value);
-            // this.view.setState(views[0].state);
-            // dispatch({
-            //   annotations: syncAnnotation,
-            //   changes: {
-            //     from: 0,
-            //     to: this.view.state.doc.length,
-            //     insert: value,
-            //   },
-            // });
-          }
-        }
-
         update(u) {
-          if (u.docChanged) {
+          if (this.mounted && u.docChanged) {
             const transactions = u.transactions
               .filter(
                 // filter out non-sync transactions without changes.
@@ -62,6 +65,8 @@ class SyncedState {
                 // Send through changes only, marked as a syncAnnotation
                 return { changes: tr.changes, annotations };
               });
+
+            console.log("update", u.docChanged, views.length, transactions);
 
             views.forEach((v) => {
               if (v === u.view) return;
@@ -88,13 +93,13 @@ export default function Shared() {
   const [submittedValue, setSubmittedValue] = useState(fileValue);
 
   function onSubmit() {
-    console.log("onSubmit", fileValue);
+    // console.log("onSubmit", fileValue);
     setSubmittedValue(fileValue);
   }
 
   function onChange(update) {
     if (update.docChanged) {
-      console.log("onChange", update);
+      // console.log("onChange", update);
       let value = update.state.doc.toString();
       setFileValue(value);
     }
@@ -151,15 +156,15 @@ export default function Shared() {
             />
             <CodeMirror6Instance
               editorSettings={editorSettings}
-              language={LANGUAGES.HTML}
+              // language={LANGUAGES.HTML}
               extensions={syncedState.plugin}
-              value={submittedValue}
+              // value={submittedValue}
             />
             <CodeMirror6Instance
               editorSettings={editorSettings}
-              language={LANGUAGES.HTML}
+              // language={LANGUAGES.HTML}
               extensions={syncedState.plugin}
-              value={submittedValue}
+              // value={submittedValue}
             />
           </section>
         )}
