@@ -46,7 +46,7 @@ a {
 }
 
 [data-supported="SUPPORTED"]::before {
-  content: "✅ Working";
+  content: "✅ Supported";
   border-color: rgb(59, 250, 59);
 }
 
@@ -54,7 +54,7 @@ a {
   background: linear-gradient(to bottom, #730000, transparent);
 }
 [data-supported="NOT_SUPPORTED"]::before {
-  content: "❌ Not Working";
+  content: "❌ Not Supported";
   border-color: red;
 }
 
@@ -62,6 +62,6 @@ a {
   background: linear-gradient(to bottom, #504d00, transparent);
 }
 [data-supported="PARTIAL_SUPPORT"]::before {
-  content: "🤏 Partially Working";
+  content: "🤏 Partial Support";
   border-color: yellow;
 }

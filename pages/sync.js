@@ -13,13 +13,12 @@ import CodeMirror6Instance from "../components/CodeMirror6Instance";
 import { ViewPlugin } from "@codemirror/view";
 
 const syncAnnotation = new AnnotationType(Boolean);
+const annotations = syncAnnotation.of(true);
 
 class SyncedState {
   constructor() {
     const views = [];
     this.views = views;
-
-    const annotations = syncAnnotation.of(true);
 
     this.plugin = ViewPlugin.fromClass(
       class {
@@ -31,12 +30,8 @@ class SyncedState {
           requestAnimationFrame(() => {
             if (views.length > 1 && view !== views[0]) {
               const value = views[0].state.doc.toString();
-              // this.view.setState(views[0].state);
-              // console.log(
-              //   "view.state.doc.length",
-              //   view.state.doc.length,
-              //   view.state.doc.toString()
-              // );
+              // setState is a bit aggressive, forcing all extensions and such to be replaced. Dispatching the new value ensures we can just be concerned with the value sync.
+              // view.setState(views[0].state);
               view.dispatch({
                 annotations: syncAnnotation,
                 changes: {
@@ -46,11 +41,14 @@ class SyncedState {
                 },
               });
             }
+            // Set a mounted flag so we know the values are in sync.
             this.mounted = true;
           });
         }
 
         destroy() {
+          this.mounted = false;
+          // Remove this view from the array.
           views.splice(views.indexOf(this.view), 1);
         }
 
@@ -66,9 +64,8 @@ class SyncedState {
                 return { changes: tr.changes, annotations };
               });
 
-            console.log("update", u.docChanged, views.length, transactions);
-
             views.forEach((v) => {
+              // Don't dispatch the transactions on this view again.
               if (v === u.view) return;
               transactions.forEach((tr) => v.dispatch(tr));
             });

@@ -27,6 +27,7 @@ export default function Home() {
             <a href="https://codepen.io">CodePen</a>. It also has dropdowns for
             settings that we need to support.{" "}
           </p>
+          <a href="./shared/">Synced State ViewPlugin Demo</a>
         </header>
 
         <section className={styles.settings}>
