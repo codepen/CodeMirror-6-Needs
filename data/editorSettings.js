@@ -1,6 +1,11 @@
 import { THEMES } from "../components/CodeMirror6Instance/extensions/themes";
 import { SUPPORT_LEVELS } from "./supportLevels";
 
+export const INDENT_VALUES = {
+  TABS: "Tabs",
+  SPACES: "Spaces",
+};
+
 export const EDITOR_SETTINGS = {
   theme: {
     label: "Syntax Highlighting",
@@ -95,8 +100,8 @@ export const EDITOR_SETTINGS = {
 
   indentUnit: {
     label: "Tabs or Spaces",
-    default: "  ",
-    options: [" ", "  "],
+    default: INDENT_VALUES.SPACES,
+    options: [INDENT_VALUES.SPACES, INDENT_VALUES.TABS],
     supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
     implemented: false,
     notes: (
@@ -128,7 +133,7 @@ export const EDITOR_SETTINGS = {
   lineWrapping: {
     label: "Line Wrapping",
     default: true,
-    options: ["true", "false"],
+    options: [true, false],
     supported: SUPPORT_LEVELS.SUPPORTED,
     implemented: true,
     notes: (

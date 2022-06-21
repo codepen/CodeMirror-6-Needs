@@ -7,6 +7,9 @@ import {
   indentWithTab /*, indentSelection */,
 } from "codemirror";
 
+import { indentationMarkers } from "@replit/codemirror-indentation-markers";
+import { INDENT_VALUES } from "../../../data/editorSettings";
+
 // TODO: Indent with tab on tab press, update indentation on the current state value?
 // https://discuss.codemirror.net/t/codemirror-6-auto-select-and-indent/4175/2
 export function useIndentation({ indentUnit /* tabSize, */ }, editorView) {
@@ -15,9 +18,13 @@ export function useIndentation({ indentUnit /* tabSize, */ }, editorView) {
   useEffect(() => {
     //,
     updateCompartment(
-      indentUnit === "tab"
-        ? [keymap.of([indentWithTab]), EditorState.tabSize.of(8)]
-        : null
+      indentUnit === INDENT_VALUES.TABS
+        ? [
+            keymap.of([indentWithTab]),
+            EditorState.tabSize.of(8),
+            indentationMarkers(),
+          ]
+        : [indentationMarkers()]
     );
   }, [indentUnit, updateCompartment]);
 
