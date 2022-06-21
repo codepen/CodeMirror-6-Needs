@@ -169,11 +169,6 @@ export const EDITOR_SETTINGS = {
           </a>
         </p>
         <p>
-          Seems that languages themselves may automatically add `matchBrackets`
-          and/or `closeBrackets` without a way to override them... Can this be
-          disabled in some way?
-        </p>
-        <p>
           TODO: CodePen has traditionally paired this concept with{" "}
           <a href="https://codemirror.net/docs/ref/#autocomplete.closeBrackets">
             Close Brackets

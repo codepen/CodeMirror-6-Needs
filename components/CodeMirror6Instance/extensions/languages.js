@@ -29,7 +29,8 @@ function getCodeMirrorLanguageData(language, matchBrackets) {
 
   if (languageData === htmlLanguage) {
     console.log("HTML!", language);
-    // For HTML, we need to manually override the loader here to turn off `matchClosingTags` and `autoCloseTags` so that we can enable them
+    // For HTML, we need to manually override the loader here to turn off `matchClosingTags` and `autoCloseTags` so that we can enable them.
+    // TODO: Should we split this off into its own little extension hook?
     languageData.load = function () {
       return import("@codemirror/lang-html").then((m) =>
         m.html({
