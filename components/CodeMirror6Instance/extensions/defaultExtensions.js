@@ -2,8 +2,6 @@ import {
   crosshairCursor,
   drawSelection,
   dropCursor,
-  highlightActiveLine,
-  highlightActiveLineGutter,
   highlightSpecialChars,
   keymap,
   rectangularSelection,
@@ -43,8 +41,6 @@ export const defaultKeymaps = keymap.of([
 export const defaultExtensions = [
   syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
   highlightSpecialChars(),
-  highlightActiveLine(),
-  highlightActiveLineGutter(),
   history(),
 
   drawSelection(),

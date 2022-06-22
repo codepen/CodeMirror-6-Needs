@@ -10,25 +10,33 @@ import CodeMirror6Instance from "../components/CodeMirror6Instance";
 import { EditorView, Decoration } from "@codemirror/view";
 import { StateField, StateEffect } from "@codemirror/state";
 
-const hideCursorTheme = EditorView.theme({
-  ".cm-activeLine.cm-activeLine, .cm-activeLineGutter.cm-activeLineGutter": {
-    background: "none",
-  },
-  ".cm-cursor-primary": {
-    display: "none",
-    opacity: 0,
-  },
-});
-
-const consoleLineDecorations = {
-  error: Decoration.line({ class: "cm-console-error" }),
-  warn: Decoration.line({ class: "cm-console-warn" }),
-  info: Decoration.line({ class: "cm-console-info" }),
+const consoleLineClasses = {
+  clear: "cm-console-clear",
+  error: "cm-console-error",
+  warn: "cm-console-warn",
+  info: "cm-console-info",
 };
+
+// Make CodeMirror line decorations from each class
+const consoleLineDecorations = Object.fromEntries(
+  Object.entries(consoleLineClasses).map(([key, value]) => [
+    key,
+    Decoration.line({ class: value }),
+  ])
+);
 const consoleDecorationTheme = EditorView.baseTheme({
-  ".cm-console-error, .cm-activeLine.cm-activeLine.cm-console-error": {
-    textDecoration: "underline 3px red",
-    background: "darkred",
+  [`.${consoleLineClasses.clear}`]: {
+    fontStyle: "italic",
+    opacity: 0.5,
+  },
+  [`.${consoleLineClasses.error}`]: {
+    background: "hsl(358.462deg 100% 61.7647% / 35%)",
+  },
+  [`.${consoleLineClasses.warn}`]: {
+    background: "hsl(49.3194deg 100% 62.549% / 35%)",
+  },
+  [`.${consoleLineClasses.info}`]: {
+    background: "hsl(206.418deg 52.7559% 50.1961% / 50%)",
   },
 });
 
@@ -42,14 +50,17 @@ const consoleDecorationField = StateField.define({
     consoleDecorations = consoleDecorations.map(tr.changes);
     for (let e of tr.effects)
       if (e.is(addConsoleDecoration)) {
-        let { from, to } = e.value;
-        for (let pos = from; pos <= to; ) {
-          let line = tr.state.doc.lineAt(pos);
-          // builder.add(line.from, line.from, underlineMark);
-          consoleDecorations = consoleDecorations.update({
-            add: [consoleLineDecorations.error.range(line.from)],
-          });
-          pos = line.to + 1;
+        let { type, from, to } = e.value;
+        console.log("adding console decoration", type);
+        if (consoleLineDecorations[type]) {
+          for (let pos = from; pos <= to; ) {
+            let line = tr.state.doc.lineAt(pos);
+            // builder.add(line.from, line.from, underlineMark);
+            consoleDecorations = consoleDecorations.update({
+              add: [consoleLineDecorations[type].range(line.from)],
+            });
+            pos = line.to + 1;
+          }
         }
       }
     return consoleDecorations;
@@ -57,21 +68,85 @@ const consoleDecorationField = StateField.define({
   provide: (f) => EditorView.decorations.from(f),
 });
 
-function underlineRange(view, ranges) {
-  let effects = ranges.map(({ from, to }) =>
-    addConsoleDecoration.of({ from, to })
-  );
-  if (!effects.length) return false;
+function addConsoleLog(view, log) {
+  const value = log.arguments.join(" ");
+  const from = view.state.doc.length;
+  const to = from + value.length;
 
-  if (!view.state.field(consoleDecorationField, false))
+  let effects = [addConsoleDecoration.of({ type: log.function, from, to })];
+
+  if (!view.state.field(consoleDecorationField, false)) {
     effects.push(
       StateEffect.appendConfig.of([
         consoleDecorationField,
         consoleDecorationTheme,
       ])
     );
-  view.dispatch({ effects });
+  }
+
+  view.dispatch({
+    changes: {
+      from,
+      to: from,
+      insert: value + "\n",
+    },
+    effects,
+  });
+
   return true;
+}
+
+export default function Console() {
+  const [editorSettings, setEditorSettings] = useState({
+    ...EDITOR_SETTINGS_DEFAULTS,
+    lineNumbers: false,
+  });
+
+  const value = ""; //logs.map((log) => log.arguments.join(" ")).join("\n");
+
+  function onInit(view) {
+    logs.forEach((log) => {
+      addConsoleLog(view, log);
+    });
+    // underlineRange(view, [{ from: 0, to: 30 }]);
+  }
+
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>CodeMirror 6 Shared State</title>
+      </Head>
+
+      <main className={styles.main}>
+        <header className={styles.header}>
+          <h1>CodeMirror 6 Shared State</h1>
+        </header>
+
+        <section className={styles.settings}>
+          <EditorSettings
+            key="settings"
+            editorSettings={editorSettings}
+            setEditorSettings={setEditorSettings}
+          />
+        </section>
+        <section
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "1rem",
+          }}
+        >
+          <CodeMirror6Instance
+            editorSettings={editorSettings}
+            language={LANGUAGES.HTML}
+            onInit={onInit}
+            // extensions={ConsoleDecorations}
+            readOnly
+          />
+        </section>
+      </main>
+    </div>
+  );
 }
 
 const logs = [
@@ -122,55 +197,3 @@ const logs = [
     id: "1655911665393",
   },
 ];
-
-export default function Console() {
-  const [editorSettings, setEditorSettings] = useState({
-    ...EDITOR_SETTINGS_DEFAULTS,
-    lineNumbers: false,
-  });
-
-  const value = logs.map((log) => log.arguments.join(" ")).join("\n");
-
-  function onInit(view) {
-    underlineRange(view, [{ from: 0, to: 30 }]);
-  }
-
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>CodeMirror 6 Shared State</title>
-      </Head>
-
-      <main className={styles.main}>
-        <header className={styles.header}>
-          <h1>CodeMirror 6 Shared State</h1>
-        </header>
-
-        <section className={styles.settings}>
-          <EditorSettings
-            key="settings"
-            editorSettings={editorSettings}
-            setEditorSettings={setEditorSettings}
-          />
-        </section>
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-          }}
-        >
-          <CodeMirror6Instance
-            editorSettings={editorSettings}
-            language={LANGUAGES.HTML}
-            value={value}
-            onInit={onInit}
-            extensions={[hideCursorTheme]}
-            // extensions={ConsoleDecorations}
-            // readOnly
-          />
-        </section>
-      </main>
-    </div>
-  );
-}
