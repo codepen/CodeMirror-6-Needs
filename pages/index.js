@@ -11,6 +11,8 @@ export default function Home() {
     EDITOR_SETTINGS_DEFAULTS
   );
 
+  console.log(editorSettings);
+
   return (
     <div className={styles.container}>
       <Head>

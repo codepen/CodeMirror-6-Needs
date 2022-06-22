@@ -21,11 +21,6 @@ export function useCodeMirror6Instance(props) {
     const editorView = new EditorView({
       state: editorState,
       parent: ref.current,
-      // dispatch: function (tr) {
-      // //   console.log("dispatch!", this, tr);
-      //   this.update([tr]);
-      //   props.dispatch
-      // },
     });
 
     // NOTE: State is available as `editorView.state`
@@ -40,17 +35,24 @@ export function useCodeMirror6Instance(props) {
 
   const { value } = props;
   useEffect(() => {
-    if (!editorView || !value) return;
-    let currentValue = editorView.state.doc.toString();
+    const validValue = value || value === "";
+    if (!editorView || !validValue) return;
 
+    const currentValue = editorView.state.doc.toString();
     if (value !== currentValue) {
-      console.log("value changed", { value, currentValue });
       // https://codemirror.net/docs/migration/#making-changes
       editorView.dispatch({
         changes: { from: 0, to: editorView.state.doc.length, insert: value },
       });
     }
   }, [value, editorView]);
+
+  // Swap out state
+  useEffect(() => {
+    if (props.state && props.state !== editorView.state) {
+      editorView.setState(props.state);
+    }
+  }, [props.state, editorView]);
 
   return { ref };
 }
