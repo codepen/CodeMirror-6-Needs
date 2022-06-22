@@ -7,85 +7,69 @@ import styles from "../styles/Home.module.scss";
 
 import CodeMirror6Instance from "../components/CodeMirror6Instance";
 
-import { EditorView, Decoration, DecorationSet } from "@codemirror/view";
-import {
-  StateField,
-  StateEffect,
-  RangeValue,
-  RangeSet,
-} from "@codemirror/state";
+import { EditorView, Decoration } from "@codemirror/view";
+import { StateField, StateEffect } from "@codemirror/state";
 
-const hideCursorTheme = EditorView.baseTheme({
-  ".cm-activeLine, .cm-activeLineGutter": { background: "none !important" },
+const hideCursorTheme = EditorView.theme({
+  ".cm-activeLine.cm-activeLine, .cm-activeLineGutter.cm-activeLineGutter": {
+    background: "none",
+  },
   ".cm-cursor-primary": {
     display: "none",
     opacity: 0,
   },
 });
 
-const addUnderline = StateEffect.define();
-
-const underlineMark = Decoration.line({ class: "cm-underline" });
-const underlineField = StateField.define({
-  create() {
-    return Decoration.none;
-  },
-  update(underlines, tr) {
-    underlines = underlines.map(tr.changes);
-    for (let e of tr.effects)
-      if (e.is(addUnderline)) {
-        // console.log("addUnderline", tr.state.doc);
-        // const lines = {
-        //   from: tr.state.doc.lineAt(e.value.from),
-        //   to: tr.state.doc.lineAt(e.value.to),
-        // };
-        // console.log(e.value, lines);
-
-        const range = new RangeValue().range(e.value.from, e.value.to);
-        console.log(range);
-
-        const range2 = new Range({
-          from: e.value.from,
-          to: e.value.to,
-        });
-        console.log(range2);
-
-        // const lineMarks = [];
-
-        // for (
-        //   let lineNumber = lines.from.number;
-        //   lineNumber <= lines.to.number;
-        //   lineNumber++
-        // ) {
-        //   // lineMarks.push();
-        //   console.log({ lineNumber });
-        underlines = underlines.update({
-          add: [underlineMark.range(range)],
-        });
-        // }
-
-        // console.log(lineMarks);
-
-        // const ranges = (
-      }
-    return underlines;
-  },
-  provide: (f) => EditorView.decorations.from(f),
-});
-
-const underlineTheme = EditorView.baseTheme({
-  ".cm-underline": {
+const consoleLineDecorations = {
+  error: Decoration.line({ class: "cm-console-error" }),
+  warn: Decoration.line({ class: "cm-console-warn" }),
+  info: Decoration.line({ class: "cm-console-info" }),
+};
+const consoleDecorationTheme = EditorView.baseTheme({
+  ".cm-console-error, .cm-activeLine.cm-activeLine.cm-console-error": {
     textDecoration: "underline 3px red",
     background: "darkred",
   },
 });
 
+const addConsoleDecoration = StateEffect.define();
+
+const consoleDecorationField = StateField.define({
+  create() {
+    return Decoration.none;
+  },
+  update(consoleDecorations, tr) {
+    consoleDecorations = consoleDecorations.map(tr.changes);
+    for (let e of tr.effects)
+      if (e.is(addConsoleDecoration)) {
+        let { from, to } = e.value;
+        for (let pos = from; pos <= to; ) {
+          let line = tr.state.doc.lineAt(pos);
+          // builder.add(line.from, line.from, underlineMark);
+          consoleDecorations = consoleDecorations.update({
+            add: [consoleLineDecorations.error.range(line.from)],
+          });
+          pos = line.to + 1;
+        }
+      }
+    return consoleDecorations;
+  },
+  provide: (f) => EditorView.decorations.from(f),
+});
+
 function underlineRange(view, ranges) {
-  let effects = ranges.map(({ from, to }) => addUnderline.of({ from, to }));
+  let effects = ranges.map(({ from, to }) =>
+    addConsoleDecoration.of({ from, to })
+  );
   if (!effects.length) return false;
 
-  if (!view.state.field(underlineField, false))
-    effects.push(StateEffect.appendConfig.of([underlineField, underlineTheme]));
+  if (!view.state.field(consoleDecorationField, false))
+    effects.push(
+      StateEffect.appendConfig.of([
+        consoleDecorationField,
+        consoleDecorationTheme,
+      ])
+    );
   view.dispatch({ effects });
   return true;
 }
@@ -183,7 +167,7 @@ export default function Console() {
             onInit={onInit}
             extensions={[hideCursorTheme]}
             // extensions={ConsoleDecorations}
-            readOnly
+            // readOnly
           />
         </section>
       </main>
