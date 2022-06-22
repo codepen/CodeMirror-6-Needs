@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, Component } from "react";
 import Head from "next/head";
 import EditorSettings from "../components/EditorSettings";
 import { EDITOR_SETTINGS_DEFAULTS } from "../data/editorSettings";
@@ -55,7 +55,6 @@ const consoleDecorationField = StateField.define({
         if (consoleLineDecorations[type]) {
           for (let pos = from; pos <= to; ) {
             let line = tr.state.doc.lineAt(pos);
-            // builder.add(line.from, line.from, underlineMark);
             consoleDecorations = consoleDecorations.update({
               add: [consoleLineDecorations[type].range(line.from)],
             });
@@ -69,12 +68,20 @@ const consoleDecorationField = StateField.define({
 });
 
 function addConsoleLog(view, log) {
+  const type = log.function;
   const value = log.arguments.join(" ");
-  const from = view.state.doc.length;
-  const to = from + value.length;
+  let from = view.state.doc.length;
+  let to = from;
 
-  let effects = [addConsoleDecoration.of({ type: log.function, from, to })];
+  if (type === "clear") {
+    from = 0;
+  }
 
+  let effects = [
+    addConsoleDecoration.of({ type, from, to: from + value.length }),
+  ];
+
+  // Ensure that the necessary extensions are added.
   if (!view.state.field(consoleDecorationField, false)) {
     effects.push(
       StateEffect.appendConfig.of([
@@ -87,7 +94,7 @@ function addConsoleLog(view, log) {
   view.dispatch({
     changes: {
       from,
-      to: from,
+      to,
       insert: value + "\n",
     },
     effects,
@@ -96,19 +103,37 @@ function addConsoleLog(view, log) {
   return true;
 }
 
+class ConsoleLog extends Component {
+  componentDidMount() {
+    if (this.props.view) {
+      addConsoleLog(this.props.view, this.props.log);
+    }
+  }
+
+  componentWillUnmount() {
+    // Remove lines. We should get some kind of Range back from the addConsoleLog function that can then be removed.
+  }
+
+  render() {
+    return null;
+  }
+}
+
 export default function Console() {
   const [editorSettings, setEditorSettings] = useState({
     ...EDITOR_SETTINGS_DEFAULTS,
     lineNumbers: false,
   });
 
-  const value = ""; //logs.map((log) => log.arguments.join(" ")).join("\n");
+  const [view, setView] = useState();
+  const [logs, setLogs] = useState(LOGS.slice(0, 5));
+
+  function addLogs() {
+    setLogs(LOGS);
+  }
 
   function onInit(view) {
-    logs.forEach((log) => {
-      addConsoleLog(view, log);
-    });
-    // underlineRange(view, [{ from: 0, to: 30 }]);
+    setView(view);
   }
 
   return (
@@ -129,27 +154,25 @@ export default function Console() {
             setEditorSettings={setEditorSettings}
           />
         </section>
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-          }}
-        >
+        <section>
           <CodeMirror6Instance
             editorSettings={editorSettings}
             language={LANGUAGES.HTML}
             onInit={onInit}
-            // extensions={ConsoleDecorations}
             readOnly
           />
+          {view &&
+            logs.map((log) => (
+              <ConsoleLog key={log.id} view={view} log={log} />
+            ))}
+          <button onClick={addLogs}>Add Logs</button>
         </section>
       </main>
     </div>
   );
 }
 
-const logs = [
+const LOGS = [
   {
     arguments: ["Console was cleared"],
     complexity: 1,
@@ -167,6 +190,11 @@ const logs = [
     id: "1655911665381",
   },
   {
+    function: "warn",
+    arguments: ['"warn"'],
+    id: "1655911665385",
+  },
+  {
     function: "info",
     arguments: ['"info"'],
     id: "1655911665382",
@@ -180,11 +208,6 @@ const logs = [
     function: "table",
     arguments: ['"table"'],
     id: "1655911665384",
-  },
-  {
-    function: "warn",
-    arguments: ['"warn"'],
-    id: "1655911665385",
   },
   {
     function: "info",
