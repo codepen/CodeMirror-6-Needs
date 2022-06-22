@@ -1,15 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Head from "next/head";
 import EditorSettings from "../components/EditorSettings";
-import CodeEditor from "../components/CodeEditor";
 import { EDITOR_SETTINGS_DEFAULTS } from "../data/editorSettings";
 import { LANGUAGES } from "../data/languages";
 import styles from "../styles/Home.module.scss";
 
-import { AnnotationType, EditorState, StateEffect } from "@codemirror/state";
-import { Annotation } from "@codemirror/state";
-import { useExtensions } from "../components/CodeMirror6Instance/extensions/useExtensions";
 import CodeMirror6Instance from "../components/CodeMirror6Instance";
+import { AnnotationType } from "@codemirror/state";
 import { ViewPlugin } from "@codemirror/view";
 
 const syncAnnotation = new AnnotationType(Boolean);

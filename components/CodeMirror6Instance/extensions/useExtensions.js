@@ -21,7 +21,6 @@ export function useExtensions(props, editorView) {
 
   const lineNumbersExtension = useLineNumbers(editorSettings, editorView);
   const codeFoldingExtension = useCodeFolding(editorSettings, editorView);
-  const readOnlyExtension = useReadOnly(editorSettings, editorView);
   const themeExtension = useThemeExtension(editorSettings, editorView);
   const fontsExtension = useFonts(editorSettings, editorView);
   const lineWrappingExtension = useLineWrapping(editorSettings, editorView);
@@ -33,6 +32,7 @@ export function useExtensions(props, editorView) {
     editorSettings,
     editorView
   );
+  const readOnlyExtension = useReadOnly(props, editorView);
   const onChangeExtension = useOnChange(props, editorView);
   const extraExtensions = useExtraExtensions(props, editorView);
 

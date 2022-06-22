@@ -15,6 +15,7 @@ CodeMirror6Instance.propTypes = {
   ),
   onInit: PropTypes.func,
   onChange: PropTypes.func,
+  readOnly: PropTypes.bool,
   editorSettings: PropTypes.shape({
     theme: PropTypes.string,
     fontSize: PropTypes.number,
