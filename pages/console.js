@@ -8,7 +8,7 @@ import styles from "../styles/Home.module.scss";
 import CodeMirror6Instance from "../components/CodeMirror6Instance";
 
 import { EditorView, Decoration } from "@codemirror/view";
-import { StateField, StateEffect } from "@codemirror/state";
+import { StateField, StateEffect, Range } from "@codemirror/state";
 
 const consoleLineClasses = {
   clear: "cm-console-clear",
@@ -53,11 +53,13 @@ const consoleDecorationField = StateField.define({
         let { type, from, to } = e.value;
         console.log("adding console decoration", type);
         if (consoleLineDecorations[type]) {
+          // Loop through lines
           for (let pos = from; pos <= to; ) {
             let line = tr.state.doc.lineAt(pos);
             consoleDecorations = consoleDecorations.update({
               add: [consoleLineDecorations[type].range(line.from)],
             });
+            // Next line
             pos = line.to + 1;
           }
         }
@@ -73,13 +75,13 @@ function addConsoleLog(view, log) {
   let from = view.state.doc.length;
   let to = from;
 
-  if (type === "clear") {
-    from = 0;
-  }
+  // if (type === "clear") {
+  //   from = 0;
+  // }
 
-  let effects = [
-    addConsoleDecoration.of({ type, from, to: from + value.length }),
-  ];
+  let end = from + value.length;
+
+  let effects = [addConsoleDecoration.of({ type, from, to: end })];
 
   // Ensure that the necessary extensions are added.
   if (!view.state.field(consoleDecorationField, false)) {
@@ -100,22 +102,35 @@ function addConsoleLog(view, log) {
     effects,
   });
 
-  return true;
+  let range = new Range(from, end + 1, value);
+  console.log({ range });
+
+  return () => {
+    console.log("removing range", range);
+    view.dispatch({
+      changes: {
+        from: range.from,
+        to: range.to,
+        insert: "",
+      },
+    });
+  };
 }
 
 class ConsoleLog extends Component {
   componentDidMount() {
     if (this.props.view) {
-      addConsoleLog(this.props.view, this.props.log);
+      this.remove = addConsoleLog(this.props.view, this.props.log);
     }
   }
 
   componentWillUnmount() {
+    this.remove();
     // Remove lines. We should get some kind of Range back from the addConsoleLog function that can then be removed.
   }
 
   render() {
-    return null;
+    return <li>{this.props.log.arguments.join(" ")}</li>;
   }
 }
 
@@ -126,10 +141,20 @@ export default function Console() {
   });
 
   const [view, setView] = useState();
+  const [lastLog, setLastLog] = useState(5);
   const [logs, setLogs] = useState(LOGS.slice(0, 5));
 
   function addLogs() {
-    setLogs(LOGS);
+    setLastLog(lastLog + 1);
+    setLogs((logs) => {
+      return [...logs, LOGS[lastLog]];
+    });
+  }
+
+  function removeLogs() {
+    setLogs((logs) => {
+      return logs.slice(1 - logs.length);
+    });
   }
 
   function onInit(view) {
@@ -155,6 +180,8 @@ export default function Console() {
           />
         </section>
         <section>
+          <button onClick={addLogs}>Add Logs</button>
+          <button onClick={removeLogs}>Remove Logs</button>
           <CodeMirror6Instance
             editorSettings={editorSettings}
             language={LANGUAGES.HTML}
@@ -165,7 +192,6 @@ export default function Console() {
             logs.map((log) => (
               <ConsoleLog key={log.id} view={view} log={log} />
             ))}
-          <button onClick={addLogs}>Add Logs</button>
         </section>
       </main>
     </div>
@@ -178,6 +204,55 @@ const LOGS = [
     complexity: 1,
     function: "clear",
     id: "1655911665379",
+  },
+  {
+    function: "log",
+    arguments: ["1"],
+    id: "165591166538333",
+  },
+  {
+    function: "log",
+    arguments: ["2"],
+    id: "165591165653833334",
+  },
+  {
+    function: "log",
+    arguments: ["3"],
+    id: "1655911665383537223",
+  },
+  {
+    function: "log",
+    arguments: ["4"],
+    id: "165591163653833673",
+  },
+  {
+    function: "log",
+    arguments: ["5"],
+    id: "165591166538353343",
+  },
+
+  {
+    function: "log",
+    arguments: ["6"],
+    id: "1655911665383253634399",
+  },
+
+  {
+    function: "log",
+    arguments: ["7"],
+    id: "1655911665383363311341",
+  },
+
+  {
+    function: "log",
+    arguments: ["8"],
+    id: "165591166538303634463234",
+  },
+
+  {
+    function: "log",
+    arguments: ["9"],
+    id: "1655911665383392634323",
   },
   {
     function: "debug",
