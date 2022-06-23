@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { defaultExtensions } from "./defaultExtensions";
 import { useEmmetExtension } from "./emmet";
 import { useLanguageExtension } from "./languages";
@@ -36,7 +37,8 @@ export function useExtensions(props, editorView) {
   const onChangeExtension = useOnChange(props, editorView);
   const extraExtensions = useExtraExtensions(props, editorView);
 
-  return [
+  // Store as a ref because the extensions themselves are stored in compartments that won't change. We don't need to rebuild this array every time it re-renders.
+  const extensionsRef = useRef([
     // Order for Emmet & default is important to allow `tab` key indentation to work.
     emmetExtension,
     defaultExtensions,
@@ -55,5 +57,7 @@ export function useExtensions(props, editorView) {
     indentationExtension,
     onChangeExtension,
     extraExtensions,
-  ];
+  ]);
+
+  return extensionsRef.current;
 }

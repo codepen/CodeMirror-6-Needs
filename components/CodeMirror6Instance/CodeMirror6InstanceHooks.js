@@ -41,6 +41,8 @@ export function useCodeMirror6Instance(props) {
     const currentValue = editorView.state.doc.toString();
     if (value !== currentValue) {
       // https://codemirror.net/docs/migration/#making-changes
+      // NOTE: "To completely reset a state—for example to load a new document—it is recommended to create a new state instead of a transaction. That will make sure no unwanted state (such as undo history events) sticks around."
+      // editorView.setState(EditorState.create())
       editorView.dispatch({
         changes: { from: 0, to: editorView.state.doc.length, insert: value },
       });
