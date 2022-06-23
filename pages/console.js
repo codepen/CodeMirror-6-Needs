@@ -8,7 +8,7 @@ import styles from "../styles/Home.module.scss";
 import CodeMirror6Instance from "../components/CodeMirror6Instance";
 
 import { EditorView, Decoration } from "@codemirror/view";
-import { StateField, StateEffect, Range } from "@codemirror/state";
+import { StateField, StateEffect, Range, RangeSet } from "@codemirror/state";
 
 const consoleLineClasses = {
   clear: "cm-console-clear",
@@ -17,14 +17,7 @@ const consoleLineClasses = {
   info: "cm-console-info",
 };
 
-// Make CodeMirror line decorations from each class
-const consoleLineDecorations = Object.fromEntries(
-  Object.entries(consoleLineClasses).map(([key, value]) => [
-    key,
-    Decoration.line({ class: value }),
-  ])
-);
-const consoleDecorationTheme = EditorView.baseTheme({
+const consoleEntriesTheme = EditorView.baseTheme({
   [`.${consoleLineClasses.clear}`]: {
     fontStyle: "italic",
     opacity: 0.5,
@@ -40,56 +33,75 @@ const consoleDecorationTheme = EditorView.baseTheme({
   },
 });
 
-const addConsoleDecoration = StateEffect.define();
+const addConsoleEntry = StateEffect.define();
+const removeConsoleEntry = StateEffect.define();
 
-const consoleDecorationField = StateField.define({
+const consoleEntriesField = StateField.define({
   create() {
-    return Decoration.none;
+    return Decoration.none; //RangeSet.empty;
   },
-  update(consoleDecorations, tr) {
-    consoleDecorations = consoleDecorations.map(tr.changes);
-    for (let e of tr.effects)
-      if (e.is(addConsoleDecoration)) {
-        let { type, from, to } = e.value;
-        console.log("adding console decoration", type);
-        if (consoleLineDecorations[type]) {
+  update(consoleEntries, tr) {
+    consoleEntries = consoleEntries.map(tr.changes);
+    for (let e of tr.effects) {
+      if (e.is(addConsoleEntry)) {
+        let { log, from, to } = e.value;
+        console.log("adding console decoration", log);
+
+        const toAdd = [
+          Decoration.mark({ attributes: { "data-log-id": log.id }, log }).range(
+            from,
+            to
+          ),
+        ];
+        const type = log.function;
+        if (consoleLineClasses[type]) {
           // Loop through lines
           for (let pos = from; pos <= to; ) {
             let line = tr.state.doc.lineAt(pos);
-            consoleDecorations = consoleDecorations.update({
-              add: [consoleLineDecorations[type].range(line.from)],
-            });
+            toAdd.push(
+              Decoration.line({ class: consoleLineClasses[type], log }).range(
+                line.from
+              )
+            );
             // Next line
             pos = line.to + 1;
           }
         }
+        consoleEntries = consoleEntries.update({
+          add: toAdd,
+          sort: true,
+        });
+      } else if (e.is(removeConsoleEntry)) {
+        let { log } = e.value;
+        consoleEntries = consoleEntries.update({
+          filter(from, to, value) {
+            return value.spec.log.id !== log.id;
+          },
+        });
       }
-    return consoleDecorations;
+    }
+    return consoleEntries;
   },
   provide: (f) => EditorView.decorations.from(f),
 });
 
 function addConsoleLog(view, log) {
-  const type = log.function;
   const value = log.arguments.join(" ");
   let from = view.state.doc.length;
   let to = from;
 
+  // const type = log.function;
   // if (type === "clear") {
   //   from = 0;
   // }
 
   let end = from + value.length;
-
-  let effects = [addConsoleDecoration.of({ type, from, to: end })];
+  let effects = [addConsoleEntry.of({ log, from, to: end })];
 
   // Ensure that the necessary extensions are added.
-  if (!view.state.field(consoleDecorationField, false)) {
+  if (!view.state.field(consoleEntriesField, false)) {
     effects.push(
-      StateEffect.appendConfig.of([
-        consoleDecorationField,
-        consoleDecorationTheme,
-      ])
+      StateEffect.appendConfig.of([consoleEntriesField, consoleEntriesTheme])
     );
   }
 
@@ -97,23 +109,45 @@ function addConsoleLog(view, log) {
     changes: {
       from,
       to,
-      insert: value + "\n",
+      insert: value + view.state.lineBreak,
     },
     effects,
   });
 
-  let range = new Range(from, end + 1, value);
-  console.log({ range });
-
   return () => {
-    console.log("removing range", range);
+    const range = { from: 0, to: 0 };
+
+    const field = view.state.field(consoleEntriesField);
+    field.between(0, view.state.doc.length, function (from, to, value) {
+      if (value.spec.log.id === log.id) {
+        range.from = Math.min(from, range.from);
+        range.to = Math.max(to, range.to);
+      }
+    });
+
+    console.log("removing", log.id, range);
+
     view.dispatch({
       changes: {
         from: range.from,
         to: range.to,
         insert: "",
       },
+      effects: [removeConsoleEntry.of({ log })],
     });
+
+    // const firstLine = view.state.doc.line(1);
+    // if (firstLine.text === "") {
+    //   console.log(firstLine);
+
+    //   view.dispatch({
+    //     changes: {
+    //       from: firstLine.from,
+    //       to: firstLine.to + 1,
+    //       insert: "",
+    //     },
+    //   });
+    // }
   };
 }
 
@@ -130,7 +164,11 @@ class ConsoleLog extends Component {
   }
 
   render() {
-    return <li>{this.props.log.arguments.join(" ")}</li>;
+    return (
+      <li>
+        {this.props.log.id}: {this.props.log.arguments.join(" ")}
+      </li>
+    );
   }
 }
 
@@ -153,7 +191,9 @@ export default function Console() {
 
   function removeLogs() {
     setLogs((logs) => {
-      return logs.slice(1 - logs.length);
+      let logs2 = [...logs];
+      logs2.shift();
+      return logs2; //.slice(1 - logs.length);
     });
   }
 
@@ -200,10 +240,35 @@ export default function Console() {
 
 const LOGS = [
   {
+    function: "log",
+    arguments: ['"first log"'],
+    id: "1655911665381322341",
+  },
+  {
     arguments: ["Console was cleared"],
     complexity: 1,
     function: "clear",
     id: "1655911665379",
+  },
+  {
+    function: "log",
+    arguments: ['"log"'],
+    id: "16559116653812341",
+  },
+  {
+    function: "error",
+    arguments: ['"error"'],
+    id: "1655911665381",
+  },
+  {
+    function: "warn",
+    arguments: ['"warn"'],
+    id: "1655911665385",
+  },
+  {
+    function: "info",
+    arguments: ['"info"'],
+    id: "1655911665382",
   },
   {
     function: "log",
@@ -260,23 +325,8 @@ const LOGS = [
     id: "1655911665380",
   },
   {
-    function: "error",
-    arguments: ['"error"'],
-    id: "1655911665381",
-  },
-  {
-    function: "warn",
-    arguments: ['"warn"'],
-    id: "1655911665385",
-  },
-  {
-    function: "info",
-    arguments: ['"info"'],
-    id: "1655911665382",
-  },
-  {
     function: "log",
-    arguments: ['"log"'],
+    arguments: ['"multiple\nlines\nin\none\nlog"'],
     id: "1655911665383",
   },
   {
