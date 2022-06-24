@@ -9,6 +9,13 @@ import CodeMirror6Instance from "../components/CodeMirror6Instance";
 
 import { EditorView, Decoration } from "@codemirror/view";
 import { StateField, StateEffect, Range, RangeSet } from "@codemirror/state";
+import {
+  foldable,
+  foldAll,
+  foldCode,
+  foldEffect,
+  foldService,
+} from "@codemirror/language";
 
 const consoleLineClasses = {
   clear: "cm-console-clear",
@@ -33,8 +40,8 @@ const consoleEntriesTheme = EditorView.baseTheme({
   },
 });
 
-const addConsoleEntry = StateEffect.define();
-const removeConsoleEntry = StateEffect.define();
+const addConsoleEntryEffect = StateEffect.define();
+const removeConsoleEntryEffect = StateEffect.define();
 
 const consoleEntriesField = StateField.define({
   create() {
@@ -43,7 +50,7 @@ const consoleEntriesField = StateField.define({
   update(consoleEntries, tr) {
     consoleEntries = consoleEntries.map(tr.changes);
     for (let e of tr.effects) {
-      if (e.is(addConsoleEntry)) {
+      if (e.is(addConsoleEntryEffect)) {
         let { log, from, to } = e.value;
         console.log("adding console decoration", log);
 
@@ -71,7 +78,7 @@ const consoleEntriesField = StateField.define({
           add: toAdd,
           sort: true,
         });
-      } else if (e.is(removeConsoleEntry)) {
+      } else if (e.is(removeConsoleEntryEffect)) {
         let { log } = e.value;
         consoleEntries = consoleEntries.update({
           filter(from, to, value) {
@@ -85,7 +92,22 @@ const consoleEntriesField = StateField.define({
   provide: (f) => EditorView.decorations.from(f),
 });
 
-function addConsoleLog(view, log) {
+function findConsoleEntryRange(view, log) {
+  const range = { from: 0, to: 0 };
+
+  const field = view.state.field(consoleEntriesField);
+  field.between(0, view.state.doc.length, function (from, to, value) {
+    if (value.spec.log.id === log.id) {
+      range.from = Math.min(from, range.from);
+      range.to = Math.max(to, range.to);
+      console.log({ from, to, range });
+    }
+  });
+
+  return range;
+}
+
+function addConsoleEntry(view, log) {
   const value = log.arguments.join(" ");
   let from = view.state.doc.length;
   let to = from;
@@ -95,8 +117,15 @@ function addConsoleLog(view, log) {
   //   from = 0;
   // }
 
-  let end = from + value.length;
-  let effects = [addConsoleEntry.of({ log, from, to: end })];
+  const insertLineBreak = from !== 0;
+
+  const lineDecorationsData = {
+    log,
+    from: insertLineBreak ? from + 1 : 0,
+  };
+  lineDecorationsData.to = lineDecorationsData.from + value.length;
+
+  let effects = [addConsoleEntryEffect.of(lineDecorationsData)];
 
   // Ensure that the necessary extensions are added.
   if (!view.state.field(consoleEntriesField, false)) {
@@ -109,57 +138,65 @@ function addConsoleLog(view, log) {
     changes: {
       from,
       to,
-      insert: value + view.state.lineBreak,
+      insert: (insertLineBreak ? view.state.lineBreak : "") + value,
     },
     effects,
   });
 
-  return () => {
-    const range = { from: 0, to: 0 };
+  setTimeout(() => {
+    let f = foldable(view.state, from, to + 1);
+    console.log("foldable", f);
+    //   view.dispatch({ effects: [foldEffect.of({ from, to: to + 1 })] })
+  });
 
-    const field = view.state.field(consoleEntriesField);
-    field.between(0, view.state.doc.length, function (from, to, value) {
-      if (value.spec.log.id === log.id) {
-        range.from = Math.min(from, range.from);
-        range.to = Math.max(to, range.to);
-      }
-    });
+  // setTimeout(() => foldAll(view));
+}
 
-    console.log("removing", log.id, range);
+function removeConsoleEntry(view, log) {
+  const range = findConsoleEntryRange(view, log);
+
+  // if (insertLineBreak) {
+  //   console.log("insertLineBreak!", range.from);
+  //   range.from = Math.max(0, from - 1);
+  // }
+
+  console.log("field before", view.state.field(consoleEntriesField));
+
+  console.log("removing", log.id, range);
+
+  view.dispatch({
+    changes: {
+      from: range.from,
+      to: range.to,
+      insert: "",
+    },
+    effects: [removeConsoleEntryEffect.of({ log })],
+  });
+
+  const firstLine = view.state.doc.line(1);
+  if (firstLine.text === "") {
+    console.log(firstLine);
 
     view.dispatch({
       changes: {
-        from: range.from,
-        to: range.to,
+        from: firstLine.from,
+        to: firstLine.to + 1,
         insert: "",
       },
-      effects: [removeConsoleEntry.of({ log })],
     });
-
-    // const firstLine = view.state.doc.line(1);
-    // if (firstLine.text === "") {
-    //   console.log(firstLine);
-
-    //   view.dispatch({
-    //     changes: {
-    //       from: firstLine.from,
-    //       to: firstLine.to + 1,
-    //       insert: "",
-    //     },
-    //   });
-    // }
-  };
+  }
+  console.log("field after", view.state.field(consoleEntriesField));
 }
 
 class ConsoleLog extends Component {
   componentDidMount() {
     if (this.props.view) {
-      this.remove = addConsoleLog(this.props.view, this.props.log);
+      this.remove = addConsoleEntry(this.props.view, this.props.log);
     }
   }
 
   componentWillUnmount() {
-    this.remove();
+    removeConsoleEntry(this.props.view, this.props.log);
     // Remove lines. We should get some kind of Range back from the addConsoleLog function that can then be removed.
   }
 
@@ -179,14 +216,14 @@ export default function Console() {
   });
 
   const [view, setView] = useState();
-  const [lastLog, setLastLog] = useState(5);
-  const [logs, setLogs] = useState(LOGS.slice(0, 5));
+  const [lastLog, setLastLog] = useState(8);
+  const [logs, setLogs] = useState(LOGS.slice(0, lastLog));
 
   function addLogs() {
-    setLastLog(lastLog + 1);
     setLogs((logs) => {
       return [...logs, LOGS[lastLog]];
     });
+    setLastLog((lastLog + 1) % LOGS.length);
   }
 
   function removeLogs() {
@@ -220,8 +257,8 @@ export default function Console() {
           />
         </section>
         <section>
-          <button onClick={addLogs}>Add Logs</button>
-          <button onClick={removeLogs}>Remove Logs</button>
+          <button onClick={addLogs}>Add Log</button>
+          <button onClick={removeLogs}>Remove Log</button>
           <CodeMirror6Instance
             editorSettings={editorSettings}
             language={LANGUAGES.HTML}
@@ -241,34 +278,40 @@ export default function Console() {
 const LOGS = [
   {
     function: "log",
-    arguments: ['"first log"'],
+    arguments: ["<div>\n\txyz\n\t123\n</div>"],
+    id: "1655911665381322333141",
+  },
+  {
+    function: "log",
+    arguments: ['"console.log"'],
+    id: "16559116653812341",
+  },
+  {
+    function: "error",
+    arguments: ['"console.error"'],
+    id: "1655911665381",
+  },
+  {
+    function: "warn",
+    arguments: ['"console.warn"'],
+    id: "1655911665385",
+  },
+  {
+    function: "info",
+    arguments: ['"console.info"'],
+    id: "1655911665382",
+  },
+  {
+    function: "log",
+    arguments: ['"regular console.log log\nwith multiple lines!"'],
     id: "1655911665381322341",
   },
+
   {
     arguments: ["Console was cleared"],
     complexity: 1,
     function: "clear",
     id: "1655911665379",
-  },
-  {
-    function: "log",
-    arguments: ['"log"'],
-    id: "16559116653812341",
-  },
-  {
-    function: "error",
-    arguments: ['"error"'],
-    id: "1655911665381",
-  },
-  {
-    function: "warn",
-    arguments: ['"warn"'],
-    id: "1655911665385",
-  },
-  {
-    function: "info",
-    arguments: ['"info"'],
-    id: "1655911665382",
   },
   {
     function: "log",
@@ -295,25 +338,21 @@ const LOGS = [
     arguments: ["5"],
     id: "165591166538353343",
   },
-
   {
     function: "log",
     arguments: ["6"],
     id: "1655911665383253634399",
   },
-
   {
     function: "log",
     arguments: ["7"],
     id: "1655911665383363311341",
   },
-
   {
     function: "log",
     arguments: ["8"],
     id: "165591166538303634463234",
   },
-
   {
     function: "log",
     arguments: ["9"],
