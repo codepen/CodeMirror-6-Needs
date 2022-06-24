@@ -54,12 +54,7 @@ const consoleEntriesField = StateField.define({
         let { log, from, to } = e.value;
         console.log("adding console decoration", log);
 
-        const toAdd = [
-          Decoration.mark({ attributes: { "data-log-id": log.id }, log }).range(
-            from,
-            to
-          ),
-        ];
+        const toAdd = [Decoration.mark({ log }).range(from, to)];
         const type = log.function;
         if (consoleLineClasses[type]) {
           // Loop through lines
@@ -144,10 +139,10 @@ function addConsoleEntry(view, log) {
   });
 
   setTimeout(() => {
-    let f = foldable(view.state, from, to + 1);
+    let f = foldable(view.state, from + 1, to);
     console.log("foldable", f);
-    //   view.dispatch({ effects: [foldEffect.of({ from, to: to + 1 })] })
-  });
+    // view.dispatch({ effects: [foldEffect.of({ from, to: to + 1 })] });
+  }, 1000);
 
   // setTimeout(() => foldAll(view));
 }
@@ -167,25 +162,23 @@ function removeConsoleEntry(view, log) {
   view.dispatch({
     changes: {
       from: range.from,
-      to: range.to,
-      insert: "",
+      to: Math.min(view.state.doc.length, range.to + 1),
     },
     effects: [removeConsoleEntryEffect.of({ log })],
   });
 
-  const firstLine = view.state.doc.line(1);
-  if (firstLine.text === "") {
-    console.log(firstLine);
+  // const firstLine = view.state.doc.line(1);
+  // if (firstLine.text === "") {
+  //   console.log(firstLine);
 
-    view.dispatch({
-      changes: {
-        from: firstLine.from,
-        to: firstLine.to + 1,
-        insert: "",
-      },
-    });
-  }
-  console.log("field after", view.state.field(consoleEntriesField));
+  //   view.dispatch({
+  //     changes: {
+  //       from: firstLine.from,
+  //       to: firstLine.to + 1,
+  //     },
+  //   });
+  // }
+  // console.log("field after", view.state.field(consoleEntriesField));
 }
 
 class ConsoleLog extends Component {
@@ -241,12 +234,12 @@ export default function Console() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>CodeMirror 6 Shared State</title>
+        <title>CodeMirror 6 Console</title>
       </Head>
 
       <main className={styles.main}>
         <header className={styles.header}>
-          <h1>CodeMirror 6 Shared State</h1>
+          <h1>CodeMirror 6 Console</h1>
         </header>
 
         <section className={styles.settings}>
