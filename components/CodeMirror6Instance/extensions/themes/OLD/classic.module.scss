@@ -1,0 +1,116 @@
+.root {
+  --black: #000;
+  --blue: #219;
+  --red: #a11;
+  --green: #164;
+  --lightGray: #ccc;
+  --midGray: #555;
+  --purple: #708;
+
+  background: white;
+  color: #222;
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--blue);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--blue);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--purple);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--blue);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--black);
+    }
+    .cm-variable-3 {
+      color: var(--black);
+    }
+    .cm-header {
+      color: var(--red);
+    }
+    .cm-number {
+      color: var(--green);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--blue);
+    }
+    .cm-attribute {
+      color: var(--midGray);
+    }
+    .cm-builtin {
+      color: var(--blue);
+    }
+    .cm-qualifier {
+      color: var(--blue);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--black);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--blue);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--red);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--red);
+    }
+    .cm-tag {
+      color: var(--blue);
+    }
+    .cm-bracket {
+      color: var(--black);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--lightGray);
+    }
+  }
+
+  // Mode Overrides
+  &[data-mode='htmlmixed'] {
+    :global {
+      .cm-atom {
+        color: var(--red);
+      }
+    }
+  }
+  &[data-mode='text/css'] {
+    :global {
+      .cm-tag {
+        color: var(--blue);
+      }
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: black;
+    }
+    .CodeMirror-selected {
+      background: rgba(black, 0.05);
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: rgba(black, 0.1);
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(black, 0.5);
+    }
+  }
+}

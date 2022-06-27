@@ -1,0 +1,116 @@
+.root {
+  --white: white;
+  --midGray: #c3c6c4;
+  --darkGray: #b7bbc8;
+  --orange: #dd925f;
+  --purple: #ae94c0;
+  --yellow: #efc371;
+  --green: #b5bc67;
+
+  background: #1d1f20;
+  color: var(--midGray);
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--yellow);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--yellow);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--yellow);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--yellow);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--purple);
+    }
+    .cm-variable-3 {
+      color: var(--purple);
+    }
+    .cm-header {
+      color: var(--orange);
+    }
+    .cm-number {
+      color: var(--orange);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--purple);
+    }
+    .cm-attribute {
+      color: var(--midGray);
+    }
+    .cm-builtin {
+      color: var(--yellow);
+    }
+    .cm-qualifier {
+      color: var(--yellow);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--midGray);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--green);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--green);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--white);
+    }
+    .cm-tag {
+      color: var(--yellow);
+    }
+    .cm-bracket {
+      color: var(--midGray);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--darkGray);
+    }
+  }
+
+  // Mode Overrides
+  &[data-mode='htmlmixed'] {
+    :global {
+      .cm-atom {
+        color: var(--green);
+      }
+    }
+  }
+  &[data-mode='text/css'] {
+    :global {
+      .cm-tag {
+        color: var(--yellow);
+      }
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: white;
+    }
+    .CodeMirror-selected {
+      background: #171813;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #0c0c04;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(white, 0.5);
+    }
+  }
+}

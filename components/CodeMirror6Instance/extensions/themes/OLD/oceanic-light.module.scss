@@ -1,0 +1,105 @@
+.root {
+  --brown: #ab7967;
+  --pink: #b48ead;
+  --red: #bf616a;
+  --green: #72a943;
+  --yellow: #e5ab00;
+  --blue: #8fa1b3;
+  --orange: #d08770;
+  --darkGray: #343d46;
+  --lightGray: #65737e;
+
+  background: #eff1f5;
+  color: var(--darkGray);
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--red);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--pink);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--orange);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--green);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--blue);
+    }
+    .cm-variable-3 {
+      color: var(--blue);
+    }
+    .cm-header {
+      color: var(--darkGray);
+    }
+    .cm-number {
+      color: var(--pink);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--green);
+    }
+    .cm-attribute {
+      color: var(--green);
+    }
+    .cm-builtin {
+      color: var(--darkGray);
+    }
+    .cm-qualifier {
+      color: var(--darkGray);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--darkGray);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--darkGray);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--orange);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--darkGray);
+    }
+    .cm-tag {
+      color: var(--red);
+    }
+    .cm-tag.cm-bracket {
+      color: var(--red);
+    }
+    .cm-bracket {
+      color: var(--darkGray);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--lightGray);
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: black;
+    }
+    .CodeMirror-selected {
+      background: #e7ebf1;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #dde5f1;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(black, 0.5);
+    }
+  }
+}

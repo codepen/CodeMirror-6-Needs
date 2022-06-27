@@ -1,7 +1,17 @@
 .root {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 1rem;
+}
+
+.filters {
+  display: flex;
   gap: 2rem;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #222;
+  border-radius: 0.5rem;
+  grid-column: 1 / -1;
 }
 
 .sample {

@@ -4,23 +4,24 @@ import styles from "./EditorSettings.module.scss";
 export default function EditorSettings({ editorSettings, setEditorSettings }) {
   function changeEditorSetting(newSettings) {
     return setEditorSettings((editorSettings) => {
-      const updatedSettings = {
+      return {
         ...editorSettings,
         ...newSettings,
       };
-      return updatedSettings;
-
-      // for font-size and font-family....
-      // .cm-editor .cm-content { font-family: "Consolas" }
     });
   }
 
   return (
     <div className={styles.root}>
       {Object.entries(EDITOR_SETTINGS).map(([key, value]) => {
-        const { label, options, supported, notes } = value;
+        const { label, options, supported, notes, implemented } = value;
         return (
-          <div key={key} className={styles.option} data-supported={supported}>
+          <div
+            key={key}
+            className={styles.option}
+            data-supported={supported}
+            data-implemented={implemented}
+          >
             <label htmlFor={key}>{label}</label>
             <select
               id={key}
@@ -30,6 +31,7 @@ export default function EditorSettings({ editorSettings, setEditorSettings }) {
                 if (value === "true") value = true;
                 if (value === "false") value = false;
                 changeEditorSetting({ [key]: value });
+                console.log(key, value);
               }}
             >
               {options.map((option) => {

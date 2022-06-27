@@ -1,5 +1,6 @@
+import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { EditorView } from "@codemirror/view";
-import { HighlightStyle, tags } from "@codemirror/highlight";
+import { tags } from "@lezer/highlight";
 
 const twilightTheme = EditorView.theme(
   {
@@ -31,11 +32,12 @@ const twilightTheme = EditorView.theme(
     },
     ".cm-gutters": {
       backgroundColor: "#1d1e22",
-      color: "#34363e",
+      color: "#44464e",
       border: "none",
     },
     ".cm-activeLineGutter": {
       backgroundColor: "#333438",
+      color: "#54565e",
     },
     ".cm-foldPlaceholder": {
       backgroundColor: "transparent",
@@ -159,6 +161,6 @@ const twilightHighlightStyle = HighlightStyle.define([
   { tag: [tags.invalid, tags.deleted], color: "red" },
 ]);
 
-const twilight = [twilightTheme, twilightHighlightStyle];
+const twilight = [twilightTheme, syntaxHighlighting(twilightHighlightStyle)];
 
 export { twilight, twilightHighlightStyle, twilightTheme };

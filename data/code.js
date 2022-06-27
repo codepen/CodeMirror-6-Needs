@@ -17,6 +17,10 @@ export const CODE_SAMPLES = [
 </head>
 <body>
 
+  <p>Lorem ipsum dolor sit amet, <a href="#" target="_blank">consectetur</a> adipiscing elit. Praesent <strong>bibendum</strong>, lorem vel tincidunt imperdiet, nibh elit laoreet felis, a bibendum nisl tortor non orci.</p>
+
+  <p>Vestibulum nunc massa, gravida quis porta nec, feugiat id metus. Nunc ac arcu dolor, quis vestibulum leo. Cras viverra mollis ipsum, non rhoncus lectus aliquam et. Morbi faucibus purus sit amet lacus aliquet elementum. Donec sit amet posuere enim.</p>
+
 </body>
 </html>`,
   },
@@ -37,13 +41,15 @@ export const CODE_SAMPLES = [
     notes: null,
     code: `import gsap from 'gsap';
 
-  let foo = "bar";
+let foo = "bar";
 
 const data = {
   age: 12
 };
 
-console.log(data.age);
+function hello(){
+  console.log(data.age);
+}
 `,
   },
   {
@@ -64,7 +70,7 @@ export default App;
     language: LANGUAGES.MARKDOWN,
     label: "Markdown",
     supported: SUPPORT_LEVELS.SUPPORTED,
-    notes: "Limited highlighting",
+    notes: null,
     code: `# This is markdown
 
 Just some *copy* here with a [link](https://codepen.io) in it.
@@ -172,7 +178,7 @@ html
   {
     language: LANGUAGES.SASS,
     label: <a href="https://sass-lang.com/">Sass</a>,
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     code: `// SASS SYNTAX
 $font-stack:    Helvetica, sans-serif
 $primary-color: #333
@@ -184,8 +190,7 @@ body
   {
     language: LANGUAGES.SCSS,
     label: <a href="https://lesscss.org/#">Less</a>,
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes: null,
+    supported: SUPPORT_LEVELS.SUPPORTED,
     code: `// Variables
 @link-color:        #428bca; // sea blue
 @link-color-hover:  darken(@link-color, 10%);
@@ -206,8 +211,8 @@ a:hover {
   {
     language: LANGUAGES.STYLUS,
     label: <a href="https://stylus-lang.com/">Stylus</a>,
-    supported: SUPPORT_LEVELS.NOT_SUPPORTED,
-    notes: null,
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `border-radius()
   -webkit-border-radius: arguments
   -moz-border-radius: arguments
@@ -222,8 +227,8 @@ a.button
   {
     language: LANGUAGES.COFFEESCRIPT,
     label: <a href="https://coffeescript.org/">CoffeeScript</a>,
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes: "Not an official mode but seems to work fairly well?",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `# Assignment:
 number   = 42
 opposite = true
@@ -279,8 +284,8 @@ type Wolfish = ExtractDogish<Wolf>;
   {
     language: LANGUAGES.LIVESCRIPT,
     label: <a href="https://livescript.net/">LiveScript</a>,
-    supported: SUPPORT_LEVELS.PARTIAL_SUPPORT,
-    notes: "Perhaps works well enough for this little-used language.",
+    supported: SUPPORT_LEVELS.SUPPORTED,
+    notes: "Legacy mode",
     code: `# Easy listing of implicit objects
 table1 =
   * id: 1

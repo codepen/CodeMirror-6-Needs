@@ -1,0 +1,105 @@
+.root {
+  --white: #f3f3f3;
+  --lightGray: #e6e6e6;
+  --midGray: #676b79;
+  --green: #19f9d8;
+  --orange: #ffb86c;
+  --red: #ff2c6d;
+  --purple: #b084eb;
+  --lightPink: #ff9ac1;
+  --pink: #ff75b5;
+
+  background: #292a2b;
+  color: var(--lightGray);
+
+  :global {
+    .cm-keyword {
+      // const, var, let
+      color: var(--pink);
+    }
+    .cm-atom {
+      // tag part of <tag>
+      color: var(--red);
+    }
+    .cm-def {
+      // params part of function(params) {
+      color: var(--lightGray);
+    }
+    .cm-variable {
+      // coffeescript var
+      color: var(--orange);
+    }
+    .cm-variable-2 {
+      // for (key in [this]), markdown li, decimals without 0 in front
+      color: var(--lightPink);
+    }
+    .cm-variable-3 {
+      color: var(--lightPink);
+    }
+    .cm-header {
+      color: var(--darkGray);
+    }
+    .cm-number {
+      color: var(--orange);
+    }
+    .cm-property {
+      // margin part of margin: 10px;, getElementById
+      color: var(--white);
+    }
+    .cm-attribute {
+      color: var(--orange);
+    }
+    .cm-builtin {
+      color: var(--lightGray);
+    }
+    .cm-qualifier {
+      color: var(--lightGray);
+    }
+    .cm-operator {
+      // CoffeeScript ->
+      color: var(--lightGray);
+    }
+    .cm-meta {
+      // @font-face
+      color: var(--purple);
+    }
+    .cm-string {
+      // href=["val"]
+      color: var(--green);
+    }
+    .cm-string-2 {
+      // match([this])
+      color: var(--orange);
+    }
+    .cm-tag {
+      color: var(--red);
+    }
+    .cm-tag.cm-bracket {
+      color: var(--red);
+    }
+    .cm-bracket {
+      color: var(--lightGray);
+    }
+    .cm-comment {
+      // /* this comment */
+      color: var(--midGray);
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: white;
+    }
+    .CodeMirror-selected {
+      background: rgba(black, 0.05);
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: rgba(black, 0.1);
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(white, 0.5);
+    }
+  }
+}

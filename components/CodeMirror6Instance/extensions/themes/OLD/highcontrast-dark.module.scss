@@ -1,0 +1,114 @@
+/*
+  Note this is the CodePen Brand theme. It uses many colors from the CodePen global scope.
+*/
+
+.root {
+  --white: #fff;
+  --yellow: #ffdd40;
+  --green: #a3d65a;
+  --teal: #2bc7b9;
+  --blue: #5e91f2;
+  --purple: #ae63e4;
+  --blueSlate: #88afbf;
+  --red: #ff3c41;
+  --orange: #ff8d41;
+  --pink: #d75093;
+  --gray: #c7c9d3;
+  --darkGray: #9b9dad;
+
+  background: #131417;
+  color: #d5d7de;
+
+  :global {
+    .cm-keyword {
+      color: var(--yellow);
+    }
+    .cm-atom {
+      color: var(--red);
+    }
+    .cm-def {
+      color: var(--blue);
+    }
+    .cm-variable {
+      color: var(--gray);
+    }
+    .cm-variable-2 {
+      color: var(--green);
+    }
+    .cm-variable-3 {
+      color: var(--white);
+    }
+    .cm-header {
+      color: var(--red);
+    }
+    .cm-number {
+      color: var(--teal);
+    }
+    .cm-property {
+      color: var(--blue);
+    }
+    .cm-attribute {
+      color: var(--gray);
+    }
+    .cm-builtin {
+      color: var(--purple);
+    }
+    .cm-qualifier {
+      color: var(--yellow);
+    }
+    .cm-operator {
+      color: var(--green);
+    }
+    .cm-meta {
+      color: var(--blue);
+    }
+    .cm-string {
+      color: var(--teal);
+    }
+    .cm-string-2 {
+      color: var(--pink);
+    }
+    .cm-tag {
+      color: var(--yellow);
+    }
+    .cm-bracket {
+      color: var(--darkGray);
+    }
+    .cm-comment {
+      color: var(--blueSlate);
+    }
+  }
+
+  // Mode Overrides
+  &[data-mode='htmlmixed'] {
+    :global {
+      .cm-atom {
+        color: var(--red);
+      }
+    }
+  }
+  &[data-mode='text/css'] {
+    :global {
+      .cm-tag {
+        color: var(--orange);
+      }
+    }
+  }
+
+  :global {
+    .CodeMirror-cursor {
+      border-left-color: var(--white);
+    }
+    .CodeMirror-selected {
+      background: #1e2129;
+    }
+    .CodeMirror-focused .CodeMirror-selected {
+      background: #272c3b;
+    }
+    .CodeMirror-matchingbracket,
+    .CodeMirror-matchingtag {
+      text-decoration: underline;
+      text-decoration-color: rgba(white, 0.5);
+    }
+  }
+}
