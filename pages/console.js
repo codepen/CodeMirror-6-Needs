@@ -10,11 +10,14 @@ import CodeMirror6Instance from "../components/CodeMirror6Instance";
 import { EditorView, Decoration } from "@codemirror/view";
 import { StateField, StateEffect, Range, RangeSet } from "@codemirror/state";
 import {
+  ensureSyntaxTree,
   foldable,
   foldAll,
   foldCode,
   foldEffect,
   foldService,
+  language,
+  syntaxTreeAvailable,
 } from "@codemirror/language";
 
 const consoleLineClasses = {
@@ -54,20 +57,18 @@ const consoleEntriesField = StateField.define({
         let { log, from, to } = e.value;
         console.log("adding console decoration", log);
 
-        const toAdd = [Decoration.mark({ log }).range(from, to)];
+        const toAdd = [Decoration.mark({ logId: log.id }).range(from, to)];
         const type = log.function;
         if (consoleLineClasses[type]) {
-          // Loop through lines
-          for (let pos = from; pos <= to; ) {
-            let line = tr.state.doc.lineAt(pos);
-            toAdd.push(
-              Decoration.line({ class: consoleLineClasses[type], log }).range(
-                line.from
-              )
-            );
-            // Next line
-            pos = line.to + 1;
-          }
+          const lines = getLines(tr.state, from, to);
+          toAdd.push(
+            ...lines.map((line) =>
+              Decoration.line({
+                class: consoleLineClasses[type],
+                logId: log.id,
+              }).range(line.from)
+            )
+          );
         }
         consoleEntries = consoleEntries.update({
           add: toAdd,
@@ -77,7 +78,7 @@ const consoleEntriesField = StateField.define({
         let { log } = e.value;
         consoleEntries = consoleEntries.update({
           filter(from, to, value) {
-            return value.spec.log.id !== log.id;
+            return value.spec.logId !== log.id;
           },
         });
       }
@@ -87,22 +88,62 @@ const consoleEntriesField = StateField.define({
   provide: (f) => EditorView.decorations.from(f),
 });
 
+function getLines(state, from, to) {
+  const lines = [];
+  // Loop through lines
+  for (let pos = from; pos <= to; ) {
+    let line = state.doc.lineAt(pos);
+    lines.push(line);
+    // Next line
+    pos = line.to + 1;
+  }
+
+  return lines;
+}
+
 function findConsoleEntryRange(view, log) {
   const range = { from: 0, to: 0 };
 
   const field = view.state.field(consoleEntriesField);
   field.between(0, view.state.doc.length, function (from, to, value) {
-    if (value.spec.log.id === log.id) {
+    if (value.spec.logId === log.id) {
       range.from = Math.min(from, range.from);
       range.to = Math.max(to, range.to);
-      console.log({ from, to, range });
+      // console.log({ from, to, range });
     }
   });
 
   return range;
 }
 
-function addConsoleEntry(view, log) {
+async function foldLog(view, log) {
+  // const range = findConsoleEntryRange(view, log);
+  // const { from, to } = range;
+  // setTimeout(() => {
+  //   const langField = view.state.field(language, false);
+  //   console.log("language", langField);
+  //   let f = foldable(view.state, from + 1, to - 1);
+  //   console.log("foldable", f);
+  //   // foldAll(view);
+  // }, 100);
+  // view.dispatch({});
+  // let available = syntaxTreeAvailable(view.state, to);
+  // console.log("before", { available });
+  // let tree = await ensureSyntaxTree(view.state, to + 1, 1000);
+  // available = syntaxTreeAvailable(view.state, to);
+  // console.log("after", { available, tree });
+  // setTimeout(() => {
+  //   let available = syntaxTreeAvailable(view.state, to);
+  //   let tree = ensureSyntaxTree(view.state, to + 1, 1000);
+  //   console.log("setTimeout", { available, tree });
+  //   // let f = foldable(view.state, from, to + 1);
+  //   // console.log("foldable", f);
+  //   // foldAll(view);
+  //   // view.dispatch({ effects: [foldEffect.of({ from, to: to + 1 })] });
+  // });
+}
+
+async function addConsoleEntry(view, log) {
   const value = log.arguments.join(" ");
   let from = view.state.doc.length;
   let to = from;
@@ -138,13 +179,7 @@ function addConsoleEntry(view, log) {
     effects,
   });
 
-  setTimeout(() => {
-    let f = foldable(view.state, from + 1, to);
-    console.log("foldable", f);
-    // view.dispatch({ effects: [foldEffect.of({ from, to: to + 1 })] });
-  }, 1000);
-
-  // setTimeout(() => foldAll(view));
+  await foldLog(view, log);
 }
 
 function removeConsoleEntry(view, log) {
