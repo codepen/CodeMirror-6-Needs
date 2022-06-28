@@ -20,58 +20,34 @@ export default function SharedYjs() {
   );
   const [submittedValue, setSubmittedValue] = useState(fileValue);
 
-  const [ytext, setYtext] = useState();
+  const [yText, setYText] = useState();
   useEffect(() => {
-    const ydoc = new Y.Doc();
-    console.log({ ydoc });
+    const yDoc = new Y.Doc();
+    const yText = yDoc.getText("file-id");
+    setYText(yText);
 
-    const ytext = ydoc.getText("file-id");
-    ytext.insert(0, "hi");
-    // ytext.insert(0, );
-
-    console.log(ytext.toString());
-
-    setYtext(ytext);
-
-    // ydoc.on("update", (updateMessage, origin, ydoc) => {
-    //   console.log({ updateMessage, origin, ydoc });
-    //   setFileValue()
-    // });
-
-    ytext.observe(function (event, transaction) {
-      console.log({ ytext, event, transaction });
-      setFileValue(ytext.toString());
+    // Keep file in sync with yText "on change"
+    yText.observe(function (event, transaction) {
+      console.log({ yText, event, transaction });
+      setFileValue(yText.toString());
     });
-
-    // setTimeout(() => {
-    //   ytext.insert(0, `<html>\n  <body>\n    Hello World\n  </body>\n</html>`);
-
-    //   //   setTimeout(() => {
-    //   //     ytext.insert(ytext.length, "xyz");
-    //   //   }, 1000);
-    // }, 10);
   }, []);
 
+  // Ensure the yText stays in sync with the main value.
   useEffect(() => {
-    if (ytext && ytext.toString() !== submittedValue) {
-      ytext.applyDelta([{ delete: ytext.length }, { insert: submittedValue }]);
+    if (yText && yText.toString() !== submittedValue) {
+      yText.applyDelta([
+        // If there's content, delete it all
+        yText.length > 0 ? { delete: yText.length } : {},
+        // Insert the new value
+        { insert: submittedValue },
+      ]);
     }
-  }, [ytext, submittedValue]);
+  }, [yText, submittedValue]);
 
   function onSubmit() {
     // console.log("onSubmit", fileValue);
     setSubmittedValue(fileValue);
-
-    // ytext.delete(0, ytext.length);
-    // ytext.insert(0, fileValue);
-  }
-
-  function onChange(update) {
-    if (update.docChanged) {
-      // console.log("onChange", update);
-      let value = update.state.doc.toString();
-      setFileValue(value);
-    }
   }
 
   return (
@@ -110,30 +86,25 @@ export default function SharedYjs() {
             gap: "1rem",
           }}
         >
-          <SyncedCodeMirror ytext={ytext} editorSettings={editorSettings} />
-          <SyncedCodeMirror ytext={ytext} editorSettings={editorSettings} />
-          <SyncedCodeMirror ytext={ytext} editorSettings={editorSettings} />
-          <SyncedCodeMirror ytext={ytext} editorSettings={editorSettings} />
+          <SyncedCodeMirror yText={yText} editorSettings={editorSettings} />
+          <SyncedCodeMirror yText={yText} editorSettings={editorSettings} />
+          <SyncedCodeMirror yText={yText} editorSettings={editorSettings} />
+          <SyncedCodeMirror yText={yText} editorSettings={editorSettings} />
         </section>
       </main>
     </div>
   );
 }
 
-function SyncedCodeMirror({ ytext, editorSettings }) {
+function SyncedCodeMirror({ yText, editorSettings }) {
   const [extensions, setExtensions] = useState();
   useEffect(() => {
-    if (!ytext) return null;
+    if (!yText) return null;
+    const undoManager = new Y.UndoManager(yText);
+    setExtensions(yCollab(yText, null, { undoManager }));
+  }, [yText]);
 
-    const undoManager = new Y.UndoManager(ytext);
-
-    setExtensions(
-      yCollab(ytext, null, {
-        undoManager,
-      })
-    );
-  }, [ytext]);
-
+  // Don't render until the extensions are ready.
   if (!extensions) return null;
 
   return (
@@ -142,16 +113,16 @@ function SyncedCodeMirror({ ytext, editorSettings }) {
       language={LANGUAGES.HTML}
       extensions={extensions}
       onInit={(view) => {
-        console.log("oninit", ytext.toString());
+        // Make sure the initial document value is the yText value.
+        console.log("oninit", yText.toString());
         view.dispatch({
           changes: {
             from: 0,
             to: view.state.doc.length,
-            insert: ytext.toString(),
+            insert: yText.toString(),
           },
         });
       }}
-      // onChange={onChange}
     />
   );
 }
