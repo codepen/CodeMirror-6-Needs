@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import EditorSettings from "../components/EditorSettings";
 import { EDITOR_SETTINGS_DEFAULTS } from "../data/editorSettings";
@@ -46,19 +46,19 @@ export default function SharedYjs() {
   }, [yText, submittedValue]);
 
   function onSubmit() {
-    // console.log("onSubmit", fileValue);
     setSubmittedValue(fileValue);
   }
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>CodeMirror 6 Shared State</title>
+        <title>CodeMirror 6 Y.js Integration</title>
       </Head>
 
       <main className={styles.main}>
         <header className={styles.header}>
-          <h1>CodeMirror 6 Shared State</h1>
+          <h1>CodeMirror 6 Y.js Integration</h1>
+          <a href="./">Back to main</a>
         </header>
 
         <section className={styles.settings}>
@@ -113,7 +113,7 @@ function SyncedCodeMirror({ yText, editorSettings }) {
       language={LANGUAGES.HTML}
       extensions={extensions}
       onInit={(view) => {
-        // Make sure the initial document value is the yText value.
+        // Make sure the initial document value is the yText value. Really should ensure there's a value set on the
         console.log("oninit", yText.toString());
         view.dispatch({
           changes: {
