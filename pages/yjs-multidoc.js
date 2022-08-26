@@ -9,7 +9,7 @@ import CodeMirror6Instance from "../components/CodeMirror6Instance";
 
 import * as Y from "yjs";
 import { yCollab } from "y-codemirror.next";
-import { EditorState, StateEffect } from "@codemirror/state";
+import { StateEffect } from "@codemirror/state";
 
 import * as Diff from "diff";
 
@@ -45,36 +45,6 @@ export function getDeltaOperations(initialText, finalText) {
 }
 
 function mergeYDocTexts(ydoc1, ydoc2) {
-  console.log("Y", Y);
-  console.log("YDoc1", ydoc1);
-
-  // const stateVector1 = Y.encodeStateVector(ydoc1);
-  // const diff2 = Y.encodeStateAsUpdate(ydoc2, stateVector1);
-  // Y.applyUpdate(ydoc1, diff2);
-
-  // const ytext2 = ydoc2.getText();
-  // ytext2.applyDelta([{ delete: ytext2.length }]);
-
-  // const state1 = Y.encodeStateAsUpdate(ydoc1);
-
-  // console.group("STATE1");
-  // Y.logUpdate(state1);
-  // Y.applyUpdate(ydoc2, state1);
-  // console.groupEnd();
-
-  // console.group("AFTER");
-  // Y.logUpdate(Y.encodeStateAsUpdate(ydoc2));
-  // console.groupEnd();
-
-  // const stateVector2 = Y.encodeStateVector(ydoc2);
-  // const diff1 = Y.encodeStateAsUpdate(ydoc1, stateVector2);
-
-  // console.info("DIFF1");
-  // Y.logUpdate(diff1);
-  // Y.applyUpdate(ydoc2, diff1);
-  // console.info("AFTER");
-  // Y.logUpdate(Y.encodeStateAsUpdate(ydoc2));
-
   const ydoc1Text = ydoc1.getText().toString();
   const ydoc2Text = ydoc2.getText().toString();
   const deltas = getDeltaOperations(ydoc1Text, ydoc2Text);
@@ -91,29 +61,6 @@ function mergeYDocTexts(ydoc1, ydoc2) {
   // Ensures the ydoc1 state matches the new ydoc2 state
   const state2 = Y.encodeStateAsUpdate(ydoc2);
   Y.applyUpdate(ydoc1, state2);
-
-  /*
-  // mergeYDocTexts(ydoc1, ydoc2);
-  // console.log(ydoc1);
-  // console.log(Y);
-  // }
-  // const deltas2 = getDeltaOperations(ydoc2Text, ydoc1.getText().toString());
-  // ydoc2.getText().applyDelta(deltas2);
-  // const stateVector1 = Y.encodeStateVector(ydoc1);
-  // const stateVector2 = Y.encodeStateVector(ydoc2);
-  // console.log({ stateVector1, stateVector2 });
-  // const diff1 = Y.encodeStateAsUpdate(ydoc1, stateVector2);
-  // const diff2 = Y.encodeStateAsUpdate(ydoc2, stateVector1);
-  // Y.applyUpdate(ydoc1, diff2);
-  // Y.applyUpdate(ydoc2, diff1);
-  // // No difference between disk and last-write-cache versions, so
-  // // just write the Yjs document to disk.
-  // const state1 = Y.encodeStateAsUpdate(ydoc1);
-  // Y.applyUpdate(ydoc2, state1);
-  // A change has happened in the text so we merge it with the Yjs document.
-  // const state1 = Y.encodeStateAsUpdate(ydoc1);
-  // Y.applyUpdate(ydoc2, state1);
-  */
 }
 
 export default function SharedYjs() {
@@ -176,42 +123,6 @@ export default function SharedYjs() {
     const ydoc2 = yDoc;
 
     mergeYDocTexts(ydoc1, ydoc2);
-    /*
-    // TODO: Compare contents?
-    // // Force new yDoc to match controller.
-    if (ydoc1.getText().toString() === ydoc2.getText().toString()) {
-      const state1 = Y.encodeStateAsUpdate(ydoc1);
-      Y.applyUpdate(ydoc2, state1);
-
-      console.log(Y);
-    } else {
-      // Merge states
-      // https://docs.yjs.dev/api/document-updates#example-sync-two-clients-by-computing-the-differences
-      const stateVector1 = Y.encodeStateVector(ydoc1);
-      const stateVector2 = Y.encodeStateVector(ydoc2);
-
-      console.log({ stateVector1, stateVector2 });
-      const diff1 = Y.encodeStateAsUpdate(ydoc1, stateVector2);
-      const diff2 = Y.encodeStateAsUpdate(ydoc2, stateVector1);
-      Y.applyUpdate(ydoc1, diff2);
-      Y.applyUpdate(ydoc2, diff1);
-
-      // // Syncing clients without loading the Y.Doc
-      // // https://docs.yjs.dev/api/document-updates#example-syncing-clients-without-loading-the-y.doc
-      // let currentState1 = Y.encodeStateAsUpdate(ydoc1);
-      // let currentState2 = Y.encodeStateAsUpdate(ydoc2);
-      // const stateVector1 = Y.encodeStateVectorFromUpdate(currentState1);
-      // const stateVector2 = Y.encodeStateVectorFromUpdate(currentState2);
-      // const diff1 = Y.diffUpdate(currentState1, stateVector2);
-      // const diff2 = Y.diffUpdate(currentState2, stateVector1);
-
-      // // sync clients
-      // currentState1 = Y.mergeUpdates([currentState1, diff2]);
-      // currentState2 = Y.mergeUpdates([currentState2, diff1]);
-      // Y.applyUpdate(ydoc1, currentState1);
-      // Y.applyUpdate(ydoc2, currentState2);
-    }
-    */
 
     yDoc.on("update", (update, _, originDoc) => {
       if (originDoc !== yDoc) return;
@@ -221,8 +132,6 @@ export default function SharedYjs() {
     });
 
     yDocs.current.push(yDoc);
-
-    // logStates();
 
     forceRender();
   }
