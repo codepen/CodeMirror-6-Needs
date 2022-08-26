@@ -45,6 +45,7 @@ export function getDeltaOperations(initialText, finalText) {
 }
 
 function mergeYDocTexts(ydoc1, ydoc2) {
+  // NOTE: This diffing doesn't really do anything at this point. For our actual implementation, the first YDoc received should be considered the primary document and all other clients should clear and go off of that document state.
   const ydoc1Text = ydoc1.getText().toString();
   const ydoc2Text = ydoc2.getText().toString();
   const deltas = getDeltaOperations(ydoc1Text, ydoc2Text);
@@ -109,6 +110,7 @@ export default function SharedYjs() {
     });
     makeYDoc(fileValue);
     forceRender();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function makeYDoc(initialValue) {
