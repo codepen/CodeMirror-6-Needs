@@ -15,12 +15,13 @@ import { keymap } from "@codemirror/view";
 
 import { Observable } from "lib0/observable";
 
+/**
+ * LinkedProvider to synchronize multiple Y.Docs with the same state and pass updates around.
+ */
 class LinkedProvider extends Observable {
   controller;
   docs = [];
-  /**
-   * @param {Y.Doc} ydoc
-   */
+
   constructor() {
     super();
 
@@ -49,9 +50,12 @@ class LinkedProvider extends Observable {
     }
   }
 
+  /**
+   * @param {Y.Doc} ydoc
+   */
   add(ydoc) {
     this.docs.push(ydoc);
-    mergeYDocTexts(this.controller, ydoc);
+    mergeYDocState(this.controller, ydoc);
     ydoc.on("update", this.updateListener);
   }
 
@@ -63,33 +67,33 @@ class LinkedProvider extends Observable {
   }
 }
 
-function mergeYDocTexts(ydoc1, ydoc2) {
-  if (ydoc1 === ydoc2) return;
+/**
+ * Ensure that states is consistent between two Y.Docs
+ *
+ * @param {Y.Doc} primaryYdoc
+ * @param {Y.Doc} secondaryYdoc
+ */
+function mergeYDocState(primaryYdoc, secondaryYdoc) {
+  if (primaryYdoc === secondaryYdoc) return;
 
-  // Janky test to see if the initial doc has any history.
-  const hasDoc1BeenInitialized = ydoc1.store.clients.size > 0;
-  if (hasDoc1BeenInitialized) {
-    // If there's content in ydoc2, delete it all
-    const ytext2 = ydoc2.getText();
+  // Janky test to see if the primary doc has any history.
+  const isPrimaryYDocInitialized = primaryYdoc.store.clients.size > 0;
+  if (isPrimaryYDocInitialized) {
+    // If there's content in secondaryYdoc, delete it all
+    const ytext2 = secondaryYdoc.getText();
     ytext2.applyDelta([{ delete: ytext2.length }]);
-
-    // Syncs the state from ydoc1 to ydoc2
-    const state1 = Y.encodeStateAsUpdate(ydoc1);
-    Y.applyUpdate(ydoc2, state1);
   }
 
-  // Ensures the ydoc1 state matches the new ydoc2 state
-  const state2 = Y.encodeStateAsUpdate(ydoc2);
-  Y.applyUpdate(ydoc1, state2);
+  // Syncs the state from primaryYdoc to secondaryYdoc
+  const primaryState = Y.encodeStateAsUpdate(primaryYdoc);
+  Y.applyUpdate(secondaryYdoc, primaryState);
 
-  // // NOTE: This diffing doesn't really do anything at this point. For our actual implementation, the first YDoc received should be considered the primary document and all other clients should clear and go off of that document state.
-  // const ydoc1Text = ydoc1.getText().toString();
-  // const ydoc2Text = ydoc2.getText().toString();
-  // const deltas = getDeltaOperations(ydoc1Text, ydoc2Text);
-  // ydoc1.getText().applyDelta(deltas);
+  // Ensures the primaryYdoc state matches the new secondaryYdoc state
+  const secondaryState = Y.encodeStateAsUpdate(secondaryYdoc);
+  Y.applyUpdate(primaryYdoc, secondaryState);
 }
 
-export default function SharedYjs() {
+export default function SharedYjsProvider() {
   const [editorSettings] = useState(EDITOR_SETTINGS_DEFAULTS);
 
   const [fileValue, setFileValue] = useState(
@@ -130,9 +134,9 @@ export default function SharedYjs() {
     makeYDoc(fileValue);
     forceRender();
 
-    // return () => {
-    //   linkedProvider.current.destroy();
-    // };
+    return () => {
+      linkedProvider.current.destroy();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -203,6 +207,7 @@ export default function SharedYjs() {
 
 function CodeMirrorYDoc({ yDoc, editorSettings }) {
   if (!yDoc) return null;
+
   return (
     <CodeMirror6Instance
       editorSettings={editorSettings}
