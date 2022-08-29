@@ -29,7 +29,7 @@ import { lintKeymap } from "@codemirror/lint";
 export const defaultKeymaps = keymap.of([
   ...defaultKeymap,
   ...searchKeymap,
-  ...historyKeymap,
+  // ...historyKeymap,
   ...lintKeymap,
 
   // NOTE: This keymap refers to the `tab` key, NOT tabs vs spaces.
@@ -41,7 +41,7 @@ export const defaultKeymaps = keymap.of([
 export const defaultExtensions = [
   syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
   highlightSpecialChars(),
-  history(),
+  // history(),
 
   drawSelection(),
   // Multi cursor/select
