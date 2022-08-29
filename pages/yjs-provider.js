@@ -28,17 +28,15 @@ class LinkedProvider extends Observable {
     this.updateListener = this.updateListener.bind(this);
 
     this.controller = new Y.Doc();
-    this.controller.on("update", this.updateListener);
-    this.docs.push(this.controller);
+    this.add(this.controller);
 
     // listen to an event that fires when a remote update is received
     this.on("update", (update, origin) => {
-      this.controller;
       this.docs.forEach((ydoc) => {
         if (origin !== ydoc) {
           Y.applyUpdate(ydoc, update, this);
+          // the third parameter sets the transaction-origin
         }
-        // the third parameter sets the transaction-origin
       });
     });
   }
@@ -46,11 +44,8 @@ class LinkedProvider extends Observable {
   updateListener(update, origin) {
     // ignore updates applied by this provider
     if (origin !== this) {
-      console.log("updatelistener", origin);
       // this update was produced either locally or by another provider.
       this.emit("update", [update, origin]);
-    } else {
-      console.log("updatelistener this origin");
     }
   }
 
@@ -69,6 +64,8 @@ class LinkedProvider extends Observable {
 }
 
 function mergeYDocTexts(ydoc1, ydoc2) {
+  if (ydoc1 === ydoc2) return;
+
   // Janky test to see if the initial doc has any history.
   const hasDoc1BeenInitialized = ydoc1.store.clients.size > 0;
   if (hasDoc1BeenInitialized) {
