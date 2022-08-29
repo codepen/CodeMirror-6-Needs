@@ -10,9 +10,63 @@ import CodeMirror6Instance from "../components/CodeMirror6Instance";
 import * as Y from "yjs";
 import { yCollab, yUndoManagerKeymap } from "y-codemirror.next";
 import { StateEffect } from "@codemirror/state";
+
 import { keymap } from "@codemirror/view";
 
-// Diff like https://motif.land/blog/syncing-text-files-using-yjs-and-the-file-system-access-api ?
+import { Observable } from "lib0/observable";
+
+class LinkedProvider extends Observable {
+  controller;
+  docs = [];
+  /**
+   * @param {Y.Doc} ydoc
+   */
+  constructor() {
+    super();
+
+    this.add = this.add.bind(this);
+    this.updateListener = this.updateListener.bind(this);
+
+    this.controller = new Y.Doc();
+    this.controller.on("update", this.updateListener);
+    this.docs.push(this.controller);
+
+    // listen to an event that fires when a remote update is received
+    this.on("update", (update, origin) => {
+      this.controller;
+      this.docs.forEach((ydoc) => {
+        if (origin !== ydoc) {
+          Y.applyUpdate(ydoc, update, this);
+        }
+        // the third parameter sets the transaction-origin
+      });
+    });
+  }
+
+  updateListener(update, origin) {
+    // ignore updates applied by this provider
+    if (origin !== this) {
+      console.log("updatelistener", origin);
+      // this update was produced either locally or by another provider.
+      this.emit("update", [update, origin]);
+    } else {
+      console.log("updatelistener this origin");
+    }
+  }
+
+  add(ydoc) {
+    this.docs.push(ydoc);
+    mergeYDocTexts(this.controller, ydoc);
+    ydoc.on("update", this.updateListener);
+  }
+
+  destroy() {
+    this.controller.destroy();
+    this.docs.forEach((ydoc) => {
+      ydoc.off("update", this.updateListener);
+    });
+  }
+}
 
 function mergeYDocTexts(ydoc1, ydoc2) {
   // Janky test to see if the initial doc has any history.
@@ -54,7 +108,7 @@ export default function SharedYjs() {
     renderComponent(Date.now());
   }
 
-  const controller = useRef();
+  const linkedProvider = useRef();
   const yDocs = useRef([]);
 
   function logStates() {
@@ -74,38 +128,25 @@ export default function SharedYjs() {
   // Set up controller yDoc
   useEffect(() => {
     console.log("setting up controller yDoc");
-    controller.current = new Y.Doc();
-    controller.current.on("update", (update, _, originDoc) => {
-      if (originDoc.guid !== controller.current.guid) return;
-      console.log("controller update!!!!!", originDoc, controller.current);
-      yDocs.current.forEach((otherDoc) => {
-        Y.applyUpdate(otherDoc, update);
-      });
-    });
+    linkedProvider.current = new LinkedProvider();
+
     makeYDoc(fileValue);
     forceRender();
+
+    // return () => {
+    //   linkedProvider.current.destroy();
+    // };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function makeYDoc(initialValue) {
     const yDoc = new Y.Doc();
     const yText = yDoc.getText();
-
     if (initialValue) {
       yText.insert(0, initialValue);
     }
 
-    mergeYDocTexts(controller.current, yDoc);
-
-    yDoc.on("update", (update, _, originDoc) => {
-      if (originDoc !== yDoc) return;
-      if (controller.current) {
-        console.log("update");
-        Y.logUpdate(update);
-        Y.applyUpdate(controller.current, update, yDoc);
-      }
-    });
-
+    linkedProvider.current.add(yDoc);
     yDocs.current.push(yDoc);
 
     forceRender();
@@ -146,9 +187,10 @@ export default function SharedYjs() {
         >
           <CodeMirrorYDoc
             initialValue={fileValue}
-            yDoc={controller.current}
+            yDoc={linkedProvider?.current?.controller}
             editorSettings={editorSettings}
           />
+
           {yDocs.current.map((yDoc, i) => (
             <CodeMirrorYDoc
               key={"ydoc" + i}
