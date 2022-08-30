@@ -85,7 +85,7 @@ function mergeYDocState(primaryYdoc, secondaryYdoc, textId) {
     ytext2.applyDelta([{ delete: ytext2.length }]);
   }
 
-  // TODO: Only do a state vector?
+  // Only do a state vector?
   const secondaryVector = Y.encodeStateVector(secondaryYdoc);
   // Syncs the state from primaryYdoc to secondaryYdoc
   const primaryStateDiff = Y.encodeStateAsUpdate(primaryYdoc, secondaryVector);
@@ -281,7 +281,9 @@ function CodeMirrorYDoc({ yDoc, editorSettings }) {
         ];
 
         editorView.dispatch({
+          // Add y.js extensions
           effects: StateEffect.appendConfig.of(extension),
+          // Ensure that the CodeMirror state matches the yText value.
           changes: {
             from: 0,
             to: editorView.state.doc.length,
