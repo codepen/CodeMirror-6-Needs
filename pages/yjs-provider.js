@@ -69,28 +69,85 @@ class LinkedProvider extends Observable {
 
 /**
  * Ensure that states is consistent between two Y.Docs
+ * https://docs.yjs.dev/api/document-updates#syncing-clients
  *
  * @param {Y.Doc} primaryYdoc
  * @param {Y.Doc} secondaryYdoc
  */
-function mergeYDocState(primaryYdoc, secondaryYdoc) {
+function mergeYDocState(primaryYdoc, secondaryYdoc, textId) {
   if (primaryYdoc === secondaryYdoc) return;
 
   // Janky test to see if the primary doc has any history.
   const isPrimaryYDocInitialized = primaryYdoc.store.clients.size > 0;
   if (isPrimaryYDocInitialized) {
     // If there's content in secondaryYdoc, delete it all
-    const ytext2 = secondaryYdoc.getText();
+    const ytext2 = secondaryYdoc.getText(textId);
     ytext2.applyDelta([{ delete: ytext2.length }]);
   }
 
+  // TODO: Only do a state vector?
+  const secondaryVector = Y.encodeStateVector(secondaryYdoc);
   // Syncs the state from primaryYdoc to secondaryYdoc
-  const primaryState = Y.encodeStateAsUpdate(primaryYdoc);
-  Y.applyUpdate(secondaryYdoc, primaryState);
+  const primaryStateDiff = Y.encodeStateAsUpdate(primaryYdoc, secondaryVector);
+  Y.applyUpdate(secondaryYdoc, primaryStateDiff);
 
-  // Ensures the primaryYdoc state matches the new secondaryYdoc state
-  const secondaryState = Y.encodeStateAsUpdate(secondaryYdoc);
+  // Ensures the primaryYdoc state matches the new secondaryYdoc state so that the IDs are consistent.
+  const primaryVector = Y.encodeStateVector(primaryYdoc);
+  const secondaryState = Y.encodeStateAsUpdate(secondaryYdoc, primaryVector);
   Y.applyUpdate(primaryYdoc, secondaryState);
+}
+
+import * as Diff from "diff";
+
+// https://motif.land/blog/syncing-text-files-using-yjs-and-the-file-system-access-api
+export function getDeltaOperations(initialText, finalText) {
+  if (initialText === finalText) {
+    return [];
+  }
+
+  const edits = Diff.diffChars(initialText || "", finalText || "");
+  let prevOffset = 0;
+  let deltas = [];
+
+  // Map the edits onto Yjs delta operations
+  for (const edit of edits) {
+    if (edit.removed && edit.value) {
+      deltas = [
+        ...deltas,
+        ...[
+          ...(prevOffset > 0 ? [{ retain: prevOffset }] : []),
+          { delete: edit.value.length },
+        ],
+      ];
+      prevOffset = 0;
+    } else if (edit.added && edit.value) {
+      deltas = [...deltas, ...[{ retain: prevOffset }, { insert: edit.value }]];
+      prevOffset = edit.value.length;
+    } else {
+      prevOffset = edit.value.length;
+    }
+  }
+  return deltas;
+}
+
+function applyDeltaDiffs(yText, newValue) {
+  if (yText) {
+    const yTextValue = yText.toString();
+    if (yTextValue !== newValue) {
+      // Less dramatic merge
+      const deltas = getDeltaOperations(yTextValue, newValue);
+      yText.applyDelta(deltas);
+      /*
+        yText.applyDelta([
+          // If there's content, delete it all
+          yText.length > 0 ? { delete: yText.length } : {},
+          // Insert the new value
+          { insert: submittedValue },
+        ]);
+      }
+    }*/
+    }
+  }
 }
 
 export default function SharedYjsProvider() {
@@ -99,40 +156,21 @@ export default function SharedYjsProvider() {
   const [fileValue, setFileValue] = useState(
     `<html>\n  <body>\n    Hello World\n  </body>\n</html>`
   );
-  const [submittedValue, setSubmittedValue] = useState(fileValue);
-  function onSubmit() {
-    setSubmittedValue(fileValue);
-  }
-
-  const [, renderComponent] = useState();
-  function forceRender() {
-    renderComponent(Date.now());
-  }
 
   const linkedProvider = useRef();
-  const yDocs = useRef([]);
-
-  function logStates() {
-    console.group("Controller YDoc");
-    const state = Y.encodeStateAsUpdate(controller.current);
-    Y.logUpdate(state);
-    console.groupEnd();
-
-    yDocs.current.map((ydoc, i) => {
-      console.group("YDoc " + i);
-      const state = Y.encodeStateAsUpdate(ydoc);
-      Y.logUpdate(state);
-      console.groupEnd();
-    });
-  }
+  const [yDocs, setYDocs] = useState([]);
 
   // Set up controller yDoc
   useEffect(() => {
-    console.log("setting up controller yDoc");
     linkedProvider.current = new LinkedProvider();
+    setYDocs([linkedProvider.current.controller]);
 
-    makeYDoc(fileValue);
-    forceRender();
+    const yDoc = makeYDoc(fileValue);
+    const yText = yDoc.getText();
+    yText.observe(function () {
+      // Keep file in sync with yText "on change"
+      setFileValue(yText.toString());
+    });
 
     return () => {
       linkedProvider.current.destroy();
@@ -148,9 +186,35 @@ export default function SharedYjsProvider() {
     }
 
     linkedProvider.current.add(yDoc);
-    yDocs.current.push(yDoc);
+    setYDocs((yDocs) => [...yDocs, yDoc]);
 
-    forceRender();
+    return yDoc;
+  }
+
+  const [submittedValue, setSubmittedValue] = useState(fileValue);
+  function onSubmit() {
+    setSubmittedValue(fileValue);
+  }
+  // Ensure the yText stays in sync with the main value.
+  useEffect(() => {
+    const yDoc = yDocs[0];
+    const yText = yDoc && yDoc.getText();
+    applyDeltaDiffs(yText, submittedValue);
+  }, [yDocs, submittedValue]);
+
+  // Debug log states
+  function logStates() {
+    console.group("Controller YDoc");
+    const state = Y.encodeStateAsUpdate(linkedProvider.current.controller);
+    Y.logUpdate(state);
+    console.groupEnd();
+
+    yDocs.map((ydoc, i) => {
+      console.group("YDoc " + i);
+      const state = Y.encodeStateAsUpdate(ydoc);
+      Y.logUpdate(state);
+      console.groupEnd();
+    });
   }
 
   return (
@@ -186,13 +250,7 @@ export default function SharedYjsProvider() {
             gap: "1rem",
           }}
         >
-          <CodeMirrorYDoc
-            initialValue={fileValue}
-            yDoc={linkedProvider?.current?.controller}
-            editorSettings={editorSettings}
-          />
-
-          {yDocs.current.map((yDoc, i) => (
+          {yDocs.map((yDoc, i) => (
             <CodeMirrorYDoc
               key={"ydoc" + i}
               yDoc={yDoc}
