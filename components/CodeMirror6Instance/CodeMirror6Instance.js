@@ -11,7 +11,7 @@ CodeMirror6Instance.propTypes = {
   value: PropTypes.string,
   state: PropTypes.object,
   extensions: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.func])
   ),
   onInit: PropTypes.func,
   onChange: PropTypes.func,

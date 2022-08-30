@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
-import { EditorView } from "codemirror";
+import { EditorView } from "@codemirror/view";
 import { useExtensions } from "./extensions/useExtensions";
 
 export function useCodeMirror6Instance(props) {
