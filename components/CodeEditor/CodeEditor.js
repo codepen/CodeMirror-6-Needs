@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import CodeMirror6Instance from "../CodeMirror6Instance";
 
 export default function CodeEditor({
